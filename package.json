@@ -25,6 +25,7 @@
     "img-loader": "^2.0.1",
     "import-glob-loader": "^1.1.0",
     "three": "latest",
+    "regl": "latest",
     "url-loader": "latest",
     "webpack": "^3.10.0",
     "webpack-glsl-loader": "^1.0.1"

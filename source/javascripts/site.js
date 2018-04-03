@@ -1,5 +1,5 @@
 // This is where it all goes :)
-import Scene from "./Scene.js"
+import Scene from "./webgl/Scene.js"
 import GridBg from "./GridBg.js"
 
 
