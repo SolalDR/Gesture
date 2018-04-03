@@ -8,6 +8,9 @@
   },
   "author": "SolalDR",
   "license": "ISC",
+  "dependencies": {
+    "simplegrid": "^1.0.2"
+  },
   "devDependencies": {
     "asap-js": "^0.5.2",
     "babel": "^6.23.0",

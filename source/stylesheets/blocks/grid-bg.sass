@@ -1,7 +1,7 @@
 
 $count: 5           // Number of lines 
-$delay-step: 0.1s
-
+$delay: 0.1s
+$duration: 1s
 
 .grid-bg
 
@@ -16,7 +16,7 @@ $delay-step: 0.1s
     fill: none
     stroke: #CCC
     stroke-miterlimit: 10
-    transition-duration: .8s
+    transition-duration: $duration
     transition-timing-function: ease-in-out
     
     @for $i from 1 to ($count + 1)
@@ -24,7 +24,7 @@ $delay-step: 0.1s
 
       &:nth-child(#{$i})
         transform: translateX(#{$decal})
-        transition-delay: $i*0.1s
+        transition-delay: $i*$delay
 
       &--hide:nth-child(#{$i})
         transform: translateX(#{$decal}) translateY(#{1024px*($i%2*2-1)})
