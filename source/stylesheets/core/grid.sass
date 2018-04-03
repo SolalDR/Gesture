@@ -1,9 +1,11 @@
+// Source & doc : https://gist.github.com/SolalDR/a0f80807d48808bb95a04afe76bdc093
 
 // Variables
 
 $col: 12
 $step: 5
 $space: 10px
+$main-breakpoint: 1080px
 $breakpoints: ( xl: 1360px, l: 1080px, m: 920px, s: 768px, xs: 360px )
 
 // Utils
@@ -13,17 +15,42 @@ $properties: ( margin: m, padding: p )
 
 // Grid
 
+@mixin grid($size)
+  max-width: $size
+  margin: auto
+  &::after
+    display: table
+    clear: both
+    width: 100%
+
+.grid
+  @include grid($main-breakpoint)
+  @each $breakpoint, $value in $breakpoints
+    &-#{$breakpoint} 
+      @include grid($value)
+
+// Columns
+
 @for $i from 1 to $col
   @for $j from 1 to $col
-    $w: $i/$j*100% // Width in percent
+    $w: $i/$j*100%
     .col-#{$i}-#{$j} 
       width: $w
+      float: left
+    .left-#{$i}-#{$j} 
+      margin-left: $w
+    .right-#{$i}-#{$j} 
+      margin-right: $w
 
-    // Breakpoints
     @each $breakpoint, $value in $breakpoints
       @media screen and (min-width: #{$value})
         .col-#{$breakpoint}-#{$i}-#{$j}
           width: $w
+          float: left
+        .left-#{$breakpoint}-#{$i}-#{$j} 
+          margin-left: $w
+        .right-#{$breakpoint}-#{$i}-#{$j} 
+          margin-right: $w
 
 // Margin, padding
 
