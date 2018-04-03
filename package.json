@@ -1,0 +1,29 @@
+{
+  "name": "Gesture",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SolalDR",
+  "license": "ISC",
+  "devDependencies": {
+    "asap-js": "^0.5.2",
+    "babel": "^6.23.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-eslint": "latest",
+    "dat-gui": "latest",
+    "editorconfig": "latest",
+    "file-loader": "^1.1.6",
+    "gl-matrix": "latest",
+    "img-loader": "^2.0.1",
+    "import-glob-loader": "^1.1.0",
+    "three": "latest",
+    "url-loader": "latest",
+    "webpack": "^3.10.0",
+    "webpack-glsl-loader": "^1.0.1"
+  }
+}
