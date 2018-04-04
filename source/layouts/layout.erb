@@ -13,7 +13,10 @@
   <body>
 
     <%= partial "partials/bg" %>
-    <%= yield %>
-    
+
+    <main class="main center-y <%= current_page.data.class_name %>">
+      <%= yield %>
+    </main>
+  
   </body>
 </html>
