@@ -2,8 +2,8 @@
 
 // Variables
 
-$col: 12
-$step: 6
+$col: 6
+$step: 5
 $space: 15px
 $main-breakpoint: 1080px
 $breakpoints: ( xl: 1360px, l: 1080px, m: 920px, s: 768px, xs: 360px )
@@ -31,30 +31,31 @@ $properties: ( margin: m, padding: p )
 
 // Columns
 
-@for $i from 1 to $col
-  @for $j from 1 to $col
-    $w: $i/$j*100%
-    .col-#{$i}-#{$j} 
-      width: $w
-      float: left
-    .left-#{$i}-#{$j} 
-      margin-left: $w
-    .right-#{$i}-#{$j} 
-      margin-right: $w
+@for $i from 1 to $col + 1
+  @for $j from 1 to $col + 1
+    @if ( $i <= $j )
+      $w: $i/$j*100%
+      .col-#{$i}-#{$j} 
+        width: $w
+        float: left
+      .left-#{$i}-#{$j} 
+        margin-left: $w
+      .right-#{$i}-#{$j} 
+        margin-right: $w
 
-    @each $breakpoint, $value in $breakpoints
-      @media screen and (min-width: #{$value})
-        .col-#{$breakpoint}-#{$i}-#{$j}
-          width: $w
-          float: left
-        .left-#{$breakpoint}-#{$i}-#{$j} 
-          margin-left: $w
-        .right-#{$breakpoint}-#{$i}-#{$j} 
-          margin-right: $w
+      @each $breakpoint, $value in $breakpoints
+        @media screen and (min-width: #{$value})
+          .col-#{$breakpoint}-#{$i}-#{$j}
+            width: $w
+            float: left
+          .left-#{$breakpoint}-#{$i}-#{$j} 
+            margin-left: $w
+          .right-#{$breakpoint}-#{$i}-#{$j} 
+            margin-right: $w
 
 // Margin, padding
 
-@for $i from 1 to $step
+@for $i from 1 to $step + 1
   @each $property, $short_p in $properties
     $value: $space*$i
     .#{$short_p}-#{$i}
