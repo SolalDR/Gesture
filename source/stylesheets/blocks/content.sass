@@ -1,0 +1,21 @@
+@mixin contentSpecial($y,$x)
+  position: fixed
+  #{$y}: #{$gutter}
+  #{$x}: #{$gutter}
+  
+.content
+
+  &--top-left
+    @include contentSpecial(top, left)
+  
+  &--top-right
+    @include contentSpecial(top, right)
+  
+  &--bottom-left
+    @include contentSpecial(bottom, left)
+  
+  &--bottom-right
+    @include contentSpecial(bottom, right)
+
+  p
+    margin: 5px
