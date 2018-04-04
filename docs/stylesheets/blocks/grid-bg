@@ -1,0 +1,37 @@
+.grid-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw; }
+  .grid-bg__line {
+    fill: none;
+    stroke: #DDD;
+    stroke-miterlimit: 10;
+    transition-duration: 1s;
+    transition-timing-function: ease-in-out; }
+    .grid-bg__line:nth-child(1) {
+      transform: translateX(16.66667%);
+      transition-delay: 0.1s; }
+    .grid-bg__line--hide:nth-child(1) {
+      transform: translateX(16.66667%) translateY(1024px); }
+    .grid-bg__line:nth-child(2) {
+      transform: translateX(33.33333%);
+      transition-delay: 0.2s; }
+    .grid-bg__line--hide:nth-child(2) {
+      transform: translateX(33.33333%) translateY(-1024px); }
+    .grid-bg__line:nth-child(3) {
+      transform: translateX(50%);
+      transition-delay: 0.3s; }
+    .grid-bg__line--hide:nth-child(3) {
+      transform: translateX(50%) translateY(1024px); }
+    .grid-bg__line:nth-child(4) {
+      transform: translateX(66.66667%);
+      transition-delay: 0.4s; }
+    .grid-bg__line--hide:nth-child(4) {
+      transform: translateX(66.66667%) translateY(-1024px); }
+    .grid-bg__line:nth-child(5) {
+      transform: translateX(83.33333%);
+      transition-delay: 0.5s; }
+    .grid-bg__line--hide:nth-child(5) {
+      transform: translateX(83.33333%) translateY(1024px); }
