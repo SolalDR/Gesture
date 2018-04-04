@@ -29,7 +29,13 @@ class Scene {
     window.addEventListener("resize", () => {
       this.computeSize();
     })
-    this.addMorphPlane("/images/backgrounds/bg_article.jpg");
+    var noise = new Image()
+    noise.src = "/images/noise_3d.jpg";
+
+    noise.onload = ()=>{
+      this.noise = this.regl.texture(noise)
+      this.addMorphPlane("/images/backgrounds/bg_article.jpg");
+    }
   }
 
   computeSize(){
@@ -40,6 +46,11 @@ class Scene {
 
   addMorphPlane(src){
     var image = new Image()
+    var config = {
+      speed: [0.0111, 0.0125, 0.0142],
+      spreadSpeed: [0.333, 0.05, 0.025],
+      spread: [0.2, 0.1, 0.14]
+    }
     image.src = src
     image.onload = () => {
       var imageTexture = this.regl.texture(image)
@@ -63,8 +74,12 @@ class Scene {
           }
         },
         uniforms: {
+          speed: () => { return config.speed },
+          spread: () => { return config.spread },
+          spreadSpeed: () => { return config.spreadSpeed },
           time: () => { return this.clock.elapsedTime },
           texture: imageTexture,
+          noise: this.noise,
           boundaries: () => { return [window.innerWidth, window.innerHeight] } ,
         },
         count: 6
