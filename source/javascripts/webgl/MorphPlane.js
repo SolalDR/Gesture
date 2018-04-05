@@ -7,32 +7,47 @@ class MorphPlane {
   /**
    * Register attributes & launch initialization
    * @constructor
+   * @prop {THREE.Clock} clock : THREE.js timer
+   * @prop {DatGui} gui : Dat.GUI Controller
+   * @prop {Function} regl : REGL Constructor
+   * @prop {Array} textures : List of all textures loaded
+   * @prop {Array} presets : List of presets 
+   * @prop {REGL.Texture} noise : Noise texture 
+   * @prop {Object} preset : Current preset 
+   * @prop {Object} animation : Used to create animation between two preset
    */
   constructor(args) {    
     this.clock = args.clock; 
-    this.gui = args.gui;
     this.regl = args.regl;
-    this.src = args.src;  
-    this.init();  
-    window.plane = this; 
+    this.textures = [];
+    this.presets = [];
+
+    this.noise = null; 
+    this.texture = null;
+    this.preset = null;
+    this.animation = null;
+
+    this.init(args.src);
+    this.initGui(args.gui);
   }
 
   /**
    * First initialization
    */
-  init() {
+  init(src) {
     this.registerPreset();
     this.loadPreset("hide");    
-    this.initGui();
 
     // Load noise
-    var noise = new Image()
+    var noise = new Image();
     noise.src = document.location.href+"./../images/noise_3d.jpg";
+    
     noise.onload = ()=>{
       this.noise = this.regl.texture(noise);
       // Load first background
-      this.load(this.src, ()=>{
-        // On load appear bg
+      this.load(src, "homepage", (texture)=>{
+        this.texture = texture;
+        this.registerCommand();
         setTimeout(()=>{
           this.loadPreset("default", 4);
         }, 1000)
@@ -41,17 +56,32 @@ class MorphPlane {
   }
 
   /**
-   * Load an image asynchronously and update
-   * @param {String} src 
+   * Load an image asynchronously and add it to the textures
+   * @param {String} src : Image path
+   * @param {String} name : Name (used as id)
+   * @param {Function} callback : function executed when image is ready 
    */
-  load(src, callback ) {
-    var image = new Image()
-    image.src = src
-    image.onload = () => {
-      this.texture = this.regl.texture(image)
-      this.registerCommand();
-      callback.call(this);
+  load(src, name, callback ) {
+
+    // If a texture with this name already exist
+    if( this.textures[name] ) {
+      callback.call(this, this.textures[name]);
+      return; 
     }
+
+    // Else 
+    var image = new Image();
+    image.src = src;
+    image.onload = () => {
+      // Set texture from image and save it
+      var texture = this.regl.texture(image); 
+      this.textures.push({
+        name: name,
+        texture: texture
+      })
+      callback.call(this, texture);
+    }
+
   }
 
   /**
@@ -72,7 +102,7 @@ class MorphPlane {
       },
 
       // Background transparent
-      blend: { enable: true, func: { src: 'src alpha', dst: 'one minus src alpha' }},
+      //blend: { enable: true, func: { src: 'src alpha', dst: 'one minus src alpha' }},
       
       // Params
       uniforms: {
@@ -83,7 +113,6 @@ class MorphPlane {
         time: () => { return this.clock.elapsedTime },
         texture: this.texture,
         noise: this.noise,
-        
         boundaries: () => { return [window.innerWidth, window.innerHeight] },
       },
 
@@ -94,9 +123,10 @@ class MorphPlane {
 
   /**
    * Setup GUI controller
+   * @param {Dat.GUI} gui
    */
-  initGui(){
-    var folder = this.gui.addFolder('Fragment');
+  initGui(gui){
+    var folder = gui.addFolder('Fragment');
     folder.add(this.preset.speed, 0).name("Speed Red")
     folder.add(this.preset.speed, 1).name("Speed Green")
     folder.add(this.preset.speed, 2).name("Speed Blue")
@@ -147,13 +177,18 @@ class MorphPlane {
     }
   }
 
-  loadPreset(name, duration, callback) {
+  /**
+   * Load a preset, set an animation if needed
+   * @param {String} name 
+   * @param {Float} duration 
+   * @param {Function} callback 
+   */
+  loadPreset(name, duration = null, callback = null) {
     
     if( !this.presets[name] ) {
       console.warn(`Preset "${name}" don't exist.`); 
       return; 
     }
-    
 
     if( duration ){
       this.animation = {
