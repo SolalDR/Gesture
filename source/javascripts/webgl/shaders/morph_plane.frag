@@ -11,8 +11,7 @@ uniform vec3 spread;
 uniform float opacity;
 
 void main(){
-  vec2 uv = gl_FragCoord.xy / boundaries;
-  //vec4 color = texture2D(texture, uv);
+  vec2 uv = vec2(gl_FragCoord.x / boundaries.x, -gl_FragCoord.y / boundaries.y + 1.);
   
   vec4 noiseR = texture2D(noise, vec2(uv.x*spreadSpeed.x, mod(uv.y*spreadSpeed.z + time*speed.x, 1.))) - 0.5;
   vec4 noiseG = texture2D(noise, vec2(uv.x*spreadSpeed.y, mod(uv.y*spreadSpeed.y + time*speed.y, 1.))) - 0.5;

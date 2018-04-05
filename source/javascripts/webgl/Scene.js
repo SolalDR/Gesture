@@ -12,15 +12,15 @@ class Scene {
     this.clock.start();
     this.gui = new Dat.GUI();
     this.canvas = document.querySelector("#canvas");
-    this.onResize();
 
     this.initRegl();
+    this.initEvents();
 
     this.plane = new MorphPlane({
       gui: this.gui, 
       clock: this.clock,
       regl: this.regl, 
-      src: document.location.href+"./../images/backgrounds/bg_article.jpg"
+      src: document.location.href+"./../images/backgrounds/bg_hompage.jpg"
     })
   }
 
@@ -28,6 +28,7 @@ class Scene {
    * Register window events
    */
   initEvents() {
+    this.onResize();
     window.addEventListener("resize", this.onResize.bind(this));
     window.addEventListener("mousemove", this.onMouseMove.bind(this));
   }
@@ -54,6 +55,7 @@ class Scene {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.ratio = 1/(this.canvas.width/this.canvas.height);	
+    if(this.plane) this.plane.registerCommand();
   }
 
   /**
