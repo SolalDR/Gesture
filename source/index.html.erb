@@ -1,11 +1,11 @@
 ---
 title: Accueil
-class_name: block-accueil 
+class_name: home
 ---
 
-<div class="accueil">
+<div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
 
-  <div class="content content--bottom-right t-right">
+  <div class="content content--hide content--bottom-right t-right">
     <p class="w-bold ">Réalisé par :</p>
     <p class="fs-s">
       Solal Dussout-Revel<br>
@@ -20,12 +20,12 @@ class_name: block-accueil
     <span class="title__crop title__crop--hide title__crop--push">gesture</span>   
   </h1>
 
-  <div class="content col-s-1-4 left-s-1-6 mt-4">
+  <div class="content content--hide col-s-1-4 left-s-1-6 mt-4">
     <p>Projet de veille technologique sur une période allant du 2 Octobre 2017 à Avril 2018. Réalisé dans le cadre de notre formation Bachelor "Designer et Développeur Interactif" à Gobelins. Sujet traité : le contrôle gestuelle</p>
   </div>
 
   <div class="center-x col-1-1 mt-5">
-    <%= link_to "voir la timeline", "/timeline.html", class: "btn" %>
+    <%= link_to "voir la timeline", "/timeline.html", class: "btn btn--hide" %>
   </div>
 
 </div>

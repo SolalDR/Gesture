@@ -19,22 +19,27 @@ class MorphPlane {
   constructor(args) {    
     this.clock = args.clock; 
     this.regl = args.regl;
-    this.textures = [];
+    this.textures = {};
     this.presets = [];
+    this.scene = args.scene;
 
     this.noise = null; 
     this.texture = null;
     this.preset = null;
     this.animation = null;
-
-    this.init(args.src);
+    
+    this.init(args.page);
     this.initGui(args.gui);
+  }
+
+  getUrl(pageName) {
+    return document.location.href+"./../images/backgrounds/bg_"+pageName+".jpg";
   }
 
   /**
    * First initialization
    */
-  init(src) {
+  init(page) {
     this.registerPreset();
     this.loadPreset("hide");    
 
@@ -45,14 +50,16 @@ class MorphPlane {
     noise.onload = ()=>{
       this.noise = this.regl.texture(noise);
       // Load first background
-      this.load(src, "homepage", (texture)=>{
-        this.texture = texture;
-        this.registerCommand();
-        setTimeout(()=>{
-          this.loadPreset("default", 4);
-        }, 1000)
+      this.load(page, (texture)=>{
+        this.select(page);
+        this.scene.onload.call(this.scene)
       });
     }
+  }
+
+  select(page){
+    this.texture = this.textures[page] ? this.textures[page] : this.textures["home"];
+    this.registerCommand();
   }
 
   /**
@@ -61,25 +68,22 @@ class MorphPlane {
    * @param {String} name : Name (used as id)
    * @param {Function} callback : function executed when image is ready 
    */
-  load(src, name, callback ) {
+  load(name, callback ) {
 
     // If a texture with this name already exist
     if( this.textures[name] ) {
-      callback.call(this, this.textures[name]);
+      if( callback ) callback.call(this, this.textures[name]);
       return; 
     }
 
     // Else 
     var image = new Image();
-    image.src = src;
+    image.src = this.getUrl(name);
     image.onload = () => {
       // Set texture from image and save it
       var texture = this.regl.texture(image); 
-      this.textures.push({
-        name: name,
-        texture: texture
-      })
-      callback.call(this, texture);
+      this.textures[name] = texture
+      if(callback) callback.call(this, texture);
     }
 
   }
@@ -190,10 +194,14 @@ class MorphPlane {
       return; 
     }
 
+    var p = this.presets[name]; 
+    var preset =  p[0] ? p[Math.floor(p.length*Math.random())] : p;
+    console.log(preset);
     if( duration ){
+
       this.animation = {
         from: JSON.parse(JSON.stringify(this.preset)),
-        to: JSON.parse(JSON.stringify(this.presets[name])),
+        to: JSON.parse(JSON.stringify(preset)),
         active: true,
         advancement: 0,
         start: this.clock.elapsedTime,
@@ -201,8 +209,9 @@ class MorphPlane {
         duration: duration,
         callback: callback ? callback : null
       };
+      
     } else {
-      this.preset = JSON.parse(JSON.stringify(this.presets[name]))
+      this.preset = JSON.parse(JSON.stringify(preset))
     }
 
     return this.preset; 
@@ -228,12 +237,26 @@ class MorphPlane {
         opacity: 1
       },
       // Huge spread & Opacity
-      "hide": {
-        speed: [0.0111, 0.0125, 0.0142],
-        spreadSpeed: [0.5, 0.5, 0.5],
-        spread: [2.4, 2.4, 2.4],
-        opacity: 0
-      }
+      "hide": [
+        {
+          speed: [0.0111, 0.0125, 0.0142],
+          spreadSpeed: [0.5, 0.5, 0.5],
+          spread: [2.4, 2.4, 2.4],
+          opacity: 0
+        },
+        {
+          speed: [0.0142, 0.0111, 0.0125],
+          spreadSpeed: [0.4, 0.6, 0.4],
+          spread: [-2.4, 2.4, -2.4],
+          opacity: 0
+        },
+        {
+          speed: [0.0125, 0.0142, 0.0111],
+          spreadSpeed: [0.5, 0.4, 0.6],
+          spread: [2.4, -2.4, -2.4],
+          opacity: 0
+        }
+      ]
     } 
   }
 }

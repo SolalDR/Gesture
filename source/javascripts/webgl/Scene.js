@@ -3,24 +3,26 @@ import MorphPlane from "./MorphPlane.js";
 import Dat from "dat-gui";
 
 class Scene {
-  
+
   /**
    * @constructor
    */
-  constructor(){
+  constructor(args){
     this.clock = new THREE.Clock();
     this.clock.start();
     this.gui = new Dat.GUI();
     this.canvas = document.querySelector("#canvas");
+    this.onload = args.onload; 
 
     this.initRegl();
     this.initEvents();
 
     this.plane = new MorphPlane({
+      scene: this,
       gui: this.gui, 
       clock: this.clock,
       regl: this.regl, 
-      src: document.location.href+"./../images/backgrounds/bg_hompage.jpg"
+      page: args.page
     })
   }
 
