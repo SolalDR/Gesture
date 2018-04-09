@@ -4,5 +4,39 @@ class_name: timeline
 ---
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
+  <h1 class="title col-s-1-2 left-s-1-6">
+    <span class="title__crop title__crop--hide">Timeline</span>
+  </h1>
+
+  <div class="timeline timeline--hide col-s-1-2 left-s-1-4 mt-4">
+    <%= svg "timeline" %>
+    <div id="timeline__data" class="timeline__data">
+    [
+      {
+        "name": "Test",
+        "date": "2017-10-01",
+        "slug": "test1"
+      },
+      {
+        "name": "Test",
+        "date": "2017-12-04",
+        "slug": "test2"
+      },
+      {
+        "name": "Test",
+        "date": "2017-11-30",
+        "slug": "test3"
+      },
+      {
+        "name": "Test",
+        "date": "2018-03-20",
+        "slug": "test4"
+      }
+    ]
+    </div>
+    <div class="timeline__bubbles"></div> 
+  </div>
+
+
 
 </div>

@@ -24,13 +24,4 @@ void main(){
   vec3 color = vec3(imageR.x, imageG.y, imageB.z);// + noise.xyz;
 
   gl_FragColor = vec4(color.xyz, opacity);
-
-  // ----- OPACITY TEST -------
-  // float sum  = color.x + color.y + color.z;
-  // if( sum > 2.98 ) {
-  //   gl_FragColor = vec4(color.xyz, max(0., .95 - (sum / 3.))*opacity);
-  // } else {
-  //   gl_FragColor = vec4(color.xyz, .95*opacity);
-  // }
-  
 }

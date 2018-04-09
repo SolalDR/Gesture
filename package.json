@@ -9,6 +9,7 @@
   "author": "SolalDR",
   "license": "ISC",
   "devDependencies": {
+    "svg-path-properties": "latest",
     "asap-js": "^0.5.2",
     "babel": "^6.23.0",
     "babel-loader": "^7.1.2",

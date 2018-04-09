@@ -3,6 +3,7 @@ import Scene from "./webgl/Scene.js"
 import GridBg from "./components/GridBg.js"
 import Title from "./components/Title.js"
 import Content from "./components/Content.js"
+import Timeline from "./components/Timeline.js"
 import Button from "./components/Button.js"
 import Asap from "asap-js"
 
@@ -30,6 +31,10 @@ class App {
     this.main = document.querySelector("main.main");
     this.title = new Title(this.main.querySelector(".title"));
    
+    if( this.currentPage == "timeline" ){
+      this.timeline = new Timeline(this.main.querySelector(".timeline"));
+    }
+
     this.contents = [];
     var contentsEl = document.querySelectorAll(".content");
     contentsEl.forEach(el => this.contents.push(new Content(el)));
@@ -62,6 +67,11 @@ class App {
       this.buttons.forEach((btn, i) => btn.display({
         delay: i*400 + 500
       }));
+      if( this.timeline ){
+        this.timeline.display({
+          delay: 2000
+        });
+      }
     }, timeout)
   }
 
@@ -74,6 +84,9 @@ class App {
     this.buttons.forEach((btn, i) => btn.hide({
       delay: i*400 + 500
     }));
+    if( this.timeline ){
+      this.timeline.hide();
+    }
   }
 
 

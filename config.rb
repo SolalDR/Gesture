@@ -54,3 +54,13 @@ configure :build do
   activate :minify_css
   activate :relative_assets
 end
+
+
+helpers do
+  def svg(name)
+    root = Middleman::Application.root
+    file_path = "#{root}/source/images/svg/#{name}.svg"
+    return File.read(file_path) if File.exists?(file_path)
+    '(not found)'
+  end
+end
