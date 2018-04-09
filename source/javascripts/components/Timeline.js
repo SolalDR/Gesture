@@ -18,6 +18,7 @@ class Timeline {
     this.path; 
     this.pathProperties;
     this.bubblesContainer = this.el.querySelector(".timeline__bubbles");
+    this.selectedItem;
     this.config = {
       dateStart: new Date("2017-09-01"),
       duration: new Date("2017-09-01").getTime() - new Date("2018-04-01").getTime()
@@ -64,6 +65,17 @@ class Timeline {
       x: coord.x/this.svg.viewBox.baseVal.width,
       y: coord.y/this.svg.viewBox.baseVal.height
     }
+  }
+
+  select(item) {
+    if( this.selectedItem && this.selectedItem != item ) this.unselect();
+    this.selectedItem = item;
+    this.selectedItem.display();
+  }
+
+  unselect() {
+    this.selectedItem.hide();
+    this.selectedItem = null;
   }
 
   /**

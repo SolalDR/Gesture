@@ -30,7 +30,7 @@ class App {
   initElements() {
     this.main = document.querySelector("main.main");
     this.title = new Title(this.main.querySelector(".title"));
-   
+    
     if( this.currentPage == "timeline" ){
       this.timeline = new Timeline(this.main.querySelector(".timeline"));
     }
@@ -112,7 +112,6 @@ class App {
     this.gridBg = GridBg.init();
     document.addEventListener("asap:before-load", this.beforeLoad.bind(this));
     document.addEventListener("asap:load", this.load.bind(this));
-    
     this.scene = new Scene({
       page: this.currentPage,
       onload: () => {
@@ -126,6 +125,8 @@ class App {
 
 window.addEventListener("load", function(){
   window.app = new App();
+
+
   Asap.start({
     sourceSelector: ".main",
    	targetSelector: ".main"

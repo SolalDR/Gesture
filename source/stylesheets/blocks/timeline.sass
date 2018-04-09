@@ -34,10 +34,16 @@
   &__bubble 
     position: absolute
     display: inline-block
-    transform: translateY(-10px)
+    transform: translateY(-10px) rotateX(0deg)
+    transition: .5s ease
     padding-left: 15px
     text-decoration: none
     min-width: 150px
+    opacity: 1
+    &--hide
+      transform: translateY(-10px) rotateX(90deg)
+      opacity: 0
+
     &-title
       color: black
       font-size: 1.5em

@@ -8,6 +8,7 @@ class Scene {
    * @constructor
    */
   constructor(args){
+    
     this.clock = new THREE.Clock();
     this.clock.start();
     this.gui = new Dat.GUI();
