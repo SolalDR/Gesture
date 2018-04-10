@@ -1,16 +1,19 @@
 - name: Test
-  slug: test-1
+  slug: test
   content: Content
   date: 2017-10-20
+
 - name: Test
-  slug: test-2
+  slug: test
   content: Content
   date: 2017-12-04
+
 - name: Test
-  slug: test-3
+  slug: test
   content: Content
   date: 2018-01-01
+
 - name: Test
-  slug: test-4
+  slug: test
   content: Content
   date: 2018-02-10
