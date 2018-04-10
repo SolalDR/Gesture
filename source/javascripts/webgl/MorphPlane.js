@@ -22,17 +22,30 @@ class MorphPlane {
     this.presets = [];
     this.scene = args.scene;
 
-    this.noise = null;
+    this.page = args.page;
+    this.mouse = [0, 0]; 
+    
+    this.noise = null; 
     this.texture = null;
     this.preset = null;
     this.animation = null;
 
     this.init(args.page);
+    this.initEvents();
     this.initGui(args.gui);
   }
 
+  /**
+   * Return boundaries according to current window size & current page
+   * @return {[x, y]} 
+   */
+  get boundaries() {
+    var boundaries = this._boundaries[this.page].call(this);
+    return boundaries ? boundaries : [window.innerWidth, window.innerHeight]
+  }
+
   getUrl(pageName) {
-    return 'images/backgrounds/bg_' + pageName + '.jpg';
+    return '/images/backgrounds/bg_' + pageName + '.jpg';
   }
 
   /**
@@ -40,11 +53,12 @@ class MorphPlane {
    */
   init(page) {
     this.registerPreset();
-    this.loadPreset("hide");
+    this.registerBoundaries();    
+    this.loadPreset("hide");    
 
     // Load noise
     var noise = new Image();
-    noise.src = 'images/noise_3d.jpg';
+    noise.src = '/images/noise_3d.png';
 
     noise.onload = ()=>{
       this.noise = this.regl.texture(noise);
@@ -56,7 +70,12 @@ class MorphPlane {
     }
   }
 
+  /**
+   * Select a page
+   * @param {String} page 
+   */
   select(page){
+    this.page  = page;
     this.texture = this.textures[page] ? this.textures[page] : this.textures["home"];
     this.registerCommand();
   }
@@ -103,9 +122,6 @@ class MorphPlane {
         )
       },
 
-      // Background transparent
-      //blend: { enable: true, func: { src: 'src alpha', dst: 'one minus src alpha' }},
-
       // Params
       uniforms: {
         speed: () => { return this.preset.speed },
@@ -115,7 +131,8 @@ class MorphPlane {
         time: () => { return this.clock.elapsedTime },
         texture: this.texture,
         noise: this.noise,
-        boundaries: () => { return [window.innerWidth, window.innerHeight] },
+        boundaries: () => { return this.boundaries },
+        mouse: () => { return this.mouse }
       },
 
       // Nb of vertices
@@ -150,6 +167,9 @@ class MorphPlane {
     this.renderAnimation();
   }
 
+  /**
+   * Mix between two preset 
+   */
   renderAnimation() {
     function easeInOut (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t }
     function mix(i, o, a){ return (o - i)*a + i; }
@@ -163,17 +183,12 @@ class MorphPlane {
       }
 
       this.animation.advancement = easeInOut(this.animation.advancement);
-
       this.preset.opacity = mix(this.animation.from.opacity, this.animation.to.opacity, this.animation.advancement)
 
-      this.preset.spread[0] = mix(this.animation.from.spread[0], this.animation.to.spread[0], this.animation.advancement)
-      this.preset.spread[1] = mix(this.animation.from.spread[1], this.animation.to.spread[1], this.animation.advancement)
-      this.preset.spread[2] = mix(this.animation.from.spread[2], this.animation.to.spread[2], this.animation.advancement)
-
-      this.preset.spreadSpeed[0] = mix(this.animation.from.spreadSpeed[0], this.animation.to.spreadSpeed[0], this.animation.advancement)
-      this.preset.spreadSpeed[1] = mix(this.animation.from.spreadSpeed[1], this.animation.to.spreadSpeed[1], this.animation.advancement)
-      this.preset.spreadSpeed[2] = mix(this.animation.from.spreadSpeed[2], this.animation.to.spreadSpeed[2], this.animation.advancement)
-
+      for(var i=0; i<3; i++) {
+        this.preset.spread[i] = mix(this.animation.from.spread[i], this.animation.to.spread[i], this.animation.advancement)
+        this.preset.spreadSpeed[i] = mix(this.animation.from.spreadSpeed[i], this.animation.to.spreadSpeed[i], this.animation.advancement)
+      }
     }
   }
 
@@ -212,11 +227,66 @@ class MorphPlane {
     return this.preset;
   }
 
+
+  /**
+   * Event window.onresize
+   */
+  onResize() {
+    var sizes = {sm: 360, md: 768, lg: 960, xl: 1360}
+    for( var i in sizes ){
+      if( window.innerWidth < sizes[i] ) {
+        this.size = i;
+        break; 
+      }
+    }
+  }
+
+  /**
+   * Event window.onmousemove
+   */
+  onMouseMove(e) {
+    this.mouse = [
+      (e.clientX/this.boundaries[0]),
+      (e.clientY/this.boundaries[1])
+    ];
+  }
+
+  /**
+   * Manage events
+   */
+  initEvents() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize.bind(this));
+    window.addEventListener("mousemove", this.onMouseMove.bind(this));
+  }
+
+  /**
+   * Register boundaries
+   */
+  registerBoundaries() {
+    this._boundaries = {
+      "article": ()=> {
+        switch(this.size) {
+          case "sm" : return [window.innerWidth, window.innerHeight]; break;
+          default : return [window.innerWidth/2, window.innerHeight]
+        }
+      },
+      "home" : () => { return [window.innerWidth, window.innerHeight] },
+      "timeline": () => { return [window.innerWidth, window.innerHeight] }
+    }
+  }
+
   /**
    * A list of pattern
    */
   registerPreset() {
     this.presets = {
+      "fire": {
+        speed: [0.0111, 0.5, 0.0142],
+        spreadSpeed: [0.333, 0.05, 0.025],
+        spread: [0.2, 1.9, 0.14],
+        opacity: 1
+      },
       // Classic
       "default":  {
         speed: [0.0111, 0.0125, 0.0142],

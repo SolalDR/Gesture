@@ -22,7 +22,6 @@ class Timeline {
       dateStart: new Date("2017-09-01"),
       duration: new Date("2017-09-01").getTime() - new Date("2018-04-01").getTime()
     }
-
     this.initSvg();
     this.initItems();
   }

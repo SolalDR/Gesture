@@ -17,7 +17,7 @@ set :build_dir, 'docs'
 
 activate :directory_indexes
 data.articles.each do |article|
-  proxy "/timeline/#{article.slug}.html", '/article.html', locals: { article: article }, ignore: true, layout: 'layout'
+  proxy "/timeline/#{article.slug}/", '/article.html', locals: { article: article }, ignore: true, layout: 'layout'
 end
 
 activate :external_pipeline,
