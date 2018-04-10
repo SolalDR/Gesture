@@ -1,11 +1,14 @@
 // This is where it all goes :)
+import Asap from "asap-js"
+window.Asap = Asap;
+
 import Scene from "./webgl/Scene.js"
 import GridBg from "./components/GridBg.js"
 import Title from "./components/Title.js"
 import Content from "./components/Content.js"
 import Timeline from "./components/Timeline.js"
 import Button from "./components/Button.js"
-import Asap from "asap-js"
+
 
 class App {
 
@@ -124,11 +127,11 @@ class App {
 
 
 window.addEventListener("load", function(){
-  window.app = new App();
-
-
   Asap.start({
     sourceSelector: ".main",
    	targetSelector: ".main"
   });
+
+  window.app = new App();
+
 })

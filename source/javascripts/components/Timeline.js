@@ -42,7 +42,8 @@ class Timeline {
    */
   initItems() {
     var datas = JSON.parse(this.el.querySelector(".timeline__data").innerHTML);
-    datas.forEach(d => this.items.push(new TimelineItem(d, this))) 
+    datas.forEach(d => this.items.push(new TimelineItem(d, this)));
+    window.Asap.addLinks(document.querySelector(".timeline__bubbles"));
   }
 
 
