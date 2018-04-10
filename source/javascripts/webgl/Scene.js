@@ -3,26 +3,25 @@ import MorphPlane from "./MorphPlane.js";
 import Dat from "dat-gui";
 
 class Scene {
-
   /**
    * @constructor
    */
   constructor(args){
-    
+
     this.clock = new THREE.Clock();
     this.clock.start();
     this.gui = new Dat.GUI();
     this.canvas = document.querySelector("#canvas");
-    this.onload = args.onload; 
+    this.onload = args.onload;
 
     this.initRegl();
     this.initEvents();
 
     this.plane = new MorphPlane({
       scene: this,
-      gui: this.gui, 
+      gui: this.gui,
       clock: this.clock,
-      regl: this.regl, 
+      regl: this.regl,
       page: args.page
     })
   }
@@ -41,13 +40,13 @@ class Scene {
    */
   initRegl() {
     this.regl = REGL({
-		  canvas: this.canvas, 
+		  canvas: this.canvas,
 		  pixelRatio: window.innerHeight/window.innerHeight
     });
 
     this.regl._gl.disable(this.regl._gl.BLEND);
     this.regl._gl.enable(this.regl._gl.DEPTH_TEST);
-  
+
     this.regl.frame(this.render.bind(this));
   }
 
@@ -57,7 +56,7 @@ class Scene {
   onResize(){
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-    this.ratio = 1/(this.canvas.width/this.canvas.height);	
+    this.ratio = 1/(this.canvas.width/this.canvas.height);
     if(this.plane) this.plane.registerCommand();
   }
 
@@ -76,12 +75,11 @@ class Scene {
       depth: 1
     })
 
-    // Update clock 
-    this.clock.getElapsedTime(); 
-  
-    this.plane.render(); 
+    // Update clock
+    this.clock.getElapsedTime();
+
+    this.plane.render();
   }
-  
 }
 
 export default Scene;

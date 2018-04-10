@@ -8,7 +8,6 @@ import Button from "./components/Button.js"
 import Asap from "asap-js"
 
 class App {
-
   /**
    * List of available pages
    */
@@ -30,7 +29,7 @@ class App {
   initElements() {
     this.main = document.querySelector("main.main");
     this.title = new Title(this.main.querySelector(".title"));
-    
+
     if( this.currentPage == "timeline" ){
       this.timeline = new Timeline(this.main.querySelector(".timeline"));
     }
@@ -54,7 +53,7 @@ class App {
   }
 
   /**
-   * Display all the HTML elements 
+   * Display all the HTML elements
    */
   displayElements(timeout = 0) {
     this.gridBg.show();
@@ -97,15 +96,14 @@ class App {
   }
 
   beforeLoad(e) {
-   
+
     e.preventDefault();
     this.hideElements();
 
     setTimeout(function(){
       e.detail.load();
-    }, 2500) 
+    }, 2500)
   }
-
 
   constructor(){
     this.initElements();
@@ -122,10 +120,8 @@ class App {
   }
 }
 
-
 window.addEventListener("load", function(){
   window.app = new App();
-
 
   Asap.start({
     sourceSelector: ".main",

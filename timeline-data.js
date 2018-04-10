@@ -8,9 +8,9 @@ var process = "M7.2,320.6C7.2,144.6,155.7,2,338.9,2,485.4,2,604.2,116.1,604.2,25
 
 var point = require('point-at-length');
 var pts = point(process.argv.slice(2).join(' '));
- 
+
 var len = pts.length();
- 
+
 for (var i = 0; i <= 10; i++) {
-    console.log(i / 10, pts.at(i / 10 * len));
+  console.log(i / 10, pts.at(i / 10 * len));
 }

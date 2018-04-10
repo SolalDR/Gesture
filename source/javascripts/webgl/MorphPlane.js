@@ -3,7 +3,6 @@ import vertexShader from "./shaders/morph_plane.vert"
 
 
 class MorphPlane {
-
   /**
    * Register attributes & launch initialization
    * @constructor
@@ -11,23 +10,23 @@ class MorphPlane {
    * @prop {DatGui} gui : Dat.GUI Controller
    * @prop {Function} regl : REGL Constructor
    * @prop {Array} textures : List of all textures loaded
-   * @prop {Array} presets : List of presets 
-   * @prop {REGL.Texture} noise : Noise texture 
-   * @prop {Object} preset : Current preset 
+   * @prop {Array} presets : List of presets
+   * @prop {REGL.Texture} noise : Noise texture
+   * @prop {Object} preset : Current preset
    * @prop {Object} animation : Used to create animation between two preset
    */
-  constructor(args) {    
-    this.clock = args.clock; 
+  constructor(args) {
+    this.clock = args.clock;
     this.regl = args.regl;
     this.textures = {};
     this.presets = [];
     this.scene = args.scene;
 
-    this.noise = null; 
+    this.noise = null;
     this.texture = null;
     this.preset = null;
     this.animation = null;
-    
+
     this.init(args.page);
     this.initGui(args.gui);
   }
@@ -41,12 +40,12 @@ class MorphPlane {
    */
   init(page) {
     this.registerPreset();
-    this.loadPreset("hide");    
+    this.loadPreset("hide");
 
     // Load noise
     var noise = new Image();
     noise.src = "/images/noise_3d.jpg";
-    
+
     noise.onload = ()=>{
       this.noise = this.regl.texture(noise);
       // Load first background
@@ -66,22 +65,21 @@ class MorphPlane {
    * Load an image asynchronously and add it to the textures
    * @param {String} src : Image path
    * @param {String} name : Name (used as id)
-   * @param {Function} callback : function executed when image is ready 
+   * @param {Function} callback : function executed when image is ready
    */
   load(name, callback ) {
-
     // If a texture with this name already exist
     if( this.textures[name] ) {
       if( callback ) callback.call(this, this.textures[name]);
-      return; 
+      return;
     }
 
-    // Else 
+    // Else
     var image = new Image();
     image.src = this.getUrl(name);
     image.onload = () => {
       // Set texture from image and save it
-      var texture = this.regl.texture(image); 
+      var texture = this.regl.texture(image);
       this.textures[name] = texture
       if(callback) callback.call(this, texture);
     }
@@ -93,12 +91,12 @@ class MorphPlane {
    */
   registerCommand() {
     this.plane = this.regl({
-      
+
       // Shaders
-      frag: fragmentShader, 
+      frag: fragmentShader,
       vert: vertexShader,
 
-      // Simple plane 
+      // Simple plane
       attributes: {
         position: this.regl.buffer(
           [[-1, -1], [1, -1], [-1,  1], [1,  -1], [-1,  1], [1,  1]]
@@ -107,7 +105,7 @@ class MorphPlane {
 
       // Background transparent
       //blend: { enable: true, func: { src: 'src alpha', dst: 'one minus src alpha' }},
-      
+
       // Params
       uniforms: {
         speed: () => { return this.preset.speed },
@@ -152,49 +150,46 @@ class MorphPlane {
     this.renderAnimation();
   }
 
-
-
   renderAnimation() {
     function easeInOut (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t }
     function mix(i, o, a){ return (o - i)*a + i; }
 
     if(this.animation && this.animation.active) {
       this.animation.advancement =(this.clock.elapsedTime - this.animation.start) / this.animation.duration
-      
+
       if( this.animation.advancement >= 1 ){
-        this.animation.active = false; 
-        this.animation.advancement = 1; 
+        this.animation.active = false;
+        this.animation.advancement = 1;
       }
 
       this.animation.advancement = easeInOut(this.animation.advancement);
 
       this.preset.opacity = mix(this.animation.from.opacity, this.animation.to.opacity, this.animation.advancement)
-    
+
       this.preset.spread[0] = mix(this.animation.from.spread[0], this.animation.to.spread[0], this.animation.advancement)
       this.preset.spread[1] = mix(this.animation.from.spread[1], this.animation.to.spread[1], this.animation.advancement)
       this.preset.spread[2] = mix(this.animation.from.spread[2], this.animation.to.spread[2], this.animation.advancement)
-      
+
       this.preset.spreadSpeed[0] = mix(this.animation.from.spreadSpeed[0], this.animation.to.spreadSpeed[0], this.animation.advancement)
       this.preset.spreadSpeed[1] = mix(this.animation.from.spreadSpeed[1], this.animation.to.spreadSpeed[1], this.animation.advancement)
       this.preset.spreadSpeed[2] = mix(this.animation.from.spreadSpeed[2], this.animation.to.spreadSpeed[2], this.animation.advancement)
-      
+
     }
   }
 
   /**
    * Load a preset, set an animation if needed
-   * @param {String} name 
-   * @param {Float} duration 
-   * @param {Function} callback 
+   * @param {String} name
+   * @param {Float} duration
+   * @param {Function} callback
    */
   loadPreset(name, duration = null, callback = null) {
-    
     if( !this.presets[name] ) {
-      console.warn(`Preset "${name}" don't exist.`); 
-      return; 
+      console.warn(`Preset "${name}" don't exist.`);
+      return;
     }
 
-    var p = this.presets[name]; 
+    var p = this.presets[name];
     var preset =  p[0] ? p[Math.floor(p.length*Math.random())] : p;
     console.log(preset);
     if( duration ){
@@ -209,12 +204,12 @@ class MorphPlane {
         duration: duration,
         callback: callback ? callback : null
       };
-      
+
     } else {
       this.preset = JSON.parse(JSON.stringify(preset))
     }
 
-    return this.preset; 
+    return this.preset;
   }
 
   /**
@@ -229,7 +224,7 @@ class MorphPlane {
         spread: [0.2, 0.1, 0.14],
         opacity: 1
       },
-      // Speed & Spread 
+      // Speed & Spread
       "dancing": {
         speed: [0.1, 0.11, 0.12],
         spreadSpeed: [0.12, 0.12, 0.12],
@@ -257,7 +252,7 @@ class MorphPlane {
           opacity: 0
         }
       ]
-    } 
+    }
   }
 }
 

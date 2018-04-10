@@ -1,7 +1,6 @@
 export default {
-
   hide: function(){
-    if( !this.display ) return; 
+    if( !this.display ) return;
     this.lines.forEach((line)=>{
       line.classList.add("grid-bg__line--hide");
     })
@@ -9,7 +8,7 @@ export default {
   },
 
   show: function(){
-    if( this.display ) return; 
+    if( this.display ) return;
     this.lines.forEach((line)=>{
       line.classList.remove("grid-bg__line--hide");
     })
@@ -22,5 +21,4 @@ export default {
     this.lines = this.svg.querySelectorAll(".grid-bg__line");
     return this;
   }
-
 }

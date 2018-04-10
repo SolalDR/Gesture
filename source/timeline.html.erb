@@ -1,6 +1,6 @@
 ---
 title: Timeline
-class_name: timeline 
+class_name: timeline
 ---
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
@@ -10,18 +10,11 @@ class_name: timeline
 
   <div class="timeline timeline--hide col-s-1-2 left-s-1-4 mt-4">
     <%= svg "timeline" %>
+
     <div id="timeline__data" class="timeline__data">
-    [<% data.articles.articles.each_with_index do |article, i| %>
-      {
-        "name": "<%= article.name %>",
-        "date": "<%= article.date %>",
-        "slug": "<%= article.slug %>"
-      }<% if (data.articles.articles.length-1 != i) %>,<% end %>
-    <% end %>]
+      <%= data.articles.to_json.html_safe %>
     </div>
-    <div class="timeline__bubbles"></div> 
+
+    <div class="timeline__bubbles"></div>
   </div>
-
-
-
 </div>

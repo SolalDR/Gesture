@@ -16,14 +16,14 @@ page '/*.txt', layout: false
 set :build_dir, 'docs'
 
 activate :directory_indexes
-data.articles.articles.each do |article|
-  proxy "/timeline/#{article.slug}/", "/article.html", :locals => { :current => article }, :ignore => true, :layout => "layout"
+data.articles.each do |article|
+  proxy "/timeline/#{article.slug}.html", '/article.html', locals: { article: article }, ignore: true, layout: 'layout'
 end
 
 activate :external_pipeline,
          name: :webpack,
          command: build? ? './node_modules/webpack/bin/webpack.js --bail' : './node_modules/webpack/bin/webpack.js --watch -d',
-         # command: build? ? 
+         # command: build? ?
          # "./node_modules/webpack/bin/webpack.js --bail -p" :
          # "./node_modules/webpack/bin/webpack.js --watch -d --progress --color",
          source: ".tmp/dist",
@@ -43,7 +43,6 @@ helpers do
   def svg(name)
     root = Middleman::Application.root
     file_path = "#{root}/source/images/svg/#{name}.svg"
-    return File.read(file_path) if File.exists?(file_path)
-    '(not found)'
+    File.exists?(file_path) ? File.read(file_path) : '(not found)'
   end
 end

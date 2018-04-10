@@ -1,10 +1,8 @@
-
-$count: 5           // Number of lines 
+$count: 5 // Number of lines
 $delay: 0.1s
 $duration: 1s
 
 .grid-bg
-
   position: fixed
   top: 0
   left: 0
@@ -13,19 +11,19 @@ $duration: 1s
   z-index: 1
 
   &__line
-    
     fill: none
-    stroke: rgba(0, 0, 0, 0.1)
-    stroke-miterlimit: 10
-    transition-duration: $duration
-    transition-timing-function: ease-in-out
-    
+    stroke: rgba(black, 0.1)
+      miterlimit: 10
+    transition:
+      duration: $duration
+      timing-function: ease-in-out
+
     @for $i from 1 to ($count + 1)
-      $decal: $i*(100%/($count+1))
+      $offset: $i*(100%/($count + 1))
 
       &:nth-child(#{$i})
-        transform: translateX(#{$decal})
+        transform: translateX(#{$offset})
         transition-delay: $i*$delay
 
       &--hide:nth-child(#{$i})
-        transform: translateX(#{$decal}) translateY(#{1024px*($i%2*2-1)})
+        transform: translateX(#{$offset}) translateY(#{1024px*($i%2*2 - 1)})

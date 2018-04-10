@@ -24,7 +24,7 @@ module.exports = {
   },
 
   module: {
-    
+
     loaders: [
       {
         enforce: 'pre',

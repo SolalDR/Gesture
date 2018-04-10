@@ -1,19 +1,15 @@
 ---
-title: current.name
+title: article.name
 class_name: article
 ---
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
   <div class="article__content col-s-1-2 left-s-1-2">
     <h1 class="title">
-      <%= current.name %>
+      <%= article.name %>
     </h1>
     <div class="content content--hide">
-      <%= current.content %>
+      <%= article.content %>
     </div>
   </div>
-  
-
-
-
 </div>

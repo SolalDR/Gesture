@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -46350,169 +46350,240 @@ function LensFlare() {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-module.exports = "precision mediump float;\n\nuniform float time;\nuniform sampler2D texture;\nuniform sampler2D noise;\nuniform vec2 boundaries;\n\nuniform vec3 speed;\nuniform vec3 spreadSpeed;\nuniform vec3 spread;\n\nvoid main(){\n  vec2 uv = gl_FragCoord.xy / boundaries;\n  //vec4 color = texture2D(texture, uv);\n  \n  vec4 noiseR = texture2D(noise, vec2(uv.x*spreadSpeed.x, mod(uv.y*spreadSpeed.x + time*speed.x, 1.)));\n  vec4 noiseG = texture2D(noise, vec2(uv.x*spreadSpeed.y, mod(uv.y*spreadSpeed.y + time*speed.y, 1.)));\n  vec4 noiseB = texture2D(noise, vec2(uv.x*spreadSpeed.z, mod(uv.y*spreadSpeed.z + time*speed.z, 1.)));\n  \n  vec4 imageR = texture2D(texture, uv + noiseR.xy*spread.x);\n  vec4 imageG = texture2D(texture, uv + noiseG.xy*spread.y);\n  vec4 imageB = texture2D(texture, uv + noiseB.xy*spread.z);\n  \n  vec3 color = vec3(imageR.x, imageG.y, imageB.z);// + noise.xyz;\n    \n\n  float sum  = color.x + color.y + color.z;\n  if( sum > 2.98 ) {\n    gl_FragColor = vec4(color.xyz, max(0., .95 - (sum / 3.)));\n  } else {\n    gl_FragColor = vec4(color.xyz, .95);\n  }\n  \n}\n"
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = "precision mediump float;\nattribute vec2 position;\nvoid main() {\n  gl_Position = vec4(position, 0, 1);\n}\n\n\n\n"
-
-/***/ }),
-/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webgl_Scene_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webgl_Scene_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_GridBg_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Title_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Content_js__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Timeline_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Button_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_asap_js__ = __webpack_require__(17);
 // This is where it all goes :)
 
 
 
 
 
+
+
+
 class App {
+  /**
+   * List of available pages
+   */
+  get PAGES_LIST() {
+    return ["home", "timeline", "article"];
+  }
+
+  /**
+   * Return the current page from the data-page attribute
+   */
+  get currentPage() {
+    var page = this.main.querySelector("*[data-page]");
+    return page ? page.getAttribute("data-page") : "home";
+  }
 
   /**
    * Get main node and inititialize common behaviours
    */
-  init() {
+  initElements() {
     this.main = document.querySelector("main.main");
     this.title = new __WEBPACK_IMPORTED_MODULE_2__components_Title_js__["a" /* default */](this.main.querySelector(".title"));
+
+    if( this.currentPage == "timeline" ){
+      this.timeline = new __WEBPACK_IMPORTED_MODULE_4__components_Timeline_js__["a" /* default */](this.main.querySelector(".timeline"));
+    }
+
+    this.contents = [];
+    var contentsEl = document.querySelectorAll(".content");
+    contentsEl.forEach(el => this.contents.push(new __WEBPACK_IMPORTED_MODULE_3__components_Content_js__["a" /* default */](el)));
+
+    this.buttons = [];
+    var buttonsEl = document.querySelectorAll(".btn");
+    buttonsEl.forEach(el => this.buttons.push(new __WEBPACK_IMPORTED_MODULE_5__components_Button_js__["a" /* default */](el)));
+  }
+
+  /**
+   * Load other backgrounds in prevision
+   */
+  preloadBackgrounds() {
+    var pages = this.PAGES_LIST;
+    pages.splice(this.PAGES_LIST.indexOf(this.currentPage), 1)
+    pages.forEach(p => this.scene.plane.load(p));
+  }
+
+  /**
+   * Display all the HTML elements
+   */
+  displayElements(timeout = 0) {
+    this.gridBg.show();
+    setTimeout(()=> {
+      this.scene.plane.loadPreset("default", 4);
+      this.title.display();
+      this.contents.forEach((content, i) => content.display({
+        delay: i*400
+      }));
+      this.buttons.forEach((btn, i) => btn.display({
+        delay: i*400 + 500
+      }));
+      if( this.timeline ){
+        this.timeline.display({
+          delay: 2000
+        });
+      }
+    }, timeout)
+  }
+
+  hideElements() {
+    this.scene.plane.loadPreset("hide", 4);
+    this.title.hide();
+    this.contents.forEach((content, i) => content.hide({
+      delay: i*400
+    }));
+    this.buttons.forEach((btn, i) => btn.hide({
+      delay: i*400 + 500
+    }));
+    if( this.timeline ){
+      this.timeline.hide();
+    }
+  }
+
+
+  load() {
+    this.scene.plane.select(this.currentPage);
+    this.initElements();
+    this.displayElements();
+  }
+
+  beforeLoad(e) {
+
+    e.preventDefault();
+    this.hideElements();
+
+    setTimeout(function(){
+      e.detail.load();
+    }, 2500)
   }
 
   constructor(){
-    this.scene = new __WEBPACK_IMPORTED_MODULE_0__webgl_Scene_js__["a" /* default */]();
+    this.initElements();
     this.gridBg = __WEBPACK_IMPORTED_MODULE_1__components_GridBg_js__["a" /* default */].init();
-    this.init();
+    document.addEventListener("asap:before-load", this.beforeLoad.bind(this));
+    document.addEventListener("asap:load", this.load.bind(this));
+    this.scene = new __WEBPACK_IMPORTED_MODULE_0__webgl_Scene_js__["a" /* default */]({
+      page: this.currentPage,
+      onload: () => {
+        this.displayElements(1000)
+        this.preloadBackgrounds();
+      }
+    });
   }
 }
 
-
 window.addEventListener("load", function(){
   window.app = new App();
+
+  __WEBPACK_IMPORTED_MODULE_6_asap_js__["a" /* default */].start({
+    sourceSelector: ".main",
+   	targetSelector: ".main"
+  });
 })
 
 
 /***/ }),
-/* 4 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(THREE) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_regl__ = __webpack_require__(5);
+/* WEBPACK VAR INJECTION */(function(THREE) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_regl__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_regl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_regl__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MorphPlane_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MorphPlane_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dat_gui__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dat_gui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_dat_gui__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shaders_morph_plane_frag__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shaders_morph_plane_frag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__shaders_morph_plane_frag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shaders_morph_plane_vert__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shaders_morph_plane_vert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__shaders_morph_plane_vert__);
-
-
 
 
 
 
 class Scene {
-  
-  constructor(){
+  /**
+   * @constructor
+   */
+  constructor(args){
+
     this.clock = new THREE.Clock();
     this.clock.start();
     this.gui = new __WEBPACK_IMPORTED_MODULE_2_dat_gui___default.a.GUI();
-
     this.canvas = document.querySelector("#canvas");
-    console.log(this.canvas)
-		this.computeSize();
-		this.regl = __WEBPACK_IMPORTED_MODULE_0_regl__({
-		  canvas: this.canvas, 
+    this.onload = args.onload;
+
+    this.initRegl();
+    this.initEvents();
+
+    this.plane = new __WEBPACK_IMPORTED_MODULE_1__MorphPlane_js__["a" /* default */]({
+      scene: this,
+      gui: this.gui,
+      clock: this.clock,
+      regl: this.regl,
+      page: args.page
+    })
+  }
+
+  /**
+   * Register window events
+   */
+  initEvents() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize.bind(this));
+    window.addEventListener("mousemove", this.onMouseMove.bind(this));
+  }
+
+  /**
+   * Init WebGL context with Regl
+   */
+  initRegl() {
+    this.regl = __WEBPACK_IMPORTED_MODULE_0_regl__({
+		  canvas: this.canvas,
 		  pixelRatio: window.innerHeight/window.innerHeight
     });
 
     this.regl._gl.disable(this.regl._gl.BLEND);
     this.regl._gl.enable(this.regl._gl.DEPTH_TEST);
-  
 
-    console.log(this.regl._gl);
     this.regl.frame(this.render.bind(this));
-    
-    window.addEventListener("resize", () => {
-      this.computeSize();
-    })
-    var noise = new Image()
-    noise.src = document.location.href+"./../images/noise_3d.jpg";
-
-    noise.onload = ()=>{
-      this.noise = this.regl.texture(noise)
-      this.addMorphPlane(document.location.href+"./../images/backgrounds/bg_article.jpg");
-    }
   }
 
-  computeSize(){
+  /**
+   * Update canvas boundaries on resize event
+   */
+  onResize(){
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-    this.ratio = 1/(this.canvas.width/this.canvas.height);	
+    this.ratio = 1/(this.canvas.width/this.canvas.height);
+    if(this.plane) this.plane.registerCommand();
   }
 
-  addMorphPlane(src){
-    var image = new Image()
-    var config = {
-      speed: [0.0111, 0.0125, 0.0142],
-      spreadSpeed: [0.333, 0.05, 0.025],
-      spread: [0.2, 0.1, 0.14]
-    }
-    image.src = src
-    image.onload = () => {
-      var imageTexture = this.regl.texture(image)
-      this.plane = this.regl({
-        frag: __WEBPACK_IMPORTED_MODULE_3__shaders_morph_plane_frag___default.a, vert: __WEBPACK_IMPORTED_MODULE_4__shaders_morph_plane_vert___default.a,
-        attributes: {
-          position: this.regl.buffer([
-            [-1, -1],   
-            [1, -1],
-            [-1,  1],
-            [1,  -1],
-            [-1,  1],
-            [1,  1]
-          ])
-        },
-        blend: {
-          enable: true,
-          func: {
-            src: 'src alpha',
-            dst: 'one minus src alpha'
-          }
-        },
-        uniforms: {
-          speed: () => { return config.speed },
-          spread: () => { return config.spread },
-          spreadSpeed: () => { return config.spreadSpeed },
-          time: () => { return this.clock.elapsedTime },
-          texture: imageTexture,
-          noise: this.noise,
-          boundaries: () => { return [window.innerWidth, window.innerHeight] } ,
-        },
-        count: 6
-      })
-    }
-  }
+  /**
+   * @TODO
+   */
+  onMouseMove() {}
 
-
+  /**
+   * RAF
+   */
   render(){
+    // Clear Backbuffer
     this.regl.clear({
       color: [0, 0, 0, 0],
       depth: 1
     })
 
-    this.clock.getElapsedTime()
-    
-    if(this.plane )
-      this.plane();
- 
+    // Update clock
+    this.clock.getElapsedTime();
+
+    this.plane.render();
   }
 }
 
@@ -46521,7 +46592,7 @@ class Scene {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 5 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -56048,58 +56119,286 @@ return wrapREGL;
 
 
 /***/ }),
-/* 6 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(THREE) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shaders_morph_plane_frag__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shaders_morph_plane_frag__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shaders_morph_plane_frag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__shaders_morph_plane_frag__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shaders_morph_plane_vert__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shaders_morph_plane_vert__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shaders_morph_plane_vert___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__shaders_morph_plane_vert__);
 
 
 
 
 class MorphPlane {
-  constructor(clock, gui) {
-    
-    this.clock = clock; 
-    this.gui = gui;
+  /**
+   * Register attributes & launch initialization
+   * @constructor
+   * @prop {THREE.Clock} clock : THREE.js timer
+   * @prop {DatGui} gui : Dat.GUI Controller
+   * @prop {Function} regl : REGL Constructor
+   * @prop {Array} textures : List of all textures loaded
+   * @prop {Array} presets : List of presets
+   * @prop {REGL.Texture} noise : Noise texture
+   * @prop {Object} preset : Current preset
+   * @prop {Object} animation : Used to create animation between two preset
+   */
+  constructor(args) {
+    this.clock = args.clock;
+    this.regl = args.regl;
+    this.textures = {};
+    this.presets = [];
+    this.scene = args.scene;
 
-    this.genGeometry();
-    this.genMaterial();
-    this.genMesh();
+    this.noise = null;
+    this.texture = null;
+    this.preset = null;
+    this.animation = null;
+
+    this.init(args.page);
+    this.initGui(args.gui);
+  }
+
+  getUrl(pageName) {
+    return "/images/backgrounds/bg_"+pageName+".jpg";
+  }
+
+  /**
+   * First initialization
+   */
+  init(page) {
+    this.registerPreset();
+    this.loadPreset("hide");
+
+    // Load noise
+    var noise = new Image();
+    noise.src = "/images/noise_3d.jpg";
+
+    noise.onload = ()=>{
+      this.noise = this.regl.texture(noise);
+      // Load first background
+      this.load(page, (texture)=>{
+        this.select(page);
+        this.scene.onload.call(this.scene)
+      });
+    }
+  }
+
+  select(page){
+    this.texture = this.textures[page] ? this.textures[page] : this.textures["home"];
+    this.registerCommand();
+  }
+
+  /**
+   * Load an image asynchronously and add it to the textures
+   * @param {String} src : Image path
+   * @param {String} name : Name (used as id)
+   * @param {Function} callback : function executed when image is ready
+   */
+  load(name, callback ) {
+    // If a texture with this name already exist
+    if( this.textures[name] ) {
+      if( callback ) callback.call(this, this.textures[name]);
+      return;
+    }
+
+    // Else
+    var image = new Image();
+    image.src = this.getUrl(name);
+    image.onload = () => {
+      // Set texture from image and save it
+      var texture = this.regl.texture(image);
+      this.textures[name] = texture
+      if(callback) callback.call(this, texture);
+    }
 
   }
 
-  genGeometry(){
-    this.geometry = new THREE.PlaneGeometry( 20, 20, 32 );
-  }
+  /**
+   * Register a new webgl command from current config
+   */
+  registerCommand() {
+    this.plane = this.regl({
 
-  genMaterial(){
-    this.material = new THREE.ShaderMaterial( {
-      uniforms: {
-        u_time: { type: "f", value: 0 },
-        u_texture_red: { type: "t", value: THREE.ImageUtils.loadTexture("/images/lot_1/red.png") },
-        u_texture_blue: { type: "t", value: THREE.ImageUtils.loadTexture("/images/lot_1/blue.png") },
-        u_texture_green: { type: "t", value: THREE.ImageUtils.loadTexture("/images/lot_1/green.png") }
+      // Shaders
+      frag: __WEBPACK_IMPORTED_MODULE_0__shaders_morph_plane_frag___default.a,
+      vert: __WEBPACK_IMPORTED_MODULE_1__shaders_morph_plane_vert___default.a,
+
+      // Simple plane
+      attributes: {
+        position: this.regl.buffer(
+          [[-1, -1], [1, -1], [-1,  1], [1,  -1], [-1,  1], [1,  1]]
+        )
       },
-      vertexShader: __WEBPACK_IMPORTED_MODULE_1__shaders_morph_plane_vert___default.a,
-      fragmentShader: __WEBPACK_IMPORTED_MODULE_0__shaders_morph_plane_frag___default.a,
-      side: THREE.DoubleSide
-    } );
+
+      // Background transparent
+      //blend: { enable: true, func: { src: 'src alpha', dst: 'one minus src alpha' }},
+
+      // Params
+      uniforms: {
+        speed: () => { return this.preset.speed },
+        spread: () => { return this.preset.spread },
+        spreadSpeed: () => { return this.preset.spreadSpeed },
+        opacity: () => { return this.preset.opacity },
+        time: () => { return this.clock.elapsedTime },
+        texture: this.texture,
+        noise: this.noise,
+        boundaries: () => { return [window.innerWidth, window.innerHeight] },
+      },
+
+      // Nb of vertices
+      count: 6
+    })
   }
 
-  genMesh(){
-    this.mesh = new THREE.Mesh( this.geometry, this.material );
-    console.log(this.mesh);
-    this.mesh.rotation.x = -3;  
+  /**
+   * Setup GUI controller
+   * @param {Dat.GUI} gui
+   */
+  initGui(gui){
+    var folder = gui.addFolder('Fragment');
+    folder.add(this.preset.speed, 0).name("Speed Red")
+    folder.add(this.preset.speed, 1).name("Speed Green")
+    folder.add(this.preset.speed, 2).name("Speed Blue")
+
+    folder.add(this.preset.spread, 0).name("Spread Red")
+    folder.add(this.preset.spread, 1).name("Spread Green")
+    folder.add(this.preset.spread, 2).name("Spread Blue")
+
+    folder.add(this.preset.spreadSpeed, 0).name("SpeedS Red")
+    folder.add(this.preset.spreadSpeed, 1).name("SpeedS Green")
+    folder.add(this.preset.spreadSpeed, 2).name("SpeedS Blue")
+  }
+
+  /**
+   * Raf method
+   */
+  render() {
+    if( this.plane ) this.plane();
+    this.renderAnimation();
+  }
+
+  renderAnimation() {
+    function easeInOut (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t }
+    function mix(i, o, a){ return (o - i)*a + i; }
+
+    if(this.animation && this.animation.active) {
+      this.animation.advancement =(this.clock.elapsedTime - this.animation.start) / this.animation.duration
+
+      if( this.animation.advancement >= 1 ){
+        this.animation.active = false;
+        this.animation.advancement = 1;
+      }
+
+      this.animation.advancement = easeInOut(this.animation.advancement);
+
+      this.preset.opacity = mix(this.animation.from.opacity, this.animation.to.opacity, this.animation.advancement)
+
+      this.preset.spread[0] = mix(this.animation.from.spread[0], this.animation.to.spread[0], this.animation.advancement)
+      this.preset.spread[1] = mix(this.animation.from.spread[1], this.animation.to.spread[1], this.animation.advancement)
+      this.preset.spread[2] = mix(this.animation.from.spread[2], this.animation.to.spread[2], this.animation.advancement)
+
+      this.preset.spreadSpeed[0] = mix(this.animation.from.spreadSpeed[0], this.animation.to.spreadSpeed[0], this.animation.advancement)
+      this.preset.spreadSpeed[1] = mix(this.animation.from.spreadSpeed[1], this.animation.to.spreadSpeed[1], this.animation.advancement)
+      this.preset.spreadSpeed[2] = mix(this.animation.from.spreadSpeed[2], this.animation.to.spreadSpeed[2], this.animation.advancement)
+
+    }
+  }
+
+  /**
+   * Load a preset, set an animation if needed
+   * @param {String} name
+   * @param {Float} duration
+   * @param {Function} callback
+   */
+  loadPreset(name, duration = null, callback = null) {
+    if( !this.presets[name] ) {
+      console.warn(`Preset "${name}" don't exist.`);
+      return;
+    }
+
+    var p = this.presets[name];
+    var preset =  p[0] ? p[Math.floor(p.length*Math.random())] : p;
+    console.log(preset);
+    if( duration ){
+
+      this.animation = {
+        from: JSON.parse(JSON.stringify(this.preset)),
+        to: JSON.parse(JSON.stringify(preset)),
+        active: true,
+        advancement: 0,
+        start: this.clock.elapsedTime,
+        end: this.clock.elapsedTime + duration,
+        duration: duration,
+        callback: callback ? callback : null
+      };
+
+    } else {
+      this.preset = JSON.parse(JSON.stringify(preset))
+    }
+
+    return this.preset;
+  }
+
+  /**
+   * A list of pattern
+   */
+  registerPreset() {
+    this.presets = {
+      // Classic
+      "default":  {
+        speed: [0.0111, 0.0125, 0.0142],
+        spreadSpeed: [0.333, 0.05, 0.025],
+        spread: [0.2, 0.1, 0.14],
+        opacity: 1
+      },
+      // Speed & Spread
+      "dancing": {
+        speed: [0.1, 0.11, 0.12],
+        spreadSpeed: [0.12, 0.12, 0.12],
+        spread: [0.3, 0.3, 0.3],
+        opacity: 1
+      },
+      // Huge spread & Opacity
+      "hide": [
+        {
+          speed: [0.0111, 0.0125, 0.0142],
+          spreadSpeed: [0.5, 0.5, 0.5],
+          spread: [2.4, 2.4, 2.4],
+          opacity: 0
+        },
+        {
+          speed: [0.0142, 0.0111, 0.0125],
+          spreadSpeed: [0.4, 0.6, 0.4],
+          spread: [-2.4, 2.4, -2.4],
+          opacity: 0
+        },
+        {
+          speed: [0.0125, 0.0142, 0.0111],
+          spreadSpeed: [0.5, 0.4, 0.6],
+          spread: [2.4, -2.4, -2.4],
+          opacity: 0
+        }
+      ]
+    }
   }
 }
 
-/* unused harmony default export */ var _unused_webpack_default_export = (MorphPlane);
+/* harmony default export */ __webpack_exports__["a"] = (MorphPlane);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = "precision mediump float;\n\nuniform float time;\nuniform sampler2D texture;\nuniform sampler2D noise;\nuniform vec2 boundaries;\n\nuniform vec3 speed;\nuniform vec3 spreadSpeed;\nuniform vec3 spread;\nuniform float opacity;\n\nvoid main(){\n  vec2 uv = vec2(gl_FragCoord.x / boundaries.x, -gl_FragCoord.y / boundaries.y + 1.);\n\n  vec4 noiseR = texture2D(noise, vec2(uv.x*spreadSpeed.x, mod(uv.y*spreadSpeed.z + time*speed.x, 1.))) - 0.5;\n  vec4 noiseG = texture2D(noise, vec2(uv.x*spreadSpeed.y, mod(uv.y*spreadSpeed.y + time*speed.y, 1.))) - 0.5;\n  vec4 noiseB = texture2D(noise, vec2(uv.x*spreadSpeed.z, mod(uv.y*spreadSpeed.x + time*speed.z, 1.))) - 0.5;\n\n  vec4 imageR = texture2D(texture, uv + noiseR.xy*spread.x);\n  vec4 imageG = texture2D(texture, uv + noiseG.xy*spread.y);\n  vec4 imageB = texture2D(texture, uv + noiseB.xy*spread.z);\n\n  vec3 color = vec3(imageR.x, imageG.y, imageB.z);// + noise.xyz;\n\n  gl_FragColor = vec4(color.xyz, opacity);\n}\n"
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = "precision mediump float;\nattribute vec2 position;\nvoid main() {\n  gl_Position = vec4(position, 0, 1);\n}\n\n\n\n"
 
 /***/ }),
 /* 7 */
@@ -60539,26 +60838,28 @@ dat.utils.common);
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = ({
-
   hide: function(){
+    if( !this.display ) return;
     this.lines.forEach((line)=>{
       line.classList.add("grid-bg__line--hide");
     })
+    this.display = false;
   },
 
   show: function(){
-      this.lines.forEach((line)=>{
-        line.classList.remove("grid-bg__line--hide");
-      })
+    if( this.display ) return;
+    this.lines.forEach((line)=>{
+      line.classList.remove("grid-bg__line--hide");
+    })
+    this.display = true;
   },
 
   init: function(){
+    this.display = false;
     this.svg = document.querySelector("#grid-bg")
     this.lines = this.svg.querySelectorAll(".grid-bg__line");
-    this.show();
     return this;
   }
-
 });
 
 
@@ -60568,28 +60869,1794 @@ dat.utils.common);
 
 "use strict";
 class Title {
-  
   constructor(el) {
     if( el && el.className.match("title") ) {
-      this.el = el; 
+      this.el = el;
       this.crops = this.el.querySelectorAll(".title__crop");
-      this.display();
     }
   }
 
   display() {
-    this.crops.forEach(title => title.classList.remove("title__crop--hide"));
+    if( this.crops ) this.crops.forEach(title => title.classList.remove("title__crop--hide"));
   }
 
   hide() {
-    this.crops.forEach(title => title.classList.add("title__crop--hide"));
+    if( this.crops ) this.crops.forEach(title => title.classList.add("title__crop--hide"));
   }
-
 }
-
 
 /* harmony default export */ __webpack_exports__["a"] = (Title);
 
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Content {
+  constructor(el, args) {
+    if( el && el.className.match("content") ) {
+      this.el = el;
+    }
+  }
+
+  display(args) {
+    if( !args ) var args = { delay: 0 };
+    if( args.delay > 0 ) {
+      setTimeout(() => this.display(), args.delay);
+      return;
+    }
+    this.el.classList.remove("content--hide");
+  }
+
+  hide(args) {
+    if( !args ) var args = { delay: 0 };
+    if( args.delay > 0 ) {
+      setTimeout(() => this.hide(), args.delay);
+      return;
+    }
+    this.el.classList.add("content--hide");
+  }
+}
+
+
+/* harmony default export */ __webpack_exports__["a"] = (Content);
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TimelineItem_js__ = __webpack_require__(14);
+
+var path = __webpack_require__(15);
+
+class Timeline {
+  /**
+   * @constructor
+   * @prop {Node} el : Timeline block element
+   * @prop {Array} items : A list of item with attribute "name", "date", "slug"
+   * @prop {SVG Element} svg : Main svg element
+   * @prop {SVG Path} path : Main svg element
+   * @prop {SVG PathProperty} pathProperties : Utils to used deprecated method as getPointsAtLength
+   */
+  constructor(el) {
+    this.el = el;
+    this.items = [];
+    this.svg;
+    this.path;
+    this.pathProperties;
+    this.bubblesContainer = this.el.querySelector(".timeline__bubbles");
+    this.selectedItem;
+    this.config = {
+      dateStart: new Date("2017-09-01"),
+      duration: new Date("2017-09-01").getTime() - new Date("2018-04-01").getTime()
+    }
+
+    this.initSvg();
+    this.initItems();
+  }
+
+  /**
+   * Init svg elements
+   */
+  initSvg() {
+    this.svg = this.el.querySelector("svg");
+    this.path = this.svg.querySelector("path");
+    this.pathProperties = path.svgPathProperties(this.path.getAttribute("d"));
+  }
+
+  /**
+   * Parse raw datas and instantiate TimelineItem
+   */
+  initItems() {
+    var datas = JSON.parse(this.el.querySelector(".timeline__data").innerHTML);
+    datas.forEach(d => this.items.push(new __WEBPACK_IMPORTED_MODULE_0__TimelineItem_js__["a" /* default */](d, this)))
+  }
+
+  /**
+   * Return points coord at
+   * @param {Float} percent [0-1]
+   */
+  getPointAt(percent) {
+    var l = percent*this.pathProperties.getTotalLength();
+    return this.pathProperties.getPointAtLength(l)
+  }
+
+  /**
+   * Return coord based on the viewbox
+   * @param {x: Float, y: Float} coord
+   * @return {x: Float, y: Float} [0-1]
+   */
+  getCoordInPercent(coord) {
+    return {
+      x: coord.x/this.svg.viewBox.baseVal.width,
+      y: coord.y/this.svg.viewBox.baseVal.height
+    }
+  }
+
+  select(item) {
+    if( this.selectedItem && this.selectedItem != item ) this.unselect();
+    this.selectedItem = item;
+    this.selectedItem.display();
+  }
+
+  unselect() {
+    this.selectedItem.hide();
+    this.selectedItem = null;
+  }
+
+  /**
+   * Display timeline
+   * @param {Object} args
+   */
+  display(args) {
+    if( args && args.delay ) {
+      setTimeout(this.display.bind(this), args.delay);
+      return;
+    }
+    this.el.classList.remove("timeline--hide");
+  }
+
+  /**
+   * Hide timeline
+   */
+  hide() {
+    this.el.classList.add("timeline--hide");
+  }
+}
+
+
+/* harmony default export */ __webpack_exports__["a"] = (Timeline);
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class TimelineItem {
+  /**
+   * @constructor
+   * @param {name: String, slug: String, date: String} datas : JSON datas of a single item
+   * @param {*} timeline : Timeline's reference
+   */
+  constructor(datas, timeline) {
+    this.timeline = timeline;
+    this.name = datas.name;
+    this.slug = datas.slug;
+    this.date = new Date(datas.date);
+
+    this.genBubble();
+    this.genSvg();
+    this.displayMarker();
+    this.initEvents();
+  }
+
+  /**
+   * Return the date formated for displaying
+   */
+  get dateFormated() {
+    var dd = (this.date.getDate() < 10 ? '0' : '') + this.date.getDate();
+    var MM = ((this.date.getMonth() + 1) < 10 ? '0' : '') + (this.date.getMonth() + 1);
+    var yyyy = this.date.getFullYear();
+    return (dd + "-" + MM + "-" + yyyy);
+  }
+
+
+  /**
+   * Compute position in svg
+   * @return (NULL || {x: Float, y: Float})
+   */
+  get position() {
+    //this.timeline.config.duration
+    if( this.date.getTime() > this.timeline.config.dateStart.getTime() ){
+      var diff = this.timeline.config.dateStart.getTime() - this.date.getTime();
+      var length = diff/this.timeline.config.duration;
+      if(length < 1){
+        this._position = this.timeline.getPointAt(length);
+        return this._position;
+      }
+    }
+    this._position = null;
+    return null;
+  }
+
+  /**
+   * Setup mouseenter & mouseleave events
+   */
+  initEvents() {
+    this.marker.addEventListener("mouseenter", ()=>{
+      this.timeline.select(this);
+    })
+  }
+
+  /**
+   * Generate HTML SVG Marker
+   */
+  genSvg() {
+    var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("r", 10);
+    circle.setAttribute("class", "timeline__point timeline__point--hide");
+    circle.setAttribute("id", "circle-"+this.slug);
+    circle.setAttribute("transform", "circle-"+this.slug);
+
+    this.marker = circle;
+    this.updatePosition();
+    this.timeline.svg.appendChild(this.marker);
+  }
+
+  /**
+   * Generate HTML for a bubble
+   */
+  genBubble() {
+    var proto = `<a href="/timeline/${this.slug}/" class="timeline__bubble timeline__bubble--hide">
+        <p class="timeline__bubble-title">${this.name}</p>
+        <p class="timeline__bubble-date">${this.dateFormated}</p>
+      </a>`
+    var container = document.createElement("fragment");
+    container.innerHTML = proto;
+    this.bubble = container.firstChild;
+    this.timeline.bubblesContainer.appendChild(this.bubble);
+  }
+
+  updatePosition() {
+    var p = this.position;
+    this.marker.setAttribute("cx", p.x);
+    this.marker.setAttribute("cy", p.y);
+    var origin = this.timeline.getCoordInPercent(p);
+    this.marker.style.transformOrigin = `${origin.x*100}% ${origin.y*100}%`;
+    this.bubble.style["top"] = origin.y*100 + "%"
+    this.bubble.style["left"] = origin.x*100 + "%"
+  }
+
+  displayMarker(){
+    this.marker.classList.remove("timeline__point--hide");
+  }
+
+  hideMarker() {
+    this.marker.classList.add("timeline__point--hide");
+  }
+
+  display(){
+    this.bubble.classList.remove("timeline__bubble--hide")
+  }
+
+  hide() {
+    this.bubble.classList.add("timeline__bubble--hide")
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (TimelineItem);
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// http://geoexamples.com/path-properties/ Version 0.4.2. Copyright 2018 Roger Veciana i Rovira.
+(function (global, factory) {
+	 true ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.spp = global.spp || {})));
+}(this, (function (exports) { 'use strict';
+
+//Parses an SVG path into an object.
+//Taken from https://github.com/jkroso/parse-svg-path
+//Re-written so it can be used with rollup
+var length = {a: 7, c: 6, h: 1, l: 2, m: 2, q: 4, s: 4, t: 2, v: 1, z: 0};
+var segment = /([astvzqmhlc])([^astvzqmhlc]*)/ig;
+
+var parse = function(path) {
+  var data = [];
+	path.replace(segment, function(_, command, args){
+		var type = command.toLowerCase();
+		args = parseValues(args);
+
+		// overloaded moveTo
+		if (type === 'm' && args.length > 2) {
+			data.push([command].concat(args.splice(0, 2)));
+			type = 'l';
+			command = command === 'm' ? 'l' : 'L';
+		}
+
+		while (args.length >= 0) {
+			if (args.length === length[type]) {
+				args.unshift(command);
+				return data.push(args);
+			}
+			if (args.length < length[type]) {
+        throw new Error('malformed path data');
+      }
+			data.push([command].concat(args.splice(0, length[type])));
+		}
+	});
+  return data;
+};
+
+var number = /-?[0-9]*\.?[0-9]+(?:e[-+]?\d+)?/ig;
+
+function parseValues(args) {
+	var numbers = args.match(number);
+	return numbers ? numbers.map(Number) : [];
+}
+
+//Calculate Bezier curve length and positionAtLength
+//Algorithms taken from http://bl.ocks.org/hnakamur/e7efd0602bfc15f66fc5, https://gist.github.com/tunght13488/6744e77c242cc7a94859 and http://stackoverflow.com/questions/11854907/calculate-the-length-of-a-segment-of-a-quadratic-bezier
+
+var Bezier = function(ax, ay, bx, by, cx, cy, dx, dy) {
+  return new Bezier$1(ax, ay, bx, by, cx, cy, dx, dy);
+};
+
+function Bezier$1(ax, ay, bx, by, cx, cy, dx, dy) {
+  this.a = {x:ax, y:ay};
+  this.b = {x:bx, y:by};
+  this.c = {x:cx, y:cy};
+  this.d = {x:dx, y:dy};
+
+  if(dx !== null && dx !== undefined && dy !== null && dy !== undefined){
+    this.getArcLength = getCubicArcLength;
+    this.getPoint = cubicPoint;
+    this.getDerivative = cubicDerivative;
+  } else {
+    this.getArcLength = getQuadraticArcLength;
+    this.getPoint = quadraticPoint;
+    this.getDerivative = quadraticDerivative;
+  }
+
+  this.init();
+}
+
+Bezier$1.prototype = {
+  constructor: Bezier$1,
+  init: function() {
+
+    this.length = this.getArcLength([this.a.x, this.b.x, this.c.x, this.d.x],
+                                    [this.a.y, this.b.y, this.c.y, this.d.y]);
+  },
+
+  getTotalLength: function() {
+    return this.length;
+  },
+  getPointAtLength: function(length) {
+    var t = t2length(length, this.length, this.getArcLength,
+                    [this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y]);
+
+    return this.getPoint([this.a.x, this.b.x, this.c.x, this.d.x],
+                                    [this.a.y, this.b.y, this.c.y, this.d.y],
+                                  t);
+  },
+  getTangentAtLength: function(length){
+    var t = t2length(length, this.length, this.getArcLength,
+                    [this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y]);
+
+    var derivative = this.getDerivative([this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y], t);
+    var mdl = Math.sqrt(derivative.x * derivative.x + derivative.y * derivative.y);
+    var tangent;
+    if (mdl > 0){
+      tangent = {x: derivative.x/mdl, y: derivative.y/mdl};
+    } else {
+      tangent = {x: 0, y: 0};
+    }
+    return tangent;
+  },
+  getPropertiesAtLength: function(length){
+    var t = t2length(length, this.length, this.getArcLength,
+                    [this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y]);
+
+    var derivative = this.getDerivative([this.a.x, this.b.x, this.c.x, this.d.x],
+                    [this.a.y, this.b.y, this.c.y, this.d.y], t);
+    var mdl = Math.sqrt(derivative.x * derivative.x + derivative.y * derivative.y);
+    var tangent;
+    if (mdl > 0){
+      tangent = {x: derivative.x/mdl, y: derivative.y/mdl};
+    } else {
+      tangent = {x: 0, y: 0};
+    }
+    var point = this.getPoint([this.a.x, this.b.x, this.c.x, this.d.x],
+                                    [this.a.y, this.b.y, this.c.y, this.d.y],
+                                  t);
+    return {x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y};
+  }
+};
+
+function quadraticDerivative(xs, ys, t){
+  return {x: (1 - t) * 2*(xs[1] - xs[0]) +t * 2*(xs[2] - xs[1]),
+    y: (1 - t) * 2*(ys[1] - ys[0]) +t * 2*(ys[2] - ys[1])
+  };
+}
+
+function cubicDerivative(xs, ys, t){
+  var derivative = quadraticPoint(
+            [3*(xs[1] - xs[0]), 3*(xs[2] - xs[1]), 3*(xs[3] - xs[2])],
+            [3*(ys[1] - ys[0]), 3*(ys[2] - ys[1]), 3*(ys[3] - ys[2])],
+            t);
+  return derivative;
+}
+
+function t2length(length, total_length, func, xs, ys){
+  var error = 1;
+  var t = length/total_length;
+  var step = (length - func(xs, ys, t))/total_length;
+
+  while (error > 0.001){
+    var increasedTLength = func(xs, ys, t + step);
+    var decreasedTLength = func(xs, ys, t - step);
+    var increasedTError = Math.abs(length - increasedTLength)/total_length;
+    var decreasedTError = Math.abs(length - decreasedTLength)/total_length;
+    if (increasedTError < error) {
+      error = increasedTError;
+      t += step;
+    } else if (decreasedTError < error) {
+      error = decreasedTError;
+      t -= step;
+    } else {
+      step /= 2;
+    }
+  }
+
+  return t;
+}
+
+function quadraticPoint(xs, ys, t){
+  var x = (1 - t) * (1 - t) * xs[0] + 2 * (1 - t) * t * xs[1] + t * t * xs[2];
+  var y = (1 - t) * (1 - t) * ys[0] + 2 * (1 - t) * t * ys[1] + t * t * ys[2];
+  return {x: x, y: y};
+}
+
+function cubicPoint(xs, ys, t){
+  var x = (1 - t) * (1 - t) * (1 - t) * xs[0] + 3 * (1 - t) * (1 - t) * t * xs[1] +
+  3 * (1 - t) * t * t * xs[2] + t * t * t * xs[3];
+  var y = (1 - t) * (1 - t) * (1 - t) * ys[0] + 3 * (1 - t) * (1 - t) * t * ys[1] +
+  3 * (1 - t) * t * t * ys[2] + t * t * t * ys[3];
+
+  return {x: x, y: y};
+}
+
+function getQuadraticArcLength(xs, ys, t) {
+  if (t === undefined) {
+    t = 1;
+  }
+   var ax = xs[0] - 2 * xs[1] + xs[2];
+   var ay = ys[0] - 2 * ys[1] + ys[2];
+   var bx = 2 * xs[1] - 2 * xs[0];
+   var by = 2 * ys[1] - 2 * ys[0];
+
+   var A = 4 * (ax * ax + ay * ay);
+   var B = 4 * (ax * bx + ay * by);
+   var C = bx * bx + by * by;
+
+   if(A === 0){
+     return t * Math.sqrt(Math.pow(xs[2] - xs[0], 2) + Math.pow(ys[2] - ys[0], 2));
+   }
+   var b = B/(2*A);
+   var c = C/A;
+   var u = t + b;
+   var k = c - b*b;
+
+   var term = ((b+Math.sqrt(b*b+k)))!==0?k*Math.log(Math.abs((u+Math.sqrt(u*u+k))/(b+Math.sqrt(b*b+k)))):0;
+   return (Math.sqrt(A)/2)*(
+     u*Math.sqrt(u*u+k)-b*Math.sqrt(b*b+k)+
+     term
+   );
+
+}
+
+// Legendre-Gauss abscissae (xi values, defined at i=n as the roots of the nth order Legendre polynomial Pn(x))
+var tValues = [
+  [],
+  [],
+  [-0.5773502691896257645091487805019574556476,0.5773502691896257645091487805019574556476],
+  [0,-0.7745966692414833770358530799564799221665,0.7745966692414833770358530799564799221665],
+  [-0.3399810435848562648026657591032446872005,0.3399810435848562648026657591032446872005,-0.8611363115940525752239464888928095050957,0.8611363115940525752239464888928095050957],
+  [0,-0.5384693101056830910363144207002088049672,0.5384693101056830910363144207002088049672,-0.9061798459386639927976268782993929651256,0.9061798459386639927976268782993929651256],
+  [0.6612093864662645136613995950199053470064,-0.6612093864662645136613995950199053470064,-0.2386191860831969086305017216807119354186,0.2386191860831969086305017216807119354186,-0.9324695142031520278123015544939946091347,0.9324695142031520278123015544939946091347],
+  [0, 0.4058451513773971669066064120769614633473,-0.4058451513773971669066064120769614633473,-0.7415311855993944398638647732807884070741,0.7415311855993944398638647732807884070741,-0.9491079123427585245261896840478512624007,0.9491079123427585245261896840478512624007],
+  [-0.1834346424956498049394761423601839806667,0.1834346424956498049394761423601839806667,-0.5255324099163289858177390491892463490419,0.5255324099163289858177390491892463490419,-0.7966664774136267395915539364758304368371,0.7966664774136267395915539364758304368371,-0.9602898564975362316835608685694729904282,0.9602898564975362316835608685694729904282],
+  [0,-0.8360311073266357942994297880697348765441,0.8360311073266357942994297880697348765441,-0.9681602395076260898355762029036728700494,0.9681602395076260898355762029036728700494,-0.3242534234038089290385380146433366085719,0.3242534234038089290385380146433366085719,-0.6133714327005903973087020393414741847857,0.6133714327005903973087020393414741847857],
+  [-0.1488743389816312108848260011297199846175,0.1488743389816312108848260011297199846175,-0.4333953941292471907992659431657841622000,0.4333953941292471907992659431657841622000,-0.6794095682990244062343273651148735757692,0.6794095682990244062343273651148735757692,-0.8650633666889845107320966884234930485275,0.8650633666889845107320966884234930485275,-0.9739065285171717200779640120844520534282,0.9739065285171717200779640120844520534282],
+  [0,-0.2695431559523449723315319854008615246796,0.2695431559523449723315319854008615246796,-0.5190961292068118159257256694586095544802,0.5190961292068118159257256694586095544802,-0.7301520055740493240934162520311534580496,0.7301520055740493240934162520311534580496,-0.8870625997680952990751577693039272666316,0.8870625997680952990751577693039272666316,-0.9782286581460569928039380011228573907714,0.9782286581460569928039380011228573907714],
+  [-0.1252334085114689154724413694638531299833,0.1252334085114689154724413694638531299833,-0.3678314989981801937526915366437175612563,0.3678314989981801937526915366437175612563,-0.5873179542866174472967024189405342803690,0.5873179542866174472967024189405342803690,-0.7699026741943046870368938332128180759849,0.7699026741943046870368938332128180759849,-0.9041172563704748566784658661190961925375,0.9041172563704748566784658661190961925375,-0.9815606342467192506905490901492808229601,0.9815606342467192506905490901492808229601],
+  [0,-0.2304583159551347940655281210979888352115,0.2304583159551347940655281210979888352115,-0.4484927510364468528779128521276398678019,0.4484927510364468528779128521276398678019,-0.6423493394403402206439846069955156500716,0.6423493394403402206439846069955156500716,-0.8015780907333099127942064895828598903056,0.8015780907333099127942064895828598903056,-0.9175983992229779652065478365007195123904,0.9175983992229779652065478365007195123904,-0.9841830547185881494728294488071096110649,0.9841830547185881494728294488071096110649],
+  [-0.1080549487073436620662446502198347476119,0.1080549487073436620662446502198347476119,-0.3191123689278897604356718241684754668342,0.3191123689278897604356718241684754668342,-0.5152486363581540919652907185511886623088,0.5152486363581540919652907185511886623088,-0.6872929048116854701480198030193341375384,0.6872929048116854701480198030193341375384,-0.8272013150697649931897947426503949610397,0.8272013150697649931897947426503949610397,-0.9284348836635735173363911393778742644770,0.9284348836635735173363911393778742644770,-0.9862838086968123388415972667040528016760,0.9862838086968123388415972667040528016760],
+  [0,-0.2011940939974345223006283033945962078128,0.2011940939974345223006283033945962078128,-0.3941513470775633698972073709810454683627,0.3941513470775633698972073709810454683627,-0.5709721726085388475372267372539106412383,0.5709721726085388475372267372539106412383,-0.7244177313601700474161860546139380096308,0.7244177313601700474161860546139380096308,-0.8482065834104272162006483207742168513662,0.8482065834104272162006483207742168513662,-0.9372733924007059043077589477102094712439,0.9372733924007059043077589477102094712439,-0.9879925180204854284895657185866125811469,0.9879925180204854284895657185866125811469],
+  [-0.0950125098376374401853193354249580631303,0.0950125098376374401853193354249580631303,-0.2816035507792589132304605014604961064860,0.2816035507792589132304605014604961064860,-0.4580167776572273863424194429835775735400,0.4580167776572273863424194429835775735400,-0.6178762444026437484466717640487910189918,0.6178762444026437484466717640487910189918,-0.7554044083550030338951011948474422683538,0.7554044083550030338951011948474422683538,-0.8656312023878317438804678977123931323873,0.8656312023878317438804678977123931323873,-0.9445750230732325760779884155346083450911,0.9445750230732325760779884155346083450911,-0.9894009349916499325961541734503326274262,0.9894009349916499325961541734503326274262],
+  [0,-0.1784841814958478558506774936540655574754,0.1784841814958478558506774936540655574754,-0.3512317634538763152971855170953460050405,0.3512317634538763152971855170953460050405,-0.5126905370864769678862465686295518745829,0.5126905370864769678862465686295518745829,-0.6576711592166907658503022166430023351478,0.6576711592166907658503022166430023351478,-0.7815140038968014069252300555204760502239,0.7815140038968014069252300555204760502239,-0.8802391537269859021229556944881556926234,0.8802391537269859021229556944881556926234,-0.9506755217687677612227169578958030214433,0.9506755217687677612227169578958030214433,-0.9905754753144173356754340199406652765077,0.9905754753144173356754340199406652765077],
+  [-0.0847750130417353012422618529357838117333,0.0847750130417353012422618529357838117333,-0.2518862256915055095889728548779112301628,0.2518862256915055095889728548779112301628,-0.4117511614628426460359317938330516370789,0.4117511614628426460359317938330516370789,-0.5597708310739475346078715485253291369276,0.5597708310739475346078715485253291369276,-0.6916870430603532078748910812888483894522,0.6916870430603532078748910812888483894522,-0.8037049589725231156824174550145907971032,0.8037049589725231156824174550145907971032,-0.8926024664975557392060605911271455154078,0.8926024664975557392060605911271455154078,-0.9558239495713977551811958929297763099728,0.9558239495713977551811958929297763099728,-0.9915651684209309467300160047061507702525,0.9915651684209309467300160047061507702525],
+  [0,-0.1603586456402253758680961157407435495048,0.1603586456402253758680961157407435495048,-0.3165640999636298319901173288498449178922,0.3165640999636298319901173288498449178922,-0.4645707413759609457172671481041023679762,0.4645707413759609457172671481041023679762,-0.6005453046616810234696381649462392798683,0.6005453046616810234696381649462392798683,-0.7209661773352293786170958608237816296571,0.7209661773352293786170958608237816296571,-0.8227146565371428249789224867127139017745,0.8227146565371428249789224867127139017745,-0.9031559036148179016426609285323124878093,0.9031559036148179016426609285323124878093,-0.9602081521348300308527788406876515266150,0.9602081521348300308527788406876515266150,-0.9924068438435844031890176702532604935893,0.9924068438435844031890176702532604935893],
+  [-0.0765265211334973337546404093988382110047,0.0765265211334973337546404093988382110047,-0.2277858511416450780804961953685746247430,0.2277858511416450780804961953685746247430,-0.3737060887154195606725481770249272373957,0.3737060887154195606725481770249272373957,-0.5108670019508270980043640509552509984254,0.5108670019508270980043640509552509984254,-0.6360536807265150254528366962262859367433,0.6360536807265150254528366962262859367433,-0.7463319064601507926143050703556415903107,0.7463319064601507926143050703556415903107,-0.8391169718222188233945290617015206853296,0.8391169718222188233945290617015206853296,-0.9122344282513259058677524412032981130491,0.9122344282513259058677524412032981130491,-0.9639719272779137912676661311972772219120,0.9639719272779137912676661311972772219120,-0.9931285991850949247861223884713202782226,0.9931285991850949247861223884713202782226],
+  [0,-0.1455618541608950909370309823386863301163,0.1455618541608950909370309823386863301163,-0.2880213168024010966007925160646003199090,0.2880213168024010966007925160646003199090,-0.4243421202074387835736688885437880520964,0.4243421202074387835736688885437880520964,-0.5516188358872198070590187967243132866220,0.5516188358872198070590187967243132866220,-0.6671388041974123193059666699903391625970,0.6671388041974123193059666699903391625970,-0.7684399634756779086158778513062280348209,0.7684399634756779086158778513062280348209,-0.8533633645833172836472506385875676702761,0.8533633645833172836472506385875676702761,-0.9200993341504008287901871337149688941591,0.9200993341504008287901871337149688941591,-0.9672268385663062943166222149076951614246,0.9672268385663062943166222149076951614246,-0.9937521706203895002602420359379409291933,0.9937521706203895002602420359379409291933],
+  [-0.0697392733197222212138417961186280818222,0.0697392733197222212138417961186280818222,-0.2078604266882212854788465339195457342156,0.2078604266882212854788465339195457342156,-0.3419358208920842251581474204273796195591,0.3419358208920842251581474204273796195591,-0.4693558379867570264063307109664063460953,0.4693558379867570264063307109664063460953,-0.5876404035069115929588769276386473488776,0.5876404035069115929588769276386473488776,-0.6944872631866827800506898357622567712673,0.6944872631866827800506898357622567712673,-0.7878168059792081620042779554083515213881,0.7878168059792081620042779554083515213881,-0.8658125777203001365364256370193787290847,0.8658125777203001365364256370193787290847,-0.9269567721871740005206929392590531966353,0.9269567721871740005206929392590531966353,-0.9700604978354287271239509867652687108059,0.9700604978354287271239509867652687108059,-0.9942945854823992920730314211612989803930,0.9942945854823992920730314211612989803930],
+  [0,-0.1332568242984661109317426822417661370104,0.1332568242984661109317426822417661370104,-0.2641356809703449305338695382833096029790,0.2641356809703449305338695382833096029790,-0.3903010380302908314214888728806054585780,0.3903010380302908314214888728806054585780,-0.5095014778460075496897930478668464305448,0.5095014778460075496897930478668464305448,-0.6196098757636461563850973116495956533871,0.6196098757636461563850973116495956533871,-0.7186613631319501944616244837486188483299,0.7186613631319501944616244837486188483299,-0.8048884016188398921511184069967785579414,0.8048884016188398921511184069967785579414,-0.8767523582704416673781568859341456716389,0.8767523582704416673781568859341456716389,-0.9329710868260161023491969890384229782357,0.9329710868260161023491969890384229782357,-0.9725424712181152319560240768207773751816,0.9725424712181152319560240768207773751816,-0.9947693349975521235239257154455743605736,0.9947693349975521235239257154455743605736],
+  [-0.0640568928626056260850430826247450385909,0.0640568928626056260850430826247450385909,-0.1911188674736163091586398207570696318404,0.1911188674736163091586398207570696318404,-0.3150426796961633743867932913198102407864,0.3150426796961633743867932913198102407864,-0.4337935076260451384870842319133497124524,0.4337935076260451384870842319133497124524,-0.5454214713888395356583756172183723700107,0.5454214713888395356583756172183723700107,-0.6480936519369755692524957869107476266696,0.6480936519369755692524957869107476266696,-0.7401241915785543642438281030999784255232,0.7401241915785543642438281030999784255232,-0.8200019859739029219539498726697452080761,0.8200019859739029219539498726697452080761,-0.8864155270044010342131543419821967550873,0.8864155270044010342131543419821967550873,-0.9382745520027327585236490017087214496548,0.9382745520027327585236490017087214496548,-0.9747285559713094981983919930081690617411,0.9747285559713094981983919930081690617411,-0.9951872199970213601799974097007368118745,0.9951872199970213601799974097007368118745]
+];
+
+// Legendre-Gauss weights (wi values, defined by a function linked to in the Bezier primer article)
+var cValues = [
+  [],[],
+  [1.0,1.0],
+  [0.8888888888888888888888888888888888888888,0.5555555555555555555555555555555555555555,0.5555555555555555555555555555555555555555],
+  [0.6521451548625461426269360507780005927646,0.6521451548625461426269360507780005927646,0.3478548451374538573730639492219994072353,0.3478548451374538573730639492219994072353],
+  [0.5688888888888888888888888888888888888888,0.4786286704993664680412915148356381929122,0.4786286704993664680412915148356381929122,0.2369268850561890875142640407199173626432,0.2369268850561890875142640407199173626432],
+  [0.3607615730481386075698335138377161116615,0.3607615730481386075698335138377161116615,0.4679139345726910473898703439895509948116,0.4679139345726910473898703439895509948116,0.1713244923791703450402961421727328935268,0.1713244923791703450402961421727328935268],
+  [0.4179591836734693877551020408163265306122,0.3818300505051189449503697754889751338783,0.3818300505051189449503697754889751338783,0.2797053914892766679014677714237795824869,0.2797053914892766679014677714237795824869,0.1294849661688696932706114326790820183285,0.1294849661688696932706114326790820183285],
+  [0.3626837833783619829651504492771956121941,0.3626837833783619829651504492771956121941,0.3137066458778872873379622019866013132603,0.3137066458778872873379622019866013132603,0.2223810344533744705443559944262408844301,0.2223810344533744705443559944262408844301,0.1012285362903762591525313543099621901153,0.1012285362903762591525313543099621901153],
+  [0.3302393550012597631645250692869740488788,0.1806481606948574040584720312429128095143,0.1806481606948574040584720312429128095143,0.0812743883615744119718921581105236506756,0.0812743883615744119718921581105236506756,0.3123470770400028400686304065844436655987,0.3123470770400028400686304065844436655987,0.2606106964029354623187428694186328497718,0.2606106964029354623187428694186328497718],
+  [0.2955242247147528701738929946513383294210,0.2955242247147528701738929946513383294210,0.2692667193099963550912269215694693528597,0.2692667193099963550912269215694693528597,0.2190863625159820439955349342281631924587,0.2190863625159820439955349342281631924587,0.1494513491505805931457763396576973324025,0.1494513491505805931457763396576973324025,0.0666713443086881375935688098933317928578,0.0666713443086881375935688098933317928578],
+  [0.2729250867779006307144835283363421891560,0.2628045445102466621806888698905091953727,0.2628045445102466621806888698905091953727,0.2331937645919904799185237048431751394317,0.2331937645919904799185237048431751394317,0.1862902109277342514260976414316558916912,0.1862902109277342514260976414316558916912,0.1255803694649046246346942992239401001976,0.1255803694649046246346942992239401001976,0.0556685671161736664827537204425485787285,0.0556685671161736664827537204425485787285],
+  [0.2491470458134027850005624360429512108304,0.2491470458134027850005624360429512108304,0.2334925365383548087608498989248780562594,0.2334925365383548087608498989248780562594,0.2031674267230659217490644558097983765065,0.2031674267230659217490644558097983765065,0.1600783285433462263346525295433590718720,0.1600783285433462263346525295433590718720,0.1069393259953184309602547181939962242145,0.1069393259953184309602547181939962242145,0.0471753363865118271946159614850170603170,0.0471753363865118271946159614850170603170],
+  [0.2325515532308739101945895152688359481566,0.2262831802628972384120901860397766184347,0.2262831802628972384120901860397766184347,0.2078160475368885023125232193060527633865,0.2078160475368885023125232193060527633865,0.1781459807619457382800466919960979955128,0.1781459807619457382800466919960979955128,0.1388735102197872384636017768688714676218,0.1388735102197872384636017768688714676218,0.0921214998377284479144217759537971209236,0.0921214998377284479144217759537971209236,0.0404840047653158795200215922009860600419,0.0404840047653158795200215922009860600419],
+  [0.2152638534631577901958764433162600352749,0.2152638534631577901958764433162600352749,0.2051984637212956039659240656612180557103,0.2051984637212956039659240656612180557103,0.1855383974779378137417165901251570362489,0.1855383974779378137417165901251570362489,0.1572031671581935345696019386238421566056,0.1572031671581935345696019386238421566056,0.1215185706879031846894148090724766259566,0.1215185706879031846894148090724766259566,0.0801580871597602098056332770628543095836,0.0801580871597602098056332770628543095836,0.0351194603317518630318328761381917806197,0.0351194603317518630318328761381917806197],
+  [0.2025782419255612728806201999675193148386,0.1984314853271115764561183264438393248186,0.1984314853271115764561183264438393248186,0.1861610000155622110268005618664228245062,0.1861610000155622110268005618664228245062,0.1662692058169939335532008604812088111309,0.1662692058169939335532008604812088111309,0.1395706779261543144478047945110283225208,0.1395706779261543144478047945110283225208,0.1071592204671719350118695466858693034155,0.1071592204671719350118695466858693034155,0.0703660474881081247092674164506673384667,0.0703660474881081247092674164506673384667,0.0307532419961172683546283935772044177217,0.0307532419961172683546283935772044177217],
+  [0.1894506104550684962853967232082831051469,0.1894506104550684962853967232082831051469,0.1826034150449235888667636679692199393835,0.1826034150449235888667636679692199393835,0.1691565193950025381893120790303599622116,0.1691565193950025381893120790303599622116,0.1495959888165767320815017305474785489704,0.1495959888165767320815017305474785489704,0.1246289712555338720524762821920164201448,0.1246289712555338720524762821920164201448,0.0951585116824927848099251076022462263552,0.0951585116824927848099251076022462263552,0.0622535239386478928628438369943776942749,0.0622535239386478928628438369943776942749,0.0271524594117540948517805724560181035122,0.0271524594117540948517805724560181035122],
+  [0.1794464703562065254582656442618856214487,0.1765627053669926463252709901131972391509,0.1765627053669926463252709901131972391509,0.1680041021564500445099706637883231550211,0.1680041021564500445099706637883231550211,0.1540457610768102880814315948019586119404,0.1540457610768102880814315948019586119404,0.1351363684685254732863199817023501973721,0.1351363684685254732863199817023501973721,0.1118838471934039710947883856263559267358,0.1118838471934039710947883856263559267358,0.0850361483171791808835353701910620738504,0.0850361483171791808835353701910620738504,0.0554595293739872011294401653582446605128,0.0554595293739872011294401653582446605128,0.0241483028685479319601100262875653246916,0.0241483028685479319601100262875653246916],
+  [0.1691423829631435918406564701349866103341,0.1691423829631435918406564701349866103341,0.1642764837458327229860537764659275904123,0.1642764837458327229860537764659275904123,0.1546846751262652449254180038363747721932,0.1546846751262652449254180038363747721932,0.1406429146706506512047313037519472280955,0.1406429146706506512047313037519472280955,0.1225552067114784601845191268002015552281,0.1225552067114784601845191268002015552281,0.1009420441062871655628139849248346070628,0.1009420441062871655628139849248346070628,0.0764257302548890565291296776166365256053,0.0764257302548890565291296776166365256053,0.0497145488949697964533349462026386416808,0.0497145488949697964533349462026386416808,0.0216160135264833103133427102664524693876,0.0216160135264833103133427102664524693876],
+  [0.1610544498487836959791636253209167350399,0.1589688433939543476499564394650472016787,0.1589688433939543476499564394650472016787,0.1527660420658596667788554008976629984610,0.1527660420658596667788554008976629984610,0.1426067021736066117757461094419029724756,0.1426067021736066117757461094419029724756,0.1287539625393362276755157848568771170558,0.1287539625393362276755157848568771170558,0.1115666455473339947160239016817659974813,0.1115666455473339947160239016817659974813,0.0914900216224499994644620941238396526609,0.0914900216224499994644620941238396526609,0.0690445427376412265807082580060130449618,0.0690445427376412265807082580060130449618,0.0448142267656996003328381574019942119517,0.0448142267656996003328381574019942119517,0.0194617882297264770363120414644384357529,0.0194617882297264770363120414644384357529],
+  [0.1527533871307258506980843319550975934919,0.1527533871307258506980843319550975934919,0.1491729864726037467878287370019694366926,0.1491729864726037467878287370019694366926,0.1420961093183820513292983250671649330345,0.1420961093183820513292983250671649330345,0.1316886384491766268984944997481631349161,0.1316886384491766268984944997481631349161,0.1181945319615184173123773777113822870050,0.1181945319615184173123773777113822870050,0.1019301198172404350367501354803498761666,0.1019301198172404350367501354803498761666,0.0832767415767047487247581432220462061001,0.0832767415767047487247581432220462061001,0.0626720483341090635695065351870416063516,0.0626720483341090635695065351870416063516,0.0406014298003869413310399522749321098790,0.0406014298003869413310399522749321098790,0.0176140071391521183118619623518528163621,0.0176140071391521183118619623518528163621],
+  [0.1460811336496904271919851476833711882448,0.1445244039899700590638271665537525436099,0.1445244039899700590638271665537525436099,0.1398873947910731547221334238675831108927,0.1398873947910731547221334238675831108927,0.1322689386333374617810525744967756043290,0.1322689386333374617810525744967756043290,0.1218314160537285341953671771257335983563,0.1218314160537285341953671771257335983563,0.1087972991671483776634745780701056420336,0.1087972991671483776634745780701056420336,0.0934444234560338615532897411139320884835,0.0934444234560338615532897411139320884835,0.0761001136283793020170516533001831792261,0.0761001136283793020170516533001831792261,0.0571344254268572082836358264724479574912,0.0571344254268572082836358264724479574912,0.0369537897708524937999506682993296661889,0.0369537897708524937999506682993296661889,0.0160172282577743333242246168584710152658,0.0160172282577743333242246168584710152658],
+  [0.1392518728556319933754102483418099578739,0.1392518728556319933754102483418099578739,0.1365414983460151713525738312315173965863,0.1365414983460151713525738312315173965863,0.1311735047870623707329649925303074458757,0.1311735047870623707329649925303074458757,0.1232523768105124242855609861548144719594,0.1232523768105124242855609861548144719594,0.1129322960805392183934006074217843191142,0.1129322960805392183934006074217843191142,0.1004141444428809649320788378305362823508,0.1004141444428809649320788378305362823508,0.0859416062170677274144436813727028661891,0.0859416062170677274144436813727028661891,0.0697964684245204880949614189302176573987,0.0697964684245204880949614189302176573987,0.0522933351526832859403120512732112561121,0.0522933351526832859403120512732112561121,0.0337749015848141547933022468659129013491,0.0337749015848141547933022468659129013491,0.0146279952982722006849910980471854451902,0.0146279952982722006849910980471854451902],
+  [0.1336545721861061753514571105458443385831,0.1324620394046966173716424647033169258050,0.1324620394046966173716424647033169258050,0.1289057221880821499785953393997936532597,0.1289057221880821499785953393997936532597,0.1230490843067295304675784006720096548158,0.1230490843067295304675784006720096548158,0.1149966402224113649416435129339613014914,0.1149966402224113649416435129339613014914,0.1048920914645414100740861850147438548584,0.1048920914645414100740861850147438548584,0.0929157660600351474770186173697646486034,0.0929157660600351474770186173697646486034,0.0792814117767189549228925247420432269137,0.0792814117767189549228925247420432269137,0.0642324214085258521271696151589109980391,0.0642324214085258521271696151589109980391,0.0480376717310846685716410716320339965612,0.0480376717310846685716410716320339965612,0.0309880058569794443106942196418845053837,0.0309880058569794443106942196418845053837,0.0134118594871417720813094934586150649766,0.0134118594871417720813094934586150649766],
+  [0.1279381953467521569740561652246953718517,0.1279381953467521569740561652246953718517,0.1258374563468282961213753825111836887264,0.1258374563468282961213753825111836887264,0.1216704729278033912044631534762624256070,0.1216704729278033912044631534762624256070,0.1155056680537256013533444839067835598622,0.1155056680537256013533444839067835598622,0.1074442701159656347825773424466062227946,0.1074442701159656347825773424466062227946,0.0976186521041138882698806644642471544279,0.0976186521041138882698806644642471544279,0.0861901615319532759171852029837426671850,0.0861901615319532759171852029837426671850,0.0733464814110803057340336152531165181193,0.0733464814110803057340336152531165181193,0.0592985849154367807463677585001085845412,0.0592985849154367807463677585001085845412,0.0442774388174198061686027482113382288593,0.0442774388174198061686027482113382288593,0.0285313886289336631813078159518782864491,0.0285313886289336631813078159518782864491,0.0123412297999871995468056670700372915759,0.0123412297999871995468056670700372915759]
+];
+
+// LUT for binomial coefficient arrays per curve order 'n'
+var binomialCoefficients = [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1]];
+
+// Look up what the binomial coefficient is for pair {n,k}
+function binomials(n, k) {
+  return binomialCoefficients[n][k];
+}
+
+/**
+ * Compute the curve derivative (hodograph) at t.
+ */
+function getDerivative(derivative, t, vs) {
+  // the derivative of any 't'-less function is zero.
+  var n = vs.length - 1,
+      _vs,
+      value,
+      k;
+  if (n === 0) {
+    return 0;
+  }
+
+  // direct values? compute!
+  if (derivative === 0) {
+    value = 0;
+    for (k = 0; k <= n; k++) {
+      value += binomials(n, k) * Math.pow(1 - t, n - k) * Math.pow(t, k) * vs[k];
+    }
+    return value;
+  } else {
+    // Still some derivative? go down one order, then try
+    // for the lower order curve's.
+    _vs = new Array(n);
+    for (k = 0; k < n; k++) {
+      _vs[k] = n * (vs[k + 1] - vs[k]);
+    }
+    return getDerivative(derivative - 1, t, _vs);
+  }
+}
+
+function B(xs, ys, t) {
+  var xbase = getDerivative(1, t, xs);
+  var ybase = getDerivative(1, t, ys);
+  var combined = xbase * xbase + ybase * ybase;
+  return Math.sqrt(combined);
+}
+
+function getCubicArcLength(xs, ys, t) {
+  var z, sum, i, correctedT;
+
+  /*if (xs.length >= tValues.length) {
+    throw new Error('too high n bezier');
+  }*/
+
+  if (t === undefined) {
+    t = 1;
+  }
+  var n = 20;
+
+  z = t / 2;
+  sum = 0;
+  for (i = 0; i < n; i++) {
+    correctedT = z * tValues[n][i] + z;
+    sum += cValues[n][i] * B(xs, ys, correctedT);
+  }
+  return z * sum;
+}
+
+//This file is taken from the following project: https://github.com/fontello/svgpath
+// Convert an arc to a sequence of cubic bézier curves
+//
+var TAU = Math.PI * 2;
+
+
+/* eslint-disable space-infix-ops */
+
+// Calculate an angle between two unit vectors
+//
+// Since we measure angle between radii of circular arcs,
+// we can use simplified math (without length normalization)
+//
+function unit_vector_angle(ux, uy, vx, vy) {
+  var sign = (ux * vy - uy * vx < 0) ? -1 : 1;
+  var dot  = ux * vx + uy * vy;
+
+  // Add this to work with arbitrary vectors:
+  // dot /= Math.sqrt(ux * ux + uy * uy) * Math.sqrt(vx * vx + vy * vy);
+
+  // rounding errors, e.g. -1.0000000000000002 can screw up this
+  if (dot >  1.0) { dot =  1.0; }
+  if (dot < -1.0) { dot = -1.0; }
+
+  return sign * Math.acos(dot);
+}
+
+
+// Convert from endpoint to center parameterization,
+// see http://www.w3.org/TR/SVG11/implnote.html#ArcImplementationNotes
+//
+// Return [cx, cy, theta1, delta_theta]
+//
+function get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi) {
+  // Step 1.
+  //
+  // Moving an ellipse so origin will be the middlepoint between our two
+  // points. After that, rotate it to line up ellipse axes with coordinate
+  // axes.
+  //
+  var x1p =  cos_phi*(x1-x2)/2 + sin_phi*(y1-y2)/2;
+  var y1p = -sin_phi*(x1-x2)/2 + cos_phi*(y1-y2)/2;
+
+  var rx_sq  =  rx * rx;
+  var ry_sq  =  ry * ry;
+  var x1p_sq = x1p * x1p;
+  var y1p_sq = y1p * y1p;
+
+  // Step 2.
+  //
+  // Compute coordinates of the centre of this ellipse (cx', cy')
+  // in the new coordinate system.
+  //
+  var radicant = (rx_sq * ry_sq) - (rx_sq * y1p_sq) - (ry_sq * x1p_sq);
+
+  if (radicant < 0) {
+    // due to rounding errors it might be e.g. -1.3877787807814457e-17
+    radicant = 0;
+  }
+
+  radicant /=   (rx_sq * y1p_sq) + (ry_sq * x1p_sq);
+  radicant = Math.sqrt(radicant) * (fa === fs ? -1 : 1);
+
+  var cxp = radicant *  rx/ry * y1p;
+  var cyp = radicant * -ry/rx * x1p;
+
+  // Step 3.
+  //
+  // Transform back to get centre coordinates (cx, cy) in the original
+  // coordinate system.
+  //
+  var cx = cos_phi*cxp - sin_phi*cyp + (x1+x2)/2;
+  var cy = sin_phi*cxp + cos_phi*cyp + (y1+y2)/2;
+
+  // Step 4.
+  //
+  // Compute angles (theta1, delta_theta).
+  //
+  var v1x =  (x1p - cxp) / rx;
+  var v1y =  (y1p - cyp) / ry;
+  var v2x = (-x1p - cxp) / rx;
+  var v2y = (-y1p - cyp) / ry;
+
+  var theta1 = unit_vector_angle(1, 0, v1x, v1y);
+  var delta_theta = unit_vector_angle(v1x, v1y, v2x, v2y);
+
+  if (fs === 0 && delta_theta > 0) {
+    delta_theta -= TAU;
+  }
+  if (fs === 1 && delta_theta < 0) {
+    delta_theta += TAU;
+  }
+
+  return [ cx, cy, theta1, delta_theta ];
+}
+
+//
+// Approximate one unit arc segment with bézier curves,
+// see http://math.stackexchange.com/questions/873224
+//
+function approximate_unit_arc(theta1, delta_theta) {
+  var alpha = 4/3 * Math.tan(delta_theta/4);
+
+  var x1 = Math.cos(theta1);
+  var y1 = Math.sin(theta1);
+  var x2 = Math.cos(theta1 + delta_theta);
+  var y2 = Math.sin(theta1 + delta_theta);
+
+  return [ x1, y1, x1 - y1*alpha, y1 + x1*alpha, x2 + y2*alpha, y2 - x2*alpha, x2, y2 ];
+}
+
+var a2c = function(x1, y1, rx, ry, phi, fa, fs, x2, y2) {
+  var sin_phi = Math.sin(phi * TAU / 360);
+  var cos_phi = Math.cos(phi * TAU / 360);
+
+  // Make sure radii are valid
+  //
+  var x1p =  cos_phi*(x1-x2)/2 + sin_phi*(y1-y2)/2;
+  var y1p = -sin_phi*(x1-x2)/2 + cos_phi*(y1-y2)/2;
+
+  if (x1p === 0 && y1p === 0) {
+    // we're asked to draw line to itself
+    return [];
+  }
+
+  if (rx === 0 || ry === 0) {
+    // one of the radii is zero
+    return [];
+  }
+
+
+  // Compensate out-of-range radii
+  //
+  rx = Math.abs(rx);
+  ry = Math.abs(ry);
+
+  var lambda = (x1p * x1p) / (rx * rx) + (y1p * y1p) / (ry * ry);
+  if (lambda > 1) {
+    rx *= Math.sqrt(lambda);
+    ry *= Math.sqrt(lambda);
+  }
+
+
+  // Get center parameters (cx, cy, theta1, delta_theta)
+  //
+  var cc = get_arc_center(x1, y1, x2, y2, fa, fs, rx, ry, sin_phi, cos_phi);
+
+  var result = [];
+  var theta1 = cc[2];
+  var delta_theta = cc[3];
+
+  // Split an arc to multiple segments, so each segment
+  // will be less than τ/4 (= 90°)
+  //
+  var segments = Math.max(Math.ceil(Math.abs(delta_theta) / (TAU / 4)), 1);
+  delta_theta /= segments;
+
+  for (var i = 0; i < segments; i++) {
+    result.push(approximate_unit_arc(theta1, delta_theta));
+    theta1 += delta_theta;
+  }
+
+  // We have a bezier approximation of a unit circle,
+  // now need to transform back to the original ellipse
+  //
+  return result.map(function (curve) {
+    for (var i = 0; i < curve.length; i += 2) {
+      var x = curve[i + 0];
+      var y = curve[i + 1];
+
+      // scale
+      x *= rx;
+      y *= ry;
+
+      // rotate
+      var xp = cos_phi*x - sin_phi*y;
+      var yp = sin_phi*x + cos_phi*y;
+
+      // translate
+      curve[i + 0] = xp + cc[0];
+      curve[i + 1] = yp + cc[1];
+    }
+
+    return curve;
+  });
+};
+
+//Calculate ans Arc curve length and positionAtLength
+//Definitions taken from https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
+var Arc = function(x0, y0, rx,ry, xAxisRotate, LargeArcFlag,SweepFlag, x,y) {
+  return new Arc$1(x0, y0, rx,ry, xAxisRotate, LargeArcFlag,SweepFlag, x,y);
+};
+
+function Arc$1(x0, y0,rx,ry, xAxisRotate, LargeArcFlag,SweepFlag,x,y) {
+    var length = 0;
+    var partialLengths = [];
+    var curves = [];
+    var res = a2c(x0, y0,rx,ry, xAxisRotate, LargeArcFlag,SweepFlag,x,y);
+    res.forEach(function(d){
+        var curve = new Bezier(d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7]);
+        var curveLength = curve.getTotalLength();
+        length += curveLength;
+        partialLengths.push(curveLength);
+        curves.push(curve);
+    });
+    this.length = length;
+    this.partialLengths = partialLengths;
+    this.curves = curves;
+}
+
+Arc$1.prototype = {
+  constructor: Arc$1,
+  init: function() {
+
+    
+  },
+
+  getTotalLength: function() {
+    return this.length;
+  },
+  getPointAtLength: function(fractionLength) {
+    
+    if(fractionLength < 0){
+      fractionLength = 0;
+    } else if(fractionLength > this.length){
+      fractionLength = this.length;
+    }
+    var i = this.partialLengths.length - 1;
+
+    while(this.partialLengths[i] >= fractionLength && this.partialLengths[i] > 0){
+      i--;
+    }
+    if(i<this.partialLengths.length-1){
+        i++;
+    }
+
+    var lengthOffset = 0;
+    for(var j=0; j<i; j++){
+        lengthOffset += this.partialLengths[j];
+    }
+
+    return this.curves[i].getPointAtLength(fractionLength - lengthOffset);
+  },
+  getTangentAtLength: function(fractionLength) {
+    if(fractionLength < 0){
+        fractionLength = 0;
+        } else if(fractionLength > this.length){
+        fractionLength = this.length;
+        }
+        var i = this.partialLengths.length - 1;
+
+        while(this.partialLengths[i] >= fractionLength && this.partialLengths[i] > 0){
+        i--;
+        }
+        if(i<this.partialLengths.length-1){
+            i++;
+        }
+
+        var lengthOffset = 0;
+        for(var j=0; j<i; j++){
+            lengthOffset += this.partialLengths[j];
+        }
+
+    return this.curves[i].getTangentAtLength(fractionLength - lengthOffset);
+  },
+  getPropertiesAtLength: function(fractionLength){
+    var tangent = this.getTangentAtLength(fractionLength);
+    var point = this.getPointAtLength(fractionLength);
+    return {x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y};
+  }
+};
+
+var LinearPosition = function(x0, x1, y0, y1) {
+  return new LinearPosition$1(x0, x1, y0, y1);
+
+};
+
+function LinearPosition$1(x0, x1, y0, y1){
+  this.x0 = x0;
+  this.x1 = x1;
+  this.y0 = y0;
+  this.y1 = y1;
+}
+
+LinearPosition$1.prototype.getTotalLength = function(){
+  return Math.sqrt(Math.pow(this.x0 - this.x1, 2) +
+         Math.pow(this.y0 - this.y1, 2));
+};
+
+LinearPosition$1.prototype.getPointAtLength = function(pos){
+  var fraction = pos/ (Math.sqrt(Math.pow(this.x0 - this.x1, 2) +
+         Math.pow(this.y0 - this.y1, 2)));
+
+  var newDeltaX = (this.x1 - this.x0)*fraction;
+  var newDeltaY = (this.y1 - this.y0)*fraction;
+  return { x: this.x0 + newDeltaX, y: this.y0 + newDeltaY };
+};
+LinearPosition$1.prototype.getTangentAtLength = function(){
+  var module = Math.sqrt((this.x1 - this.x0) * (this.x1 - this.x0) +
+              (this.y1 - this.y0) * (this.y1 - this.y0));
+  return { x: (this.x1 - this.x0)/module, y: (this.y1 - this.y0)/module };
+};
+LinearPosition$1.prototype.getPropertiesAtLength = function(pos){
+  var point = this.getPointAtLength(pos);
+  var tangent = this.getTangentAtLength();
+  return {x: point.x, y: point.y, tangentX: tangent.x, tangentY: tangent.y};
+};
+
+var pathProperties = function(svgString) {
+  var length = 0;
+  var partial_lengths = [];
+  var functions = [];
+
+  function svgProperties(string){
+    if(!string){return null;}
+    var parsed = parse(string);
+    var cur = [0, 0];
+    var prev_point = [0, 0];
+    var curve;
+    var ringStart;
+    for (var i = 0; i < parsed.length; i++){
+      //moveTo
+      if(parsed[i][0] === "M"){
+        cur = [parsed[i][1], parsed[i][2]];
+        ringStart = [cur[0], cur[1]];
+        functions.push(null);
+      } else if(parsed[i][0] === "m"){
+        cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[1]];
+        ringStart = [cur[0], cur[1]];
+        functions.push(null);
+      }
+      //lineTo
+      else if(parsed[i][0] === "L"){
+        length = length + Math.sqrt(Math.pow(cur[0] - parsed[i][1], 2) + Math.pow(cur[1] - parsed[i][2], 2));
+        functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]));
+        cur = [parsed[i][1], parsed[i][2]];
+      } else if(parsed[i][0] === "l"){
+        length = length + Math.sqrt(Math.pow(parsed[i][1], 2) + Math.pow(parsed[i][2], 2));
+        functions.push(new LinearPosition(cur[0], parsed[i][1] + cur[0], cur[1], parsed[i][2] + cur[1]));
+        cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[1]];
+      } else if(parsed[i][0] === "H"){
+        length = length + Math.abs(cur[0] - parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], parsed[i][1], cur[1], cur[1]));
+        cur[0] = parsed[i][1];
+      } else if(parsed[i][0] === "h"){
+        length = length + Math.abs(parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1]));
+        cur[0] = parsed[i][1] + cur[0];
+      } else if(parsed[i][0] === "V"){
+        length = length + Math.abs(cur[1] - parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], cur[0], cur[1], parsed[i][1]));
+        cur[1] = parsed[i][1];
+      } else if(parsed[i][0] === "v"){
+        length = length + Math.abs(parsed[i][1]);
+        functions.push(new LinearPosition(cur[0], cur[0], cur[1], cur[1] + parsed[i][1]));
+        cur[1] = parsed[i][1] + cur[1];
+      //Close path
+      }  else if(parsed[i][0] === "z" || parsed[i][0] === "Z"){
+        length = length + Math.sqrt(Math.pow(ringStart[0] - cur[0], 2) + Math.pow(ringStart[1] - cur[1], 2));
+        functions.push(new LinearPosition(cur[0], ringStart[0], cur[1], ringStart[1]));
+        cur = [ringStart[0], ringStart[1]];
+      }
+      //Cubic Bezier curves
+      else if(parsed[i][0] === "C"){
+        curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4] , parsed[i][5], parsed[i][6]);
+        length = length + curve.getTotalLength();
+        cur = [parsed[i][5], parsed[i][6]];
+        functions.push(curve);
+      } else if(parsed[i][0] === "c"){
+        curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4] , cur[0] + parsed[i][5], cur[1] + parsed[i][6]);
+        length = length + curve.getTotalLength();
+        cur = [parsed[i][5] + cur[0], parsed[i][6] + cur[1]];
+        functions.push(curve);
+      } else if(parsed[i][0] === "S"){
+        if(i>0 && ["C","c","S","s"].indexOf(parsed[i-1][0]) > -1){
+          curve = new Bezier(cur[0], cur[1] , 2*cur[0] - parsed[i-1][parsed[i-1].length - 4], 2*cur[1] - parsed[i-1][parsed[i-1].length - 3], parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
+        } else {
+          curve = new Bezier(cur[0], cur[1] , cur[0], cur[1], parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
+        }
+        length = length + curve.getTotalLength();
+        cur = [parsed[i][3], parsed[i][4]];
+        functions.push(curve);
+      }  else if(parsed[i][0] === "s"){ //240 225
+        if(i>0 && ["C","c","S","s"].indexOf(parsed[i-1][0]) > -1){
+          curve = new Bezier(cur[0], cur[1] , cur[0] + curve.d.x - curve.c.x, cur[1] + curve.d.y - curve.c.y, cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
+        } else {
+          curve = new Bezier(cur[0], cur[1] , cur[0], cur[1], cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
+        }
+        length = length + curve.getTotalLength();
+        cur = [parsed[i][3] + cur[0], parsed[i][4] + cur[1]];
+        functions.push(curve);
+      }
+      //Quadratic Bezier curves
+      else if(parsed[i][0] === "Q"){
+        if(cur[0] == parsed[i][1] && cur[1] == parsed[i][2]){
+          curve = new LinearPosition(parsed[i][1], parsed[i][3], parsed[i][2], parsed[i][4]);
+        } else {
+          curve = new Bezier(cur[0], cur[1] , parsed[i][1], parsed[i][2] , parsed[i][3], parsed[i][4]);
+        }
+        length = length + curve.getTotalLength();
+        functions.push(curve);
+        cur = [parsed[i][3], parsed[i][4]];
+        prev_point = [parsed[i][1], parsed[i][2]];
+
+      }  else if(parsed[i][0] === "q"){
+        if(!(parsed[i][1] == 0 && parsed[i][2] == 0)){
+          curve = new Bezier(cur[0], cur[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2] , cur[0] + parsed[i][3], cur[1] + parsed[i][4]);
+        } else {
+          curve = new LinearPosition(cur[0] + parsed[i][1], cur[0] + parsed[i][3], cur[1] + parsed[i][2], cur[1] + parsed[i][4]);
+        }
+        length = length + curve.getTotalLength();
+        prev_point = [cur[0] + parsed[i][1], cur[1] + parsed[i][2]];
+        cur = [parsed[i][3] + cur[0], parsed[i][4] + cur[1]];
+        functions.push(curve);
+      } else if(parsed[i][0] === "T"){
+        if(i>0 && ["Q","q","T","t"].indexOf(parsed[i-1][0]) > -1){
+          curve = new Bezier(cur[0], cur[1] , 2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1] , parsed[i][1], parsed[i][2]);
+        } else {
+          curve = new LinearPosition(cur[0], parsed[i][1], cur[1], parsed[i][2]);
+        }
+        functions.push(curve);
+        length = length + curve.getTotalLength();
+        prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
+        cur = [parsed[i][1], parsed[i][2]];
+
+      } else if(parsed[i][0] === "t"){
+        if(i>0 && ["Q","q","T","t"].indexOf(parsed[i-1][0]) > -1){
+          curve = new Bezier(cur[0], cur[1] , 2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1] , cur[0] + parsed[i][1], cur[1] + parsed[i][2]);
+        } else {
+          curve = new LinearPosition(cur[0], cur[0] + parsed[i][1], cur[1], cur[1] + parsed[i][2]);
+        }
+        length = length + curve.getTotalLength();
+        prev_point = [2 * cur[0] - prev_point[0] , 2 * cur[1] - prev_point[1]];
+        cur = [parsed[i][1] + cur[0], parsed[i][2] + cur[0]];
+        functions.push(curve);
+      } else if(parsed[i][0] === "A"){
+        curve = new Arc(cur[0], cur[1], parsed[i][1], parsed[i][2], parsed[i][3], parsed[i][4], parsed[i][5], parsed[i][6], parsed[i][7]);
+
+        length = length + curve.getTotalLength();
+        cur = [parsed[i][6], parsed[i][7]];
+        functions.push(curve);
+      } else if(parsed[i][0] === "a"){
+        curve = new Arc(cur[0], cur[1], parsed[i][1], parsed[i][2], parsed[i][3], parsed[i][4], parsed[i][5], cur[0] + parsed[i][6], cur[1] + parsed[i][7]);
+
+        length = length + curve.getTotalLength();
+        cur = [cur[0] + parsed[i][6], cur[1] + parsed[i][7]];
+        functions.push(curve);
+      }
+      partial_lengths.push(length);
+
+    }
+    return svgProperties;
+  }
+
+ svgProperties.getTotalLength = function(){
+    return length;
+  };
+
+  svgProperties.getPointAtLength = function(fractionLength){
+    var fractionPart = getPartAtLength(fractionLength);
+    return functions[fractionPart.i].getPointAtLength(fractionPart.fraction);
+  };
+
+  svgProperties.getTangentAtLength = function(fractionLength){
+    var fractionPart = getPartAtLength(fractionLength);
+    return functions[fractionPart.i].getTangentAtLength(fractionPart.fraction);
+  };
+
+  svgProperties.getPropertiesAtLength = function(fractionLength){
+    var fractionPart = getPartAtLength(fractionLength);
+    return functions[fractionPart.i].getPropertiesAtLength(fractionPart.fraction);
+  };
+
+  svgProperties.getParts = function(){
+    var parts = [];
+    for(var i = 0; i< functions.length; i++){
+      if(functions[i] != null){
+        var properties = {};
+        properties['start'] = functions[i].getPointAtLength(0);
+        properties['end'] = functions[i].getPointAtLength(partial_lengths[i] - partial_lengths[i-1]);
+        properties['length'] = partial_lengths[i] - partial_lengths[i-1];
+        (function(func){
+          properties['getPointAtLength'] = function(d){return func.getPointAtLength(d);};
+          properties['getTangentAtLength'] = function(d){return func.getTangentAtLength(d);};
+          properties['getPropertiesAtLength'] = function(d){return func.getPropertiesAtLength(d);};
+        })(functions[i]);
+        
+        parts.push(properties);
+      }
+    }
+  
+    return parts;
+  };
+
+  var getPartAtLength = function(fractionLength){
+    if(fractionLength < 0){
+      fractionLength = 0;
+    } else if(fractionLength > length){
+      fractionLength = length;
+    }
+
+    var i = partial_lengths.length - 1;
+
+    while(partial_lengths[i] >= fractionLength && partial_lengths[i] > 0){
+      i--;
+    }
+    i++;
+    return {fraction: fractionLength-partial_lengths[i-1], i: i};
+  };
+
+  return svgProperties(svgString);
+};
+
+exports.svgPathProperties = pathProperties;
+exports.parse = parse;
+exports.Bezier = Bezier;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Button {
+  constructor(el, args) {
+    if( el && el.className.match("btn") ) {
+      this.el = el;
+    }
+  }
+
+  display(args) {
+    if( !args ) var args = { delay: 0 };
+    if( args.delay > 0 ) {
+      setTimeout(() => this.display(), args.delay);
+      return;
+    }
+    this.el.classList.remove("btn--hide");
+  }
+
+  hide(args) {
+    if( !args ) var args = { delay: 0 };
+    if( args.delay > 0 ) {
+      setTimeout(() => this.hide(), args.delay);
+      return;
+    }
+    this.el.classList.add("btn--hide");
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Button);
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/*
+ * DOMParser HTML extension
+ * 2012-09-04
+ * 
+ * By Eli Grey, http://eligrey.com
+ * Public domain.
+ * 
+ */
+
+/*! @source https://gist.github.com/1129031 */
+/*global document, DOMParser*/
+
+(function(DOMParser) {
+	"use strict";
+
+	var proto = DOMParser.prototype, 
+        nativeParse = proto.parseFromString;
+
+	// Firefox/Opera/IE lancent des erreurs sur les types non pris en charge 
+	try {
+		// WebKit renvoie null sur les types non pris en charge 
+		if ((new DOMParser()).parseFromString("", "text/html")) {
+			// text/html l'analyse est supportée nativement 
+			return;
+		}
+	} catch (ex) {}
+
+	proto.parseFromString = function(markup, type) {
+		if (/^\s*text\/html\s*(?:;|$)/i.test(type)) {
+
+			var doc = document.implementation.createHTMLDocument("");
+      		if (markup.toLowerCase().indexOf('<!doctype') > -1) {
+    			doc.documentElement.innerHTML = markup;
+  			} else {
+    			doc.body.innerHTML = markup;
+  			}
+			return doc;
+
+		} else {
+
+			return nativeParse.apply(this, arguments);
+
+		}
+	};
+}(DOMParser));
+
+
+
+
+
+/**
+ * An abstract class which allow to implements events 
+ * @author Solal Dussout-Revel https://github.com/SolalDR
+ * @abstract
+ */
+function AbstractEvent () {
+	this.events = {};
+}
+
+// Add a new function to execute when "name" is dispatch 
+AbstractEvent.prototype.on = function(name, callback) {
+	if (!this.events[name]) this.events[name] = [];
+	this.events[name].push(callback.bind(this));
+}
+
+// Remove a function
+AbstractEvent.prototype.off = function(name, callback){
+	if (!this.events[name]) return;
+	for (var i = 0; i < this.events[name].length; i++) {
+		if( this.events[name][i] == callback ) this.events[name].splice(i, 1);
+	}
+}
+
+// Dispatch the event, loop in this.events[name] and execute all the function in it
+AbstractEvent.prototype.dispatch = function(name, event) {
+	if (!this.events[name]) return;
+	var callback;
+	for (var i = 0; i < this.events[name].length; i++){
+		callback = this.events[name][i];
+		callback(event);
+	}
+}
+
+/**
+ * @namespace
+ * Asap.js core
+ * run Asap.start() to launch listening
+ */
+var Asap = {
+
+
+	/*********************** Config *********************/
+	
+	/*
+	 *	Default configuration
+	 */ 
+	default: {
+		selector: {
+			target: "body",
+			source: "body"
+		}
+	},
+
+	config: {},
+
+	/*********************** Storage *********************/
+
+	/* List of all the links in the dom [Asap.Link] */
+	links: [], 
+
+	/* List of all the current request  [Asap.Request]*/
+	requests: [],
+
+	/* Custom events list */
+	events: {
+		/* Dispatch when a new visit is end */
+		load: new Event("asap:load", { "bubbles":false, "cancelable": false}),
+	},
+
+
+	/**
+	 * @constructor
+	 * The future constructor of animation system
+	 */
+	Animation: function(){
+		this.request;			// Referer request
+		this.bemName;			// Block name of animation ["slide", "fade", "rotate"]
+		this.status; 			// Start / Run / End
+		this.callback; 			// On end
+	},
+
+
+	/*********************** History *********************/
+
+	/**
+	 * Push the current state to allow back history action 
+	 */
+	saveInitialState: function(){
+		window.history.pushState({
+			title: document.querySelector("title").innerHTML,
+			body: document.body.innerHTML
+		}, "Asap", document.location.href);
+	},
+
+
+	/**
+	 * Restore a state
+	 * @params {Object} state
+	 */
+	restoreFromState: function(state){
+		document.title.innerHTML = state.title;
+		document.body.innerHTML = state.body;
+		Asap.evaluateScripts(document.body);
+		Asap.addLinks(document.body);
+	},
+
+
+	/*********************** Helpers *********************/
+
+	/**
+	 * An helper method to facilitate Event implementation in objects
+	 * @param {function} c : The object constructor
+	 */
+	implementEvent: function(c){
+		var proto = Object.assign( {}, c.prototype);  			// Store originals proto
+		c.prototype = AbstractEvent.prototype; 					// Implement events methods 
+		c.prototype.constructor = c; 							// Override constructor
+		c.prototype = Object.assign(c.prototype, proto); 		// Merge originals proto
+	},
+
+	
+	/**
+	 * Eval <script> content in source node,
+	 * allow to launch specific scripts when a new visit is done 
+	 * @param {Node} source  
+	 */
+	evaluateScripts: function(source){
+		var scripts = source.querySelectorAll("script");
+		for(var i=0; i<scripts.length; i++){
+			eval(scripts[i].innerHTML);
+		}
+	},
+
+
+	/**
+	 * Instantiate an Asap.Link object for each link in the target node
+	 * @param {Node} target 
+	 */
+	addLinks: function(target){
+		var links = target.querySelectorAll("a");
+		for(var i=0; i<links.length; i++){
+			if( links[i].getAttribute("data-asap") !== "false" ){
+				this.links.push(new Asap.Link(links[i]));
+			}
+		}
+	},
+
+
+	/*********************** Initialisation *********************/
+	
+
+	initConfig: function(c){
+
+		this.config.selector = {};
+
+		this.config.selector.target = c.targetSelector ? c.targetSelector : this.default.selector.target;
+
+		
+		if( c.sourceSelector ) {
+			this.config.selector.source = c.sourceSelector;
+			this.config.source = document.querySelector(this.config.selector.source);
+		} else {
+			this.config.selector.source = this.default.selector.source;
+			this.config.source = document.body;
+		}
+	},
+
+
+	/**
+	 * Setup the global configuration, 
+	 * get all the links in the page
+	 * and init the listening
+	 *
+	 * @param {object} args : a configuration object
+	 */
+	start: function(args){
+		var self = this;
+
+		if( !args ){ var args = {} }
+
+		this.initConfig(args);
+		this.addLinks( document.body );
+		
+		window.onpopstate = function(event) {
+			// console.log(window.history);
+			self.restoreFromState(event.state);
+		};
+		this.saveInitialState();
+	}
+};
+
+
+
+/**
+ * Asap.Link represent an html link. 
+ * It is used to instantiate new Asap.Visit on click and manage special attributes
+ * @constructor 
+ * @param {Node} node The <a> element 
+ */
+Asap.Link = function(node){
+	this.link = node;
+
+	this.source = null;
+	this.animation = null;
+	this.target = Asap.config.selector.target;
+	this.nativeTarget = "_self";
+
+	// If the link has been visited before
+	this.visits = [];
+
+	this.initConfig();
+	this.initEvents();
+}
+
+
+Asap.Link.prototype = {
+
+	/**
+	 * The list of availables attributes for HTML Element
+	 */
+	AVAILABLES: {
+		source: "data-asap-source",
+		target: "data-asap-target",
+		animate: "data-asap-animate",
+		off: "data-asap-off"
+	},
+
+
+	/**
+	 * Click event
+	 * @param {object} event 
+	 */
+	onVisit: function(event){
+		this.visits.push(new Asap.Visit(this));
+		if( this.url.type !== this.url.types.UNDEFINED ) {
+			event.preventDefault();
+		}
+	},
+
+	/**
+	 * Manage html attributes
+	 */
+	initConfig: function(){
+		if(this.link.getAttribute(this.AVAILABLES.source)) this.source = this.link.getAttribute(this.AVAILABLES.source);
+		if(this.link.getAttribute(this.AVAILABLES.target)) this.target = this.link.getAttribute(this.AVAILABLES.target);
+		if(this.link.hasAttribute(this.AVAILABLES.animate)) this.animation = true;
+		if(this.link.hasAttribute(this.AVAILABLES.off)) this.enable = false;
+		if(this.link.hasAttribute("target")) this.nativeTarget = this.link.getAttribute("target");
+	},
+	
+
+	/**
+	 * Init click events
+	 */
+	initEvents: function(){
+		this.url = new Asap.Url(this.link.getAttribute("href"));		
+		
+		if( !this.enable && this.url.valid && this.nativeTarget === "_self" ){
+			this.link.addEventListener("click", this.onVisit.bind(this));
+		}
+	}
+}
+
+
+Asap.Request = function(arg) {
+	AbstractEvent.call(this);
+	if (arg instanceof Asap.Url) {
+		this.url = arg.value
+	}
+
+	this.opened = false;
+	this.xhr = this.getXhrObject(); 	// XHR Request
+	this.response = null; 				// Asap.Response
+	this.target = document.body; 		// Target DOM
+	this.complete = false;				// Request status
+	this.send();
+}
+
+
+Asap.Request.prototype = Object.assign({}, AbstractEvent.prototype);
+Asap.Request.prototype = Object.assign(Asap.Request.prototype, {
+
+	getXhrObject: function(){
+		if(window.XMLHttpRequest){
+			return new XMLHttpRequest();
+		}	else if(window.ActiveXObject) {
+			return new ActiveXObject("Microsoft.XMLHTTP");
+		} else {
+			console.log("Votre navigateur ne supporte pas les objets XMLHTTPRequest...");
+			return;
+		}
+	},
+
+	open: function(){
+		var self = this;
+		this.xhr.open("GET", this.url, true);
+		this.xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		this.xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+		this.xhr.onreadystatechange = function() {
+			if(this.readyState === 4 && this.status === 200) {
+				var response = this.responseText;
+				self.success = true;	
+				self.dispatch("success", {
+					response: response
+				});
+			}
+		}
+		this.opened = true;
+		return this;
+	},
+
+	send: function() {
+		if(!this.opened){
+			console.warn("Objet XHR ouvert automatiquement");
+			this.open();
+		}
+		this.xhr.send(null);
+		return this;
+	}
+	
+}); 
+
+
+Asap.Response = function(response){
+	this.content = response;
+	this.status = 200;
+	this.parse();
+}
+
+
+Asap.Response.prototype = {
+	parse: function(){
+		this.parser = new DOMParser();
+		this.contentParsed = this.parser.parseFromString(this.content, "text/html");
+	}
+}
+
+/**
+ * Asap.Url 
+ *
+ * Represent an URL formated 
+ * It is used to transform a classic href to a formatted url. 
+ * It deal with cross-domain, relative, absolute url
+ *
+ * @constructor 
+ * @param {String} href The href attribute of Asap.Link element 
+ */
+Asap.Url = function(href){
+
+	this.href = href;	// (string) Href attribute
+	this.value = null;	// (string) Url formated
+	this.valid = true;	// (boolean) 
+		
+	this.format();
+}
+
+
+Asap.Url.prototype = {
+
+	/**
+	 * List of availables status
+	 */
+	types: {
+		RELATIVE: 1,
+		ABSOLUTE: 2,
+		ROOT: 3,
+		CROSSDOMAIN: 4,
+		UNDEFINED: 5 // mailto, javascript, ftp, file, tel, has
+	},
+
+
+	/**
+	 * List of regexp used in different case
+	 */
+	regexp: {
+		relative: /^(?:\.+?\/|[\w\.]+$)/,		// ex : ./test/index.html || ../../test.css || index.html
+		root: /^\/.*?$/,						// ex : /test/test.html
+		dir: /\/$/,								// ex : https://test.com/test/
+		fileOrDir: /\/([\w\.]+)?$/, 			// ex : https://test.com/test/index.html || https://test.com/test/
+		url: /https?:\/\/(?:((?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}|localhost))\b[-a-zA-Z0-9@:%_\+.~#?&\/=]*/i
+	},
+
+
+	/**
+	 * Format a relative path in url
+	 * ex : './path/to/something'
+	 * @return void
+	 */
+	formatRelative: function(){
+		var base = document.location.href;
+
+		// If current url is a path to a file or a dir
+		if( base.match( this.regexp.fileOrDir ) ){
+			base = base.replace(this.regexp.fileOrDir, "/");
+		}
+
+		this.value = base + this.href; 
+		this.type = this.types.RELATIVE;
+	},
+
+
+	/**
+	 * Format a absolute path in url
+	 * ex : '/path/to/something/else'
+	 * @return void
+	 */
+	formatAbsolute: function(){
+		var base = document.location.origin;
+		this.value = base + this.href; 
+		this.type = this.types.ROOT;
+	},
+
+
+	/**
+	 * Format a full url and check Cross-Domain url
+	 * @return void
+	 */
+	formatUrl: function(){
+		var urlMatch = this.href.match(this.regexp.url);
+
+		// match 1 represent host 
+		if( urlMatch[1] && urlMatch[1] == document.location.host ){
+			this.value = this.href;
+			this.type = this.types.ABSOLUTE;
+		} else {
+			this.type = this.types.CROSSDOMAIN;
+			this.valid = false;
+		}
+	},
+
+
+	/**
+	 * Main function which match the good url pattern and format it
+	 * @return void
+	 */
+	format: function(){
+
+		// If href is a relatif path
+		if( this.href.match( this.regexp.relative ) ){ 
+	
+			this.formatRelative();
+		
+		// If href is a absolute path
+		} else if( this.href.match( this.regexp.root )){  
+			
+			this.formatAbsolute();
+
+		// If href is a full url
+		} else if (this.href.match( this.regexp.url )) { 
+
+			this.formatUrl();
+
+		// undefined, we don't care 
+		} else { 
+
+			console.log(this.href);
+			this.type = this.types.UNDEFINED
+			this.valid = false;
+
+		}
+	}
+}
+
+
+Asap.Visit = function(link){
+	var self = this;
+	this.link = link;
+	this.target = null; 
+	this.source = null;
+	this.request = new Asap.Request(link.url);
+
+	this.autoload = true;
+
+	this.initParameters();
+
+	this.request.on("success", function(e){
+		self.onRequestSuccess(e.response);
+		Asap.requests.push(self.request);
+	});
+}
+
+
+Asap.Visit.prototype = {
+
+	onRequestSuccess: function(response){
+		this.response = new Asap.Response(response);
+
+		this.state = {
+			title: document.querySelector("title").innerHTML,
+			body: document.body.innerHTML,
+			animation: this.params.animationName,
+			date: Date.now()
+		};
+
+		this.queryTarget();
+		this.querySource();
+
+		this.autoload = document.dispatchEvent( new CustomEvent("asap:before-load", { detail: this, "cancelable": true }) );
+			
+		if( this.autoload ){
+			this.load();	
+		}
+	},
+
+	queryTarget: function(){
+		if( this.params.targetSelector ){
+			this.target = this.response.contentParsed.body.querySelector(this.params.targetSelector);
+			if( !this.target ) {
+				console.warn("Asap : Selector data-target was not valid, \""+this.params.targetSelector+"\" has been replace by \"body\"");
+			}
+		}
+		if( !this.target ) this.target = this.response.contentParsed.body;
+	},
+
+	querySource: function(){
+		if( this.params.sourceSelector ){
+			this.source = document.querySelector(this.params.sourceSelector); 
+			if( !this.source ) {
+				console.warn("Asap : Selector data-source was not valid, \""+this.params.sourceSelector+"\" has been replace by \"body\"");	
+			} 
+		}
+		if( !this.source ) this.source = Asap.config.source; 
+	},
+
+	load: function(){
+		this.updateBody();
+		this.updateHead();
+
+		window.history.pushState(this.state, "Asap", this.link.url.value);
+
+		Asap.evaluateScripts(this.source);
+
+		document.dispatchEvent(new CustomEvent("asap:load", { "bubbles":false, "cancelable": false, "detail": this }));
+	},
+
+	updateBody: function(){
+		this.source.innerHTML = this.target.innerHTML;
+		Asap.addLinks(this.source);
+	},
+
+	updateHead: function(){
+		document.querySelector("title").innerHTML = this.response.contentParsed.querySelector("title").innerHTML;
+	},
+
+	initParameters: function(){
+		this.params = {
+			sourceSelector: this.link.source,
+			targetSelector: this.link.target,
+			animationName: this.link.animation
+		}
+	}
+
+}
+/* harmony default export */ __webpack_exports__["a"] = (Asap);
 
 /***/ })
 /******/ ]);

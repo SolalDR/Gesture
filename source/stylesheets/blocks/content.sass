@@ -1,28 +1,18 @@
-@mixin contentSpecial($y,$x)
-  position: fixed
-  #{$y}: #{$gutter}
-  #{$x}: #{$gutter}
-  
 .content
   overflow: hidden
 
-  &--top-left
-    @include contentSpecial(top, left)
-  
-  &--top-right
-    @include contentSpecial(top, right)
-  
-  &--bottom-left
-    @include contentSpecial(bottom, left)
-  
-  &--bottom-right
-    @include contentSpecial(bottom, right)
+  @each $vertical in (top, bottom)
+    @each $horizontal in (left, right)
+      &--#{$vertical}-#{$horizontal}
+        #{$vertical}: #{$gutter}
+        #{$horizontal}: #{$gutter}
+        position: fixed
 
-  & > *
+  > *
     margin: 5px
     transform: translateX(0)
-    transition: 1.5s cubic-bezier(.53,-0.23,.18,1.3)
+    transition: 1.5s cubic-bezier(.53, -0.23, .18, 1.3)
 
   &--hide
-    & > *
+    > *
       transform: translateX(calc(-100% - 10px))

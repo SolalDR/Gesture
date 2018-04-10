@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "SolalDR",
+  "repository": "https://github.com/SolalDR/Gesture",
   "license": "ISC",
   "devDependencies": {
     "svg-path-properties": "latest",
@@ -27,5 +28,8 @@
     "url-loader": "latest",
     "webpack": "^3.10.0",
     "webpack-glsl-loader": "^1.0.1"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0"
   }
 }

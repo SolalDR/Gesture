@@ -6,41 +6,44 @@ $col: 6
 $step: 5
 $space: 15px
 $main-breakpoint: 1080px
-$breakpoints: ( xl: 1360px, l: 1080px, m: 920px, s: 768px, xs: 360px )
+$breakpoints: (xl: 1360px, l: 1080px, m: 920px, s: 768px, xs: 360px)
 
 // Utils
 
-$directions: ( top: t, bottom: b, left: l, right: r )
-$properties: ( margin: m, padding: p )
+$directions: (top: t, bottom: b, left: l, right: r)
+$properties: (margin: m, padding: p)
 
 // Grid
 
-@mixin grid($size)
+=grid($size)
   max-width: $size
   margin: auto
+
   &::after
     display: table
     clear: both
     width: 100%
 
 .grid
-  @include grid($main-breakpoint)
+  +grid($main-breakpoint)
   @each $breakpoint, $value in $breakpoints
-    &-#{$breakpoint} 
-      @include grid($value)
+    &-#{$breakpoint}
+      +grid($value)
 
 // Columns
 
 @for $i from 1 to $col + 1
   @for $j from 1 to $col + 1
-    @if ( $i <= $j )
+    @if $i <= $j
       $w: $i/$j*100%
-      .col-#{$i}-#{$j} 
+      .col-#{$i}-#{$j}
         width: $w
         float: left
-      .left-#{$i}-#{$j} 
+
+      .left-#{$i}-#{$j}
         margin-left: $w
-      .right-#{$i}-#{$j} 
+
+      .right-#{$i}-#{$j}
         margin-right: $w
 
       @each $breakpoint, $value in $breakpoints
@@ -48,21 +51,23 @@ $properties: ( margin: m, padding: p )
           .col-#{$breakpoint}-#{$i}-#{$j}
             width: $w
             float: left
-          .left-#{$breakpoint}-#{$i}-#{$j} 
+
+          .left-#{$breakpoint}-#{$i}-#{$j}
             margin-left: $w
-          .right-#{$breakpoint}-#{$i}-#{$j} 
+
+          .right-#{$breakpoint}-#{$i}-#{$j}
             margin-right: $w
 
 // Margin, padding
 
 @for $i from 1 to $step + 1
-  @each $property, $short_p in $properties
+  @each $property, $property-shortcut in $properties
     $value: $space*$i
-    .#{$short_p}-#{$i}
+    .#{$property-shortcut}-#{$i}
       #{$property}: $value
 
-    @each $direction, $short_d in $directions
-      .#{$short_p}#{$short_d}-#{$i}
+    @each $direction, $direction-shortcut in $directions
+      .#{$property-shortcut}#{$direction-shortcut}-#{$i}
         #{$property}-#{$direction}: $space*$i
 
 // Hide / Show
@@ -71,16 +76,17 @@ $properties: ( margin: m, padding: p )
   @media screen and (max-width: #{$value})
     .hide-#{$breakpoint}
       display: none
+
   @media screen and (min-width: #{$value})
     .show-#{$breakpoint}
       display: none
 
-
 // Center
 
 .center-x
-  margin-left: auto
-  margin-right: auto
+  margin:
+    left: auto
+    right: auto
   text-align: center
 
 .center-y
@@ -92,16 +98,20 @@ $properties: ( margin: m, padding: p )
 
 .pane
   min-height: 100vh
-  
+
 // Text
 
 .t-left
   text-align: left
+
 .t-right
   text-align: right
+
 .w-bold
   font-weight: bold
+
 .w-thin
   font-weight: thin
+
 .w-regular
   font-weight: regular

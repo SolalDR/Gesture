@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <circle id="rond_hover" class="cls-1" cx="25" cy="25" r="25" transform="translate(0 0)"/>
+</svg>
