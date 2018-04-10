@@ -13,8 +13,6 @@ page '/*.xml', layout: false
 page '/*.json', layout: false
 page '/*.txt', layout: false
 
-set :build_dir, 'docs'
-
 activate :directory_indexes
 data.articles.each do |article|
   proxy "/timeline/#{article.slug}/", '/article.html', locals: { article: article }, ignore: true, layout: 'layout'
@@ -37,7 +35,6 @@ configure :build do
   activate :minify_css
   activate :relative_assets
 end
-
 
 helpers do
   def svg(name)
