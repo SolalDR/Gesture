@@ -32,7 +32,7 @@ class MorphPlane {
   }
 
   getUrl(pageName) {
-    return "/images/backgrounds/bg_"+pageName+".jpg";
+    return 'images/backgrounds/bg_' + pageName + '.jpg';
   }
 
   /**
@@ -44,7 +44,7 @@ class MorphPlane {
 
     // Load noise
     var noise = new Image();
-    noise.src = "/images/noise_3d.jpg";
+    noise.src = 'images/noise_3d.jpg';
 
     noise.onload = ()=>{
       this.noise = this.regl.texture(noise);
