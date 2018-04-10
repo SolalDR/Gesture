@@ -9,7 +9,6 @@ import Content from "./components/Content.js"
 import Timeline from "./components/Timeline.js"
 import Button from "./components/Button.js"
 
-
 class App {
   /**
    * List of available pages
