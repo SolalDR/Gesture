@@ -36,10 +36,10 @@ class Timeline {
     if(v) {
       this.items.forEach(item => {
         item.hide();
-        item.hidePoint({delay: (1 - this.items.length)*2500});
+        item.hidePoint({delay: (1 - item.length)*2500});
       });
     }
-    else this.items.forEach(item => item.showPoint({delay: this.items.length*2500}));
+    else this.items.forEach(item => item.showPoint({delay: item.length*2500}));
   }
 
   /**
