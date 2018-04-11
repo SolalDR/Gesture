@@ -5,7 +5,7 @@ class_name: timeline
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
 
-  <aside class="aside col-s-1-6">
+  <aside class="aside">
     <div class="aside__content">
       <div class="logo"></div>
     </div>
@@ -13,7 +13,7 @@ class_name: timeline
       <ul class="categories">
         <% data.contents.categories.each do |category| %>
           <li class="categories__item category category--centered">
-            <%= content_tag :span, nil, class: "category__icon category__icon--transparent category__icon--#{category.slug}", title: category.name %>
+            <%= content_tag :span, nil, class: "category__icon category__icon--transparent category__icon--small category__icon--#{category.slug}", title: category.name %>
             <div class="category__name"><%= category.name %></div>
           </li>
         <% end %>

@@ -1,4 +1,6 @@
 .aside
+  $width: 200px
+  width: $width
   top: 0
   left: 0
   padding:
@@ -11,6 +13,13 @@
   justify-content: space-between
   box-sizing: border-box
   position: fixed
+
+  @media screen and (max-width: $width*6)
+    $relative-width: 100%/6
+    width: $relative-width
+
+  +responsive(s)
+    display: none
 
   &__content
     flex-grow: 0

@@ -11,13 +11,17 @@
     &:not(&--transparent)
       background-color: #fff
 
+    &--small
+      width: 40px
+      height: 40px
+
     @each $type in eye-tracking, gesture-recognition, facial-recognition
       &--#{$type}
         background-image: image-url('categories/#{$type}.svg')
 
   &__name
     color: $color-3
-    font-size: 14px
+    font-size: 12px
     font-weight: bold
 
   &--centered &__icon

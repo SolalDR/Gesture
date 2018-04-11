@@ -1,14 +1,14 @@
 categories:
   - &eye_tracking
-    name: Eye tracking
+    name: eye tracking
     slug: eye-tracking
 
   - &gesture_recognition
-    name: Gesture recognition
+    name: gesture recognition
     slug: gesture-recognition
 
   - &facial_recognition
-    name: Facial recognition
+    name: facial recognition
     slug: facial-recognition
 
 articles:
