@@ -15,11 +15,13 @@ class Title {
   }
 
   show({delay = 0} = {}) {
+    console.log("Show",  this);
     if(delay) setTimeout(() => this.show(), delay)
     else this.hidden = false;
   }
 
   hide({delay = 0} = {}) {
+    console.log("Hide",  this);
     if(delay) setTimeout(() => this.hide(), delay)
     else this.hidden = true;
   }

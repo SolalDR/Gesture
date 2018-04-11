@@ -24,6 +24,7 @@ class MorphPlane {
 
     this.page = args.page;
     this.mouse = [0, 0]; 
+    this.expectedMouse = [0, 0]; 
     
     this.noise = null; 
     this.texture = null;
@@ -164,6 +165,10 @@ class MorphPlane {
    */
   render() {
     if( this.plane ) this.plane();
+    this.mouse = [
+      this.mouse[0] + (this.expectedMouse[0] - this.mouse[0])*0.1,
+      this.mouse[1] + (this.expectedMouse[1] - this.mouse[1])*0.1
+    ]
     this.renderAnimation();
   }
 
@@ -245,7 +250,7 @@ class MorphPlane {
    * Event window.onmousemove
    */
   onMouseMove(e) {
-    this.mouse = [
+    this.expectedMouse = [
       (e.clientX/this.boundaries[0]),
       (e.clientY/this.boundaries[1])
     ];

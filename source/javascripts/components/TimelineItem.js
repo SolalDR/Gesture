@@ -3,16 +3,17 @@ class TimelineItem {
    * @constructor
    * @param {name: String, slug: String, date: String} datas : JSON datas of a single item
    * @param {*} timeline : Timeline's reference
+   * @prop {String} length : [0-1] part in the timeline
    */
   constructor(datas, timeline) {
     this.timeline = timeline;
     this.name = datas.name;
     this.slug = datas.slug;
+    this.length = 0;
     this.date = new Date(datas.date);
 
     this.generateBubble();
     this.generateSvg();
-    this.showPoint();
     this.initEvents();
   }
 
@@ -35,9 +36,9 @@ class TimelineItem {
     //this.timeline.config.duration
     if( this.date.getTime() > this.timeline.config.dateStart.getTime() ){
       var diff = this.timeline.config.dateStart.getTime() - this.date.getTime();
-      var length = diff/this.timeline.config.duration;
+      this.length = diff/this.timeline.config.duration;
       if(length < 1){
-        this._position = this.timeline.getPointAt(length);
+        this._position = this.timeline.getPointAt(this.length);
         return this._position;
       }
     }
@@ -103,6 +104,8 @@ class TimelineItem {
     var p = this.position;
     this.point.setAttribute("cx", p.x);
     this.point.setAttribute("cy", p.y);
+    p.x -= 10;
+    p.y += 5;
     var origin = this.timeline.getCoordInPercent(p);
     this.point.style.transformOrigin = `${origin.x*100}% ${origin.y*100}%`;
     this.bubble.style["top"] = origin.y*100 + "%"
