@@ -14,16 +14,19 @@ $duration: 1s
     fill: none
     stroke: rgba(black, 0.1)
       miterlimit: 10
+      width: 1px
     transition:
       duration: $duration
       timing-function: ease-in-out
-
+  
     @for $i from 1 to ($count + 1)
       $offset: $i*(100%/($count + 1))
 
       &:nth-child(#{$i})
         transform: translateX(#{$offset})
+        // transform: translateY(0)
         transition-delay: $i*$delay
 
       &--hide:nth-child(#{$i})
         transform: translateX(#{$offset}) translateY(#{1024px*($i%2*2 - 1)})
+        // transform: translateY(#{1024px*($i%2*2 - 1)})
