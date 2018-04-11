@@ -32,6 +32,7 @@ class App {
   initElements() {
     this.main = document.querySelector("main.main");
     this.title = new Title(this.main.querySelector(".title"));
+    this.logo = document.querySelector(".logo");
 
     if( this.currentPage === "timeline" ){
       this.timeline = new Timeline(this.main.querySelector(".timeline"));
@@ -64,6 +65,7 @@ class App {
    */
   showElements(timeout = 0) {
     this.gridBg.show();
+    this.logo.classList.remove("logo--hidden");
     setTimeout(()=> {
       this.scene.plane.loadPreset("default", 4);
       this.title.show();
