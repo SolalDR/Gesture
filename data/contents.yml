@@ -89,7 +89,7 @@ articles:
       The facial recognition technology is designed by NEC Corp., which is known to have one of the world’s most accurate systems, capable of recognizing those who have undergone cosmetic surgery as well as distinguishing between identical twins.
       The committee believes the system will identify each person quickly. It tested the technology when it was managing the flow of media personnel entering the Japan House information center during the 2016 Rio Games.
       In Rio de Janeiro, identification of people entering the venues was carried out at designated security checkpoints that showed the IDs on screen with their facial photos as security personnel and other officers checked each individual. But this led to some delays, which frustrated some of those involved at the event.
-    date: 2017-12-24
+    date: 2017-12-20
     url: https://www.japantimes.co.jp/news/2017/12/24/national/olympics-deploy-facial-recognition-technology-screen-staff-athletes-reporters/
 
   - name: InvenSense
@@ -109,7 +109,7 @@ articles:
       The aim of this study was to construct a prototype system for recognizing hand postures with the aim of controlling a bionic hand by analyzing sEMG signals measured at the flexor digitorum superficialis and extensor digitorum muscles. We adopted multiple features commonly used in previous studies—mean absolute value, zero crossing, slope sign change, and waveform length—in the algorithm for extracting hand-posture features, and the k-nearest-neighbors (KNN) algorithm as the classifier to perform hand-posture recognition.
       The bionic hand was controlled by an Arduino microprocessor, which converted the signals received from the classification process that were fed to the servo motors controlling the bionic fingers. We constructed a two-channel sEMG pattern-recognition system that can identify human hand postures and control a homemade bionic hand to perform corresponding hand postures. The KNN approach was able to recognize four different hand postures with a classification accuracy of 94% in the online experiment by using the channel combination. Moreover, the experimental tests show that the bionic hand could faithfully imitate the hand postures of the human hand.
       This study has bridged the gap between the features of sEMG signals of fingers and the postures of a bionic hand.
-    date: 2017-11-30
+    date: 2017-11-28
     url: https://www.sciencedirect.com/science/article/pii/S0208521617300323
 
   - name: PrimeSense
