@@ -5,10 +5,9 @@ class_name: article
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
   <article class="article article--hidden">
-    <%= content_tag(:span, nil,
-      class: "article__category-icon article__category-icon--#{article.category.slug}",
-      title: article.category.name
-    ) %>
+    <div class="article__category category">
+      <%= content_tag :span, nil, class: "category__icon category__icon--#{article.category.slug}", title: article.category.name %>
+    </div>
     <div class="col-s-1-2 left-s-1-2">
       <header class="article__header">
         <h1 class="title article__title">

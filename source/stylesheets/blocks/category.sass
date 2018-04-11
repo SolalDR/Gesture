@@ -1,0 +1,28 @@
+.category
+  width: 60px
+
+  &__icon
+    background: no-repeat center center / 60% auto
+    width: 60px
+    height: 60px
+    border-radius: 60px
+    display: block
+
+    &:not(&--transparent)
+      background-color: #fff
+
+    @each $type in eye-tracking, gesture-recognition, facial-recognition
+      &--#{$type}
+        background-image: image-url('categories/#{$type}.svg')
+
+  &__name
+    color: $color-3
+    font-size: 14px
+
+  &--centered &__icon
+    margin:
+      left: auto
+      right: auto
+
+  &--centered &__name
+    text-align: center

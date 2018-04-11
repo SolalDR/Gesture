@@ -32,28 +32,17 @@
     color: $color-3
     transition-delay: .3s
 
-  &__category-icon
+  &__category
+    top: 50%
+    left: 25%
+    position: fixed
+    transform: translate(-50%, -50%)
     transition-delay: .6s
 
   &__link
     margin-top: 30px
     text-align: center
     transition-delay: .4s
-
-  &__category-icon
-    background: #fff no-repeat center center / 60% auto
-    width: 60px
-    height: 60px
-    top: 50%
-    left: 25%
-    border-radius: 60px
-    position: fixed
-    display: block
-    transform: translate(-50%, -50%)
-
-    @each $type in eye-tracking, gesture-recognition, facial-recognition
-      &--#{$type}
-        background-image: image-url('categories/#{$type}.svg')
 
   &__content
     margin-top: $gutter

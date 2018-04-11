@@ -5,6 +5,22 @@ class_name: timeline
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
 
+  <aside class="aside col-s-1-6">
+    <div class="aside__content">
+      <div class="logo"></div>
+    </div>
+    <div class="aside__content">
+      <ul class="categories">
+        <% data.contents.categories.each do |category| %>
+          <li class="categories__item category category--centered">
+            <%= content_tag :span, nil, class: "category__icon category__icon--transparent category__icon--#{category.slug}", title: category.name %>
+            <div class="category__name"><%= category.name %></div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </aside>
+
   <h1 class="title col-s-1-2 left-s-1-6">
     <span class="title__crop title__crop--hidden">Timeline</span>
   </h1>

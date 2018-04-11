@@ -1,15 +1,15 @@
 categories:
-  - &facial_recognition
-    name: Facial recognition
-    slug: facial-recognition
+  - &eye_tracking
+    name: Eye tracking
+    slug: eye-tracking
 
   - &gesture_recognition
     name: Gesture recognition
     slug: gesture-recognition
 
-  - &eye_tracking
-    name: Eye tracking
-    slug: eye-tracking
+  - &facial_recognition
+    name: Facial recognition
+    slug: facial-recognition
 
 articles:
   - name: Lorem Ipsum
