@@ -34,6 +34,16 @@
     transition: .4s ease-in-out
     opacity: 1
     transform: translateY(20px)
+    &::before
+      content: ""
+      display: block
+      width: 30px
+      height: 30px
+      background-color: white
+      position: absolute
+      border-radius: 100%
+      top: -53px
+      left: 8px
     &--hidden
       opacity: 0
       transform: translateY(20px)

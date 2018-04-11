@@ -67,7 +67,7 @@ class App {
     setTimeout(()=> {
       this.scene.plane.loadPreset("default", 4);
       this.title.show();
-      if(this.article) this.article.show();
+      if(this.article) this.article.show(); 
       this.contents.forEach((content, i) => content.show({
         delay: i*400
       }));
@@ -79,7 +79,7 @@ class App {
           delay: 2000
         });
       }
-    }, timeout)
+    }, timeout + 20)
   }
 
   hideElements() {
