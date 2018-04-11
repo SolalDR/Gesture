@@ -21,5 +21,4 @@ class Article {
     else this.hidden = true;
   }
 }
-
 export default Article;
