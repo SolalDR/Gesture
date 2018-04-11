@@ -14,7 +14,7 @@ page '/*.json', layout: false
 page '/*.txt', layout: false
 
 activate :directory_indexes
-data.articles.each do |article|
+data.contents.articles.each do |article|
   proxy "/timeline/#{article.slug}/", '/article.html', locals: { article: article }, ignore: true, layout: 'layout'
 end
 

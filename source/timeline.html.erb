@@ -12,7 +12,7 @@ class_name: timeline
     <%= svg "timeline" %>
 
     <div id="timeline__data" class="timeline__data">
-      <%= data.articles.to_json.html_safe %>
+      <%= data.contents.articles.map{ |a| a.slice :name, :slug, :date }.to_json.html_safe %>
     </div>
     <div class="timeline__bubbles"></div>
   </div>

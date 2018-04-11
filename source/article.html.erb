@@ -4,12 +4,26 @@ class_name: article
 ---
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
-  <div class="article__content col-s-1-2 left-s-1-2">
-    <h1 class="title">
-      <%= article.name %>
-    </h1>
-    <div class="content content--hide">
-      <%= article.content %>
+  <article class="article article--hidden">
+    <%= content_tag(:span, nil,
+      class: "article__category-icon article__category-icon--#{article.category.slug}",
+      title: article.category.name
+    ) %>
+    <div class="col-s-1-2 left-s-1-2">
+      <header class="article__header">
+        <h1 class="title article__title">
+          <%= article.name %>
+        </h1>
+        <h3 class="article__date">
+          <%= article.date.strftime '%d/%m/%Y' %>
+        </h3>
+      </header>
+
+      <div class="content content--hide  article__content">
+        <% article.content.split("\n\n").each do |paragraph| %>
+          <p><%= paragraph.strip %></p>
+        <% end %>
+      </div>
     </div>
-  </div>
+  </article>
 </div>

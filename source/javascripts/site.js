@@ -8,6 +8,7 @@ import Title from "./components/Title.js"
 import Content from "./components/Content.js"
 import Timeline from "./components/Timeline.js"
 import Button from "./components/Button.js"
+import Article from "./components/Article.js"
 
 class App {
   /**
@@ -32,8 +33,12 @@ class App {
     this.main = document.querySelector("main.main");
     this.title = new Title(this.main.querySelector(".title"));
 
-    if( this.currentPage == "timeline" ){
+    if( this.currentPage === "timeline" ){
       this.timeline = new Timeline(this.main.querySelector(".timeline"));
+    }
+
+    if( this.currentPage === 'article' ){
+      this.article = new Article(this.main.querySelector('.article'));
     }
 
     this.contents = [];
@@ -62,6 +67,7 @@ class App {
     setTimeout(()=> {
       this.scene.plane.loadPreset("default", 4);
       this.title.display();
+      if(this.article) this.article.show();
       this.contents.forEach((content, i) => content.display({
         delay: i*400
       }));
