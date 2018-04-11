@@ -1,5 +1,17 @@
 .logo
-  background: image-url('logo.svg') no-repeat center center / contain
-  width: 30px
+  background: image-url('logo.svg') no-repeat top center / contain
+  width: 20px
   height: 50px
   display: block
+  transform: translateX(0)
+  opacity: 1
+  transition: .4s ease-in
+
+  &--hidden
+    opacity: 0
+    transform: translateX(-20px)
+
+  &--header-top
+    position: fixed
+    top: 30px
+    left: 30px

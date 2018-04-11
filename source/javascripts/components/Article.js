@@ -1,5 +1,5 @@
 class Article {
-  constructor(element) {
+  constructor(element){
     this.element = element;
   }
 
