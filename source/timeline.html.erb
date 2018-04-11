@@ -4,7 +4,6 @@ class_name: timeline
 ---
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
-
   <aside class="aside">
     <div class="aside__content">
       <div class="logo"></div>
@@ -24,10 +23,12 @@ class_name: timeline
   <h1 class="title col-s-1-2 left-s-1-6">
     <span class="title__crop title__crop--hidden">Timeline</span>
   </h1>
+
   <div class="clr"></div>
+
   <div class="timeline timeline--hidden mt-4">
     <%= svg "timeline" %>
-
+    <p class="timeline__date timeline__date--hidden"></p>
     <div id="timeline__data" class="timeline__data">
       <%= data.contents.articles.map{ |a| a.slice :name, :slug, :date }.to_json.html_safe %>
     </div>

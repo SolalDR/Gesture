@@ -9,6 +9,7 @@ class Timeline {
    * @prop {SVG Element} svg : Main svg element
    * @prop {SVG Path} path : Main svg element
    * @prop {SVG PathProperty} pathProperties : Utils to used deprecated method as getPointsAtLength
+   * @prop {HTML Node} date : Date indicator at center of timeline
    */
   constructor(el) {
     this.el = el;
@@ -17,13 +18,36 @@ class Timeline {
     this.path;
     this.pathProperties;
     this.bubblesContainer = this.el.querySelector(".timeline__bubbles");
+    this.date = this.el.querySelector(".timeline__date");
     this.selectedItem;
+    this.speed = 0;
+
     this.config = {
       dateStart: new Date("2017-09-01"),
+      dateEnd: new Date("2018-04-01"),
+      dateDiff: null,
       duration: new Date("2017-09-01").getTime() - new Date("2018-04-01").getTime()
     }
+    this.config.dateDiff = new Date("2018-04-01").getTime() - new Date("2017-09-01").getTime();
+    this.currentDate = new Date(this.config.dateStart.getTime());
+    this.updateDate();
+
     this.initSvg();
     this.initItems();
+    this.initEvents();
+  }
+
+  /**
+   * Init Events
+   */
+  initEvents() {
+    this.wheel = { current: 0, speed: 0 }
+    this.el.addEventListener("wheel", (event) => {
+      if( this.wheel.speed === 0 ) requestAnimationFrame(this.updateSpeedWheel.bind(this));  
+  
+      this.wheel.speed = event.deltaY;
+      this.items.forEach(i => i.hide());
+    })
   }
 
   get hidden() {
@@ -31,6 +55,7 @@ class Timeline {
   }
 
   set hidden(v) {
+    this.date.classList[v ? 'add' : 'remove']("timeline__date--hidden");
     this.el.classList[v ? 'add' : 'remove']('timeline--hidden');
 
     if(v) {
@@ -42,6 +67,39 @@ class Timeline {
     else this.items.forEach(item => item.showPoint({delay: item.length*2500}));
   }
 
+  updateDate() {
+    var dd = (this.currentDate.getDate() < 10 ? '0' : '') + this.currentDate.getDate();
+    var MM = ((this.currentDate.getMonth() + 1) < 10 ? '0' : '') + (this.currentDate.getMonth() + 1);
+    var yyyy = this.currentDate.getFullYear();
+    this.date.innerHTML = `<span class="timeline__date-line">${dd}.${MM}</span><span class="timeline__date-line">${yyyy}</span>`
+  }
+
+  /**
+   * Raf
+   */
+  updateSpeedWheel(){
+    if( this.wheel.speed !== 0 ) this.wheel.speed *= 0.95
+    
+    var deltaDate = this.wheel.speed*1000*60*60*10;
+    if( deltaDate ){
+      this.currentDate.setTime(this.currentDate.getTime() + deltaDate);
+      if(this.currentDate.getTime() < this.config.dateStart.getTime() ) {
+        this.currentDate.setTime(this.config.dateStart.getTime());
+        this.wheel.speed = 0;
+      } 
+      if(this.currentDate.getTime() > this.config.dateEnd.getTime() ) {
+        this.currentDate.setTime(this.config.dateEnd.getTime());
+        this.wheel.speed = 0;
+      } 
+
+      this.updateDate();
+      this.items.forEach(i => i.updatePosition());
+      
+      if( Math.abs(this.wheel.speed) < 0.01 ) this.wheel.speed = 0;
+      requestAnimationFrame(this.updateSpeedWheel.bind(this));
+    }
+  }
+ 
   /**
    * Init svg elements
    */

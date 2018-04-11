@@ -34,8 +34,8 @@ class TimelineItem {
    */
   get position() {
     //this.timeline.config.duration
-    if( this.date.getTime() > this.timeline.config.dateStart.getTime() ){
-      var diff = this.timeline.config.dateStart.getTime() - this.date.getTime();
+    if( this.date.getTime() > this.timeline.currentDate.getTime() ){
+      var diff = this.timeline.currentDate.getTime() - this.date.getTime();
       this.length = diff/this.timeline.config.duration;
       if(length < 1){
         this._position = this.timeline.getPointAt(this.length);
@@ -83,6 +83,7 @@ class TimelineItem {
 
     this.point = circle;
     this.updatePosition();
+    this.hidePoint();
     this.timeline.svg.appendChild(this.point);
   }
 
@@ -102,14 +103,23 @@ class TimelineItem {
 
   updatePosition() {
     var p = this.position;
-    this.point.setAttribute("cx", p.x);
-    this.point.setAttribute("cy", p.y);
-    p.x -= 10;
-    p.y += 5;
-    var origin = this.timeline.getCoordInPercent(p);
-    this.point.style.transformOrigin = `${origin.x*100}% ${origin.y*100}%`;
-    this.bubble.style["top"] = origin.y*100 + "%"
-    this.bubble.style["left"] = origin.x*100 + "%"
+    if(p !== null ) {
+      this.point.setAttribute("cx", p.x);
+      this.point.setAttribute("cy", p.y);
+      p.x -= 10;
+      p.y += 5;
+      var origin = this.timeline.getCoordInPercent(p);
+      this.point.style.transformOrigin = `${origin.x*100}% ${origin.y*100}%`;
+      this.bubble.style["top"] = origin.y*100 + "%"
+      this.bubble.style["left"] = origin.x*100 + "%"
+
+      if( this.pointHidden ) this.showPoint();
+      if( this.length > 1) this.hidePoint();
+
+    } else {
+      this.hidePoint();
+      this.hide();
+    }
   }
 
   showPoint({delay = 0} = {}) {

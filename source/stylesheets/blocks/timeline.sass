@@ -24,17 +24,36 @@
       dashoffset: 0
     transition: 2.5s linear
 
+  &__date
+    position: absolute
+    top: 65%
+    left: 0%
+    font-size: 15px
+    font-family: $font-secondary
+    text-align: center
+    transition: .4s ease-in-out
+    opacity: 1
+    transform: translateY(20px)
+    &--hidden
+      opacity: 0
+      transform: translateY(20px)
+    &-line
+      display: block
+      &:last-child
+        font-weight: bold
+        letter-spacing: 1px
+
   &__data
     display: none
 
   &__point
-    fill: rgba(0, 0, 0, 0.5)
+    fill: rgba(0, 0, 0, 0.9)
     stroke: transparent
-    transition: .2s ease-in
-    transform: scale(1)
+    transition: .2s ease-in all
+    transform: scale(1) 
 
     &--hidden
-      transform: scale(0)
+      transform: scale(0) translateX(-5px) 
       fill: rgba(0, 0, 0, 0)
 
     &:hover
@@ -48,19 +67,23 @@
 
   &__bubble
     position: absolute
-    display: inline-block
-    transform: translateY(-15px) translateX(30px) rotateX(0deg)
-    transition: .5s ease
+    display: inline-block    
     text-decoration: none
     min-width: 150px
     opacity: 1
+    transform: translateX(30px) translateY(-10px)
 
     &--hidden
-      transform: translateY(-10px) translateX(30px) rotateX(90deg)
-      opacity: 0
+      .timeline__bubble-title
+        transform: translateX(-10px)
+        opacity: 0
+      .timeline__bubble-date
+        transform: translateX(10px) translateY(-7px)
+        opacity: 0
 
     &-title
       color: black
+      transition: .5s ease all
       font:
         size: 1.5em
         weight: bold
@@ -68,11 +91,12 @@
 
     &-date
       color: $color-3
+      transition: .5s ease all
       font:
         family: $font-primary
         size: 12px
       letter-spacing: 1px
-      transform: translateY(-7px)
+      transform: translateY(-7px) translateX(0)
       margin-left: 5px
 
   &--hidden
