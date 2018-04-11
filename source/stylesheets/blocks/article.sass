@@ -1,7 +1,7 @@
 .article
-  $b: &
-
-  padding-right: $gutter
+  padding:
+    right: $gutter
+    left: 35px
   width: 100%
   max-width: 1000px
   margin:
@@ -59,7 +59,9 @@
     margin-top: $gutter
 
   +responsive(s)
-    padding-right: 0
+    padding:
+      right: 0
+      left: 0
 
     &__header
       margin-left: 0

@@ -24,7 +24,7 @@ export default {
   },
 
   init: function() {
-    this._hidden = false;
+    this._hidden = true;
     this.svg = document.querySelector('#grid-bg')
     this.lines = this.svg.querySelectorAll('.grid-bg__line');
 
