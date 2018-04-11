@@ -12,62 +12,114 @@ categories:
     slug: facial-recognition
 
 articles:
-  - name: Lorem Ipsum
-    slug: lorem-ipsum-1
-    category: *facial_recognition
-    content: |
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.
-
-      Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    date: 2017-10-20
-    url: https://www.google.com
-
-  - name: Lorem Ipsum
-    slug: lorem-ipsum-2
-    category: *gesture_recognition
-    content: |
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.
-
-      Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    date: 2017-12-04
-    url: https://www.google.com
-
-  - name: Lorem Ipsum
-    slug: lorem-ipsum-3
+  - name: RightEye
+    slug: right-eye
     category: *eye_tracking
-    content: |
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.
+    content: Une technologie de eye-tracking également commercialisée par l'intermédiaire du périphérique Tobii EyeX, sur lequel s'appuie dorénavant RightEye pour proposer de nouveaux matériels capables de réaliser des tests de vision pouvant contribuer au diagnostic de la maladie de Parkinson...
+    date: 2018-01-09
+    url: https://www.lesnumeriques.com/loisirs/ces-2018-righteye-detecte-parkinson-autisme-traumatismes-n70041.html
 
-      Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    date: 2018-01-01
-    url: https://www.google.com
+  - name: SuriCog
+    slug: suri-cog
+    category: *eye_tracking
+    content: Cet eye-tracker naturel apporte une aide au diagnostic des principales maladies neurologiques et des troubles de l'apprentissage. Remboursé dans plusieurs pays, il est utilisé dans 50 centres d'exploration clinique d'excellence dans le monde et près de la moitié des centres hospitaliers universitaires...
+    date: 2017-12-30
+    url: https://www.usine-digitale.fr/article/ces-2018-avec-eyebrain-et-eyedee-suricog-permet-d-interagir-avec-le-regard.N631443
 
-  - name: Lorem Ipsum
-    slug: lorem-ipsum-4
+  - name: Pensées consommateurs
+    slug: pensees-consommateurs
+    category: *eye_tracking
+    content: Emily Safian-Demers with the French advertising company Ipsos uses eye-tracking for neuromarketing techniques on December 5, 2017 at Ipos in Norwalk, Connecticut. Struggling to explain exactly why you splurged on that new pair of shoes, that pricey smartphone? The reason may lie in your...
+    date: 2017-12-24
+    url: https://www.huffpostmaghreb.com/2017/12/24/publicite--reconnaissance_n_18904648.html
+
+  - name: Olympics & facial recognition
+    slug: olympics-and-facial-recognition
     category: *facial_recognition
-    content: |
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-      quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.
+    content: Facial recognition technology will be used at the Tokyo 2020 Olympics and Paralympics to streamline the entry of athletes, officials and journalists to the games venues, sources close to the organizing committee say. In light of concerns about terrorism, the games' organizers aim to bolster security and...
+    date: 2017-12-24
+    url: https://www.japantimes.co.jp/news/2017/12/24/national/olympics-deploy-facial-recognition-technology-screen-staff-athletes-reporters/
 
-      Duis aute irure dolor in reprehenderit in voluptate velit esse
-      cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-      proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    date: 2018-02-10
-    url: https://www.google.com
+  - name: InvenSense
+    slug: inven-sense
+    category: *gesture_recognition
+    content: InvenSense, la filiale de TDK dédiée aux capteurs de mouvements, a lancé la production en volume de l'ICM-20789, un module embarquant un accéléromètre et un gyroscope triaxiaux ainsi qu'un capteur de pression barométrique. Ce dernier se distingue par sa précision (bruit efficace de 0,4Pa...
+    date: 2017-11-30
+    url: http://www.electroniques.biz/component/k2/item/61028-invensense-met-la-pression-a-ses-capteurs-inertiels
+
+  - name: Bionic hand
+    slug: bionic-hand
+    category: *gesture_recognition
+    content: We adopted multiple features commonly used in previous studies—mean absolute value, zero crossing, slope sign change, and waveform length—in the algorithm for extracting hand-posture features, and the k-nearest-neighbors (KNN) algorithm as the classifier to perform hand-posture recognition.
+    date: 2017-11-30
+    url: https://www.sciencedirect.com/science/article/pii/S0208521617300323
+
+  - name: Brevet Apple
+    slug: brevet-apple
+    category: *facial_recognition
+    content: La société israélienne PrimeSense s'est fait connaître en contribuant à la conception du Kinect de Microsoft. Rachetée par Apple en 2013 pour 360...
+    date: 2017-11-29
+    url: https://www.lesnumeriques.com/ordinateur/apple-depose-brevet-pour-controler-imac-avec-gestes-n68911.html
+
+  - name: Inpecteur russe
+    slug: inspecteur-russe
+    category: *facial_recognition
+    content: La vision par ordinateur et l'apprentissage automatique rendent le nouveau dispositif russe anti-sommeil pour conducteur plus efficace que ses ... Basé sur un processeur mono-cœur ARM 32 bits, l'appareil est doté d'une caméra de haute résolution à vision nocturne, ce qui garantit la fiabilité du...
+    date: 2017-11-17
+    url: https://fr.sputniknews.com/sci_tech/201711171033926277-russie-anti-sommeil-volant-conducteur-disporitif/
+
+  - name: 3D sensors
+    slug: 3d-sensors
+    category: *gesture_recognition
+    content: Gesture recognition for user interface is also being applied with 3D sensing. Although in the early stages of development, this promises to make great...
+    date: 2017-10-18
+    url: https://thenextweb.com/contributors/2017/10/17/3d-sensors-bringing-revolution-ai-industry/
+
+  - name: Matchpoint
+    slug: matchpoint
+    category: *gesture_recognition
+    content: Advances in voice recognition mean that in many cases we can simply ask our ... That's the promise of “Matchpoint,” a new gesture-based technology that ... To operate a control, you simply gesture in a way that mimics the icon's...
+    date: 2017-10-10
+    url: https://www.nbcnews.com/mach/science/will-gesture-technology-kill-remote-control-ncna809051
+
+  - name: Panasonic Tokyo
+    slug: panasonic-tokyo
+    category: *facial_recognition
+    content: Outre les mimiques du visage, le système utilise une seconde caméra, thermique celle-là, une seconde source de données qui, combinée à la...
+    date: 2017-10-07
+    url: https://www.lci.fr/high-tech/video-ceatec-salon-de-tokyo-la-reconnaissance-faciale-fait-froid-dans-le-dos-nec-panasonic-2066604.html
+
+  - name: SenseTime
+    slug: sense-time
+    category: *facial_recognition
+    content: En Chine, un système de surveillance à base de caméras sait reconnaître passants et véhicules dans la rue avec un taux d'erreur très faible.
+    date: 2017-09-30
+    url: bfmbusiness.bfmtv.com/hightech/ce-systeme-chinois-de-reconnaissance-faciale-est-d-une-efficacite-redoutable-1266945.html
+
+  - name: HoloLamp
+    slug: holo-mamp
+    category: *facial_recognition
+    content: Résultat de plusieurs années de recherches et de développement, HoloLamp utilise des algorithmes avancés de vision par ordinateur et de machine...
+    date: 2017-09-28
+    url: www.sonovision.com/univers/item/laval-8-hololamp-la-vr-portable-sans-lunettes-ni-smartphone-ni-tablette-mais-avec.html
+
+  - name: Tap Strap
+    slug: tap-trap
+    category: *gesture_recognition
+    content:
+    date: 2018-02-26
+    url: hitek.fr/actualite/tap-strap-clavier-futur-reconnaissance-gestuelle_15493
+
+  - name: Apple contrôle gestuel
+    slug: apple-controle-gestuel
+    category: *gesture_recognition
+    content:
+    date: 2018-04-05
+    url: https://www.boursier.com/actions/actualites/news/apple-travaille-sur-les-ecrans-incurves-et-le-controle-gestuel-761557.html
+
+  - name: FingerTalk
+    slug: finger-talk
+    category: *gesture_recognition
+    content: FingerTalk is a newly released app that enables AR control via the user's hand gestures. To initiate the app's gesture recognition technology, the user...
+    date: 2017-10-24
+    url: https://www.prnewswire.com/news-releases/macron-releases-hand-gesture-recognition-app-fingertalk-300541991.html
