@@ -38,3 +38,14 @@ middleman
 ```shell
 middleman build
 ```
+
+### Todo
+
+- Animate enter & out animation
+- Responsive
+- Texture distorsion on wheel 
+- Manage huge wheel delta for apple trackpad
+- Add articles
+- Add loader
+- Back button in article
+- Scroll call2action in timline
