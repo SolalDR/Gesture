@@ -88,7 +88,7 @@ class TimelineItem {
     var p = this.position;
     this.marker.setAttribute("cx", p.x);
     this.marker.setAttribute("cy", p.y);
-    p.x -= 10;
+    p.x -= 10; 
     p.y += 5;
     var origin = this.timeline.getCoordInPercent(p);
     this.marker.style.transformOrigin = `${origin.x*100}% ${origin.y*100}%`;
