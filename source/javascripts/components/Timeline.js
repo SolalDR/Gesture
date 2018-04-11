@@ -24,9 +24,9 @@ class Timeline {
 
     this.config = {
       dateStart: new Date("2017-09-01"),
-      dateEnd: new Date("2018-04-01"),
+      dateEnd: new Date("2018-03-20"),
       dateDiff: null,
-      duration: new Date("2017-09-01").getTime() - new Date("2018-04-01").getTime()
+      duration: new Date("2017-01-01").getTime() - new Date("2017-03-01").getTime()
     }
     this.config.dateDiff = new Date("2018-04-01").getTime() - new Date("2017-09-01").getTime();
     this.currentDate = new Date(this.config.dateStart.getTime());
@@ -44,8 +44,8 @@ class Timeline {
     this.wheel = { current: 0, speed: 0 }
     this.el.addEventListener("wheel", (event) => {
       if( this.wheel.speed === 0 ) requestAnimationFrame(this.updateSpeedWheel.bind(this));  
-  
-      this.wheel.speed = event.deltaY;
+    
+      this.wheel.speed = event.deltaY > 0 ? Math.min(2, event.deltaY) : Math.max(-2, event.deltaY);
       this.items.forEach(i => i.hide());
     })
   }
@@ -78,24 +78,20 @@ class Timeline {
    * Raf
    */
   updateSpeedWheel(){
-    if( this.wheel.speed !== 0 ) this.wheel.speed *= 0.95
-    
     var deltaDate = this.wheel.speed*1000*60*60*10;
     if( deltaDate ){
       this.currentDate.setTime(this.currentDate.getTime() + deltaDate);
       if(this.currentDate.getTime() < this.config.dateStart.getTime() ) {
         this.currentDate.setTime(this.config.dateStart.getTime());
-        this.wheel.speed = 0;
       } 
       if(this.currentDate.getTime() > this.config.dateEnd.getTime() ) {
         this.currentDate.setTime(this.config.dateEnd.getTime());
-        this.wheel.speed = 0;
       } 
 
       this.updateDate();
       this.items.forEach(i => i.updatePosition());
       
-      if( Math.abs(this.wheel.speed) < 0.01 ) this.wheel.speed = 0;
+      this.wheel.speed = 0;
       requestAnimationFrame(this.updateSpeedWheel.bind(this));
     }
   }

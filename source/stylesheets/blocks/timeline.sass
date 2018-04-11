@@ -79,11 +79,12 @@
     position: absolute
     display: inline-block    
     text-decoration: none
-    min-width: 150px
+    min-width: 250px
     opacity: 1
     transform: translateX(30px) translateY(-10px)
 
     &--hidden
+      pointer-events: none
       .timeline__bubble-title
         transform: translateX(-10px)
         opacity: 0
@@ -94,6 +95,8 @@
     &-title
       color: black
       transition: .5s ease all
+      line-height: 1.5em
+      white-space: nowrap
       font:
         size: 1.5em
         weight: bold
@@ -107,7 +110,9 @@
         size: 12px
       letter-spacing: 1px
       transform: translateY(-7px) translateX(0)
-      margin-left: 5px
+      margin:
+        left: 5px
+        top: 5px
 
   &--hidden
     .timeline__svg

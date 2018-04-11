@@ -10,7 +10,9 @@ class Scene {
 
     this.clock = new THREE.Clock();
     this.clock.start();
-    this.gui = new Dat.GUI();
+    this.gui = new Dat.GUI({autoPlace: false});
+
+
     this.canvas = document.querySelector("#canvas");
     this.onload = args.onload;
 
