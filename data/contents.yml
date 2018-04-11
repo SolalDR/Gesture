@@ -15,111 +15,255 @@ articles:
   - name: RightEye
     slug: right-eye
     category: *eye_tracking
-    content: Une technologie de eye-tracking également commercialisée par l'intermédiaire du périphérique Tobii EyeX, sur lequel s'appuie dorénavant RightEye pour proposer de nouveaux matériels capables de réaliser des tests de vision pouvant contribuer au diagnostic de la maladie de Parkinson...
+    content: |
+      The scientists behind RightEye have developed visual tests to help detect multiple pathologies in just a few minutes, thanks to eye tracking analysis. At CES 2018, they announce a partnership with Tobii and seek outlets for their solutions.
+      RightEye, a specialist in the health sector, has just announced a partnership with Tobii, whose integrated eye tracking solutions (in a gaming perspective) we have already mentioned to certain notebooks like the over-the-top Predator 21X. Acer or the latest generation of Alienware laptops. An eye-tracking technology also marketed through the Tobii EyeX device, which is now used by RightEye to offer new equipment capable of performing vision tests that can contribute to the diagnosis of Parkinson's disease, head trauma or some forms of autism.
+      In total, six test procedures were devised, each specific to the search for a particular pathology. They are added to other forms of tests designed to perform a complete brain diagnosis or to measure certain cognitive performances. However, the diagnosis is not the only application area on which RightEye works: the company also develops rehabilitation and learning tools, which can lead to the vision of a patient to help improve or recover certain functions. It remains to be seen if many hospitals, clinics and other rehabilitation centers will be equipped with such solutions and if they will prove themselves in the field to help health professionals to detect and / or treat some of these pathologies . Because it is what is missing from these announcements and the presentation of these solutions: RightEye does not evoke, or too little, the reliability of the diagnoses thus made. It is therefore imagined that these are rather superficial tests that should lead to more thorough examinations in case of doubt. A minimally invasive and quick way to detect a potential problem.
+      RightEye is present at CES 2018 to demonstrate its solutions, starting to market in the form of subscriptions between $ 2,500 and $ 5,000 per month for software access; the hardware itself should be more affordable than before thanks to the partnership with Tobii (the devices used until then by RightEye were billed between $ 5,000 and $ 10,000). Indeed, their cost should not be burdened by the presence of a sensor Tobii EyeX, being a device sold about 160 €. Henrik Eskilsson, CEO of Tobii, said he was delighted to see that the eye-tracking solutions developed by his company are of interest to professionals in areas other than video games. "We are excited to expand the use of eye-tracking in the areas of health, vision and sport through this partnership with RightEye," he said.
     date: 2018-01-09
     url: https://www.lesnumeriques.com/loisirs/ces-2018-righteye-detecte-parkinson-autisme-traumatismes-n70041.html
 
   - name: SuriCog
     slug: suri-cog
     category: *eye_tracking
-    content: Cet eye-tracker naturel apporte une aide au diagnostic des principales maladies neurologiques et des troubles de l'apprentissage. Remboursé dans plusieurs pays, il est utilisé dans 50 centres d'exploration clinique d'excellence dans le monde et près de la moitié des centres hospitaliers universitaires...
+    content: |
+      The Parisian company SuriCog that will exhibit at the Eureka Park CES 2018 in Las Vegas aims to make the interaction of man with the digital world more efficient and more natural by exploiting the potential of the eye as a reflection of the activity of the brain . The solutions proposed by SuriCog have applications in the medical, industrial and cultural fields. They rely on an eye-tracking device to analyze the activity of the retina. A mount captures and geolocates the movements of the eye very finely. The eye-tracker models the eye to make it interact with its real and virtualized immediate environment.
+      SuriCog's mission is to empower people to master their technological environment, and their real-time eye-tracker makes their interaction with digital systems more natural for their well-being and health," says Marc Massonneau. , president and co-founder of SuriCog.
+      SuriCog markets two product families: EyeBrain and EyeDee
+      In the field of e-health, SuriCog offers EyeBrain. This natural eye-tracker provides help in the diagnosis of major neurological diseases and learning disorders. Reimbursed in several countries, it is used in 50 centers of clinical exploration of excellence in the world and nearly half of the university hospital centers (CHU) of France.
+      To meet the digital transformation needs of the industry, SuriCog has also developed EyeDee. The application makes it possible to optimize human-machine interfaces, the manufacturing process, monitoring and control, the ergonomics of the workstation and the training of operators. EyeDee also has a vocation in the cultural world. Thus, SuriCog has experimented in partnership with the Louvre Museum an innovative tool to help the visit. From the point of impact of the gaze on the work, the visitor can trigger via a box the diffusion of a content which can be a music related to the universe of the artist is an audio commentary on the zone of interest targeted by the eyes.
     date: 2017-12-30
     url: https://www.usine-digitale.fr/article/ces-2018-avec-eyebrain-et-eyedee-suricog-permet-d-interagir-avec-le-regard.N631443
 
-  - name: Pensées consommateurs
-    slug: pensees-consommateurs
+  - name: IPSOS
+    slug: ipsos
     category: *eye_tracking
-    content: Emily Safian-Demers with the French advertising company Ipsos uses eye-tracking for neuromarketing techniques on December 5, 2017 at Ipos in Norwalk, Connecticut. Struggling to explain exactly why you splurged on that new pair of shoes, that pricey smartphone? The reason may lie in your...
+    content: |
+      Why buy this pair of shoes or this new smartphone? More and more advertisers are trying to probe the unconscious of consumers to guess their buying behavior and better guide them.
+      To do this, they use tools that observe the movement of the eyes and the recognition of facial expressions, interpreting a smile or pout of spite, or that detect sweating and brain activity.
+      They could eventually replace the traditional surveys conducted to evaluate the reaction to a new product and the intention to buy.
+      "It's not that people do not want to tell you, it's actually that they can not say why they made a particular purchase decision," says Jessica Azoulay, vice president for market analysis at Isobar, an advertising agency specializing in digital.
+      These new techniques make it possible to distinguish rational factors from emotional factors by examining the consumer's brain activity. They "can capture different types of emotions and analyze them very precisely second by second," adds Elissa Moses, head of neurological and behavioral sciences at the market research firm Ipsos.
+      "People will not be able to tell you what made them upset in one scene and amused in another, but we'll know it through facial recognition," she adds.
+      These technologies include knowing if a brand retains its aura with consumers and make advertising more effective by determining what should be developed to better sell the prodWhy buy this pair of shoes or this new smartphone? More and more advertisers are trying to probe the unconscious of consumers to guess their buying behavior and better guide them.
+      To do this, they use tools that observe the movement of the eyes and the recognition of facial expressions, interpreting a smile or pout of spite, or that detect sweating and brain activity.
+      They could eventually replace the traditional surveys conducted to evaluate the reaction to a new product and the intention to buy.
+      "It's not that people do not want to tell you, it's actually that they can not say why they made a particular purchase decision," says Jessica Azoulay, vice president for market analysis at Isobar, an advertising agency specializing in digital.
+      These new techniques make it possible to distinguish rational factors from emotional factors by examining the consumer's brain activity. They "can capture different types of emotions and analyze them very precisely second by second," adds Elissa Moses, head of neurological and behavioral sciences at the market research firm Ipsos.
+      "People will not be able to tell you what made them upset in one scene and amused in another, but we'll know it through facial recognition," she adds.
+      These technologies include knowing if a brand retains its aura with consumers and make advertising more effective by determining what should be developed to better sell the product.
+      "There is a dance between the conscious and the unconscious," said Elissa Moses, pointing out that ultimately the act of purchase is conscious.
+      Some of these techniques date back to the 1970s but have been improved with the latest technological developments.
+      Digital glasses now make it possible to follow the movement of the eyes when someone watches television or a showcase and to detect where his eye is. Sensors on the skin of the hand measure the thrills and electroencephalography (EEG) techniques read the brain activity.
+      These processes then make it possible to establish a "heat map" with "hotspots" that detect when the attention of a potential buyer is fixed and on what.
+      The pharmaceutical and hygiene giant Johnson & Johnson has used them to test thousands of consumers for its messages extolling the qualities of its Tylenol analgesic and their reaction to the use of certain words rather than others to better message. The reactions have been analyzed to the nearest millisecond, says Eric Dolan, who conducts such studies at Johnson & Johnson.
+      Tivity Health also used it for its "silver sneakers" fitness program for seniors and worked with Isobar to determine which message was best suited to the psychological profile of its potential members.
+      More than 1,000 seniors watched a series of fast moving images and words associated with physical exertion. Based on their reaction, measured by clicks, this established that this population gave importance to the exercise because it gave them autonomy and independence.
+      These themes were then emphasized in Tivity's advertising campaigns, which included a grandfather doing push-ups with a toddler on his back.
+      The audience was more receptive to these messages than others showing seniors in a pool or gym and highlighting the gregarious aspect of the exercise.
+      "We were a bit surprised," says Elizabeth Rula who directs this kind of research for Tivity, adding that the initial intention was more to highlight the social character of the program.
+      "There is a dance between the conscious and the unconscious," said Elissa Moses, pointing out that ultimately the act of purchase is conscious.
+      Some of these techniques date back to the 1970s but have been improved with the latest technological developments.
+      Digital glasses now make it possible to follow the movement of the eyes when someone watches television or a showcase and to detect where his eye is. Sensors on the skin of the hand measure the thrills and electroencephalography (EEG) techniques read the brain activity.
+      These processes then make it possible to establish a "heat map" with "hotspots" that detect when the attention of a potential buyer is fixed and on what.
+      The pharmaceutical and hygiene giant Johnson & Johnson has used them to test thousands of consumers for its messages extolling the qualities of its Tylenol analgesic and their reaction to the use of certain words rather than others to better message. The reactions have been analyzed to the nearest millisecond, says Eric Dolan, who conducts such studies at Johnson & Johnson.
+      Tivity Health also used it for its "silver sneakers" fitness program for seniors and worked with Isobar to determine which message was best suited to the psychological profile of its potential members.
+      More than 1,000 seniors watched a series of fast moving images and words associated with physical exertion. Based on their reaction, measured by clicks, this established that this population gave importance to the exercise because it gave them autonomy and independence.
+      These themes were then emphasized in Tivity's advertising campaigns, which included a grandfather doing push-ups with a toddler on his back.
+      The audience was more receptive to these messages than others showing seniors in a pool or gym and highlighting the gregarious aspect of the exercise.
+      "We were a bit surprised," says Elizabeth Rula who directs this kind of research for Tivity, adding that the initial intention was more to highlight the social character of the program.
     date: 2017-12-24
     url: https://www.huffpostmaghreb.com/2017/12/24/publicite--reconnaissance_n_18904648.html
 
   - name: Olympics & facial recognition
     slug: olympics-and-facial-recognition
     category: *facial_recognition
-    content: Facial recognition technology will be used at the Tokyo 2020 Olympics and Paralympics to streamline the entry of athletes, officials and journalists to the games venues, sources close to the organizing committee say. In light of concerns about terrorism, the games' organizers aim to bolster security and...
+    content: |
+      Facial recognition technology will be used at the Tokyo 2020 Olympics and Paralympics to streamline the entry of athletes, officials and journalists to the games venues, sources close to the organizing committee say.
+      In light of concerns about terrorism, the games’ organizers aim to bolster security and prevent those involved in the 2020 Games from lending or borrowing ID cards. Digital verification will make it difficult to use stolen or forged cards and likely reduce waiting times.
+      The technology won’t be used for spectators, who will be asked to show their tickets and submit to luggage checks just as in the previous Olympics, the sources, who declined to be named, said Saturday.
+      The organizing committee will distribute ID cards bearing facial photos for those involved in the games. The total is expected to reach around 300,000 to 400,000, including athletes and media representatives.
+      When they enter the venues via the competition entrances or media facilities, their faces will automatically be checked against registered photos for discrepancies.
+      The Justice Ministry deployed gates using facial recognition technology to screen passengers at Tokyo’s Haneda airport in October.
+      The Tokyo Olympics are scheduled to be held from July 24 to Aug. 9, followed by the Paralympics from Aug. 25 to Sept. 6. Given the Japan’s hot and humid summers, organizers are also studying how to get people into the venues quickly.
+      The facial recognition technology is designed by NEC Corp., which is known to have one of the world’s most accurate systems, capable of recognizing those who have undergone cosmetic surgery as well as distinguishing between identical twins.
+      The committee believes the system will identify each person quickly. It tested the technology when it was managing the flow of media personnel entering the Japan House information center during the 2016 Rio Games.
+      In Rio de Janeiro, identification of people entering the venues was carried out at designated security checkpoints that showed the IDs on screen with their facial photos as security personnel and other officers checked each individual. But this led to some delays, which frustrated some of those involved at the event.
     date: 2017-12-24
     url: https://www.japantimes.co.jp/news/2017/12/24/national/olympics-deploy-facial-recognition-technology-screen-staff-athletes-reporters/
 
   - name: InvenSense
     slug: inven-sense
     category: *gesture_recognition
-    content: InvenSense, la filiale de TDK dédiée aux capteurs de mouvements, a lancé la production en volume de l'ICM-20789, un module embarquant un accéléromètre et un gyroscope triaxiaux ainsi qu'un capteur de pression barométrique. Ce dernier se distingue par sa précision (bruit efficace de 0,4Pa...
+    content: |
+      InvenSense, TDK's motion sensor subsidiary, has launched volume production of the ICM-20789, a module with a triaxial accelerometer and gyroscope and a barometric pressure sensor. The latter is distinguished by its precision (effective noise of 0.4Pa, temperature coefficient of +/- 0.5Pa / ° C), which allows it to detect differences in altitude of the order of 5cm only.
+      The ICM-20789 targets drones, health and fitness accessories, gesture recognition and video games. The accelerometer offers a full scale programmable between +/- 2g and +/- 16g, the gyroscope between +/- 250 ° / s and +/- 2000 ° / s. Also included in the miniature LGA package (4x4x1,365mm) is a 16-bit analog-to-digital converter for inertial sensors, a 24-bit ADC for the pressure sensor, a FIFO memory of 4 KB, programmable digital filters, two temperature and I²C and SPI interfaces.
     date: 2017-11-30
     url: http://www.electroniques.biz/component/k2/item/61028-invensense-met-la-pression-a-ses-capteurs-inertiels
 
   - name: Bionic hand
     slug: bionic-hand
     category: *gesture_recognition
-    content: We adopted multiple features commonly used in previous studies—mean absolute value, zero crossing, slope sign change, and waveform length—in the algorithm for extracting hand-posture features, and the k-nearest-neighbors (KNN) algorithm as the classifier to perform hand-posture recognition.
+    content: |
+      A bionic hand with fine motor ability could be a favorable option for replacing the human hand when performing various operations. Myoelectric control has been widely used to recognize hand movements in recent years. However, most of the previous studies have focused on whole-hand movements, with only a few investigating subtler motions.
+      The aim of this study was to construct a prototype system for recognizing hand postures with the aim of controlling a bionic hand by analyzing sEMG signals measured at the flexor digitorum superficialis and extensor digitorum muscles. We adopted multiple features commonly used in previous studies—mean absolute value, zero crossing, slope sign change, and waveform length—in the algorithm for extracting hand-posture features, and the k-nearest-neighbors (KNN) algorithm as the classifier to perform hand-posture recognition.
+      The bionic hand was controlled by an Arduino microprocessor, which converted the signals received from the classification process that were fed to the servo motors controlling the bionic fingers. We constructed a two-channel sEMG pattern-recognition system that can identify human hand postures and control a homemade bionic hand to perform corresponding hand postures. The KNN approach was able to recognize four different hand postures with a classification accuracy of 94% in the online experiment by using the channel combination. Moreover, the experimental tests show that the bionic hand could faithfully imitate the hand postures of the human hand.
+      This study has bridged the gap between the features of sEMG signals of fingers and the postures of a bionic hand.
     date: 2017-11-30
     url: https://www.sciencedirect.com/science/article/pii/S0208521617300323
 
-  - name: Brevet Apple
-    slug: brevet-apple
+  - name: PrimeSense
+    slug: prime-sense
     category: *facial_recognition
-    content: La société israélienne PrimeSense s'est fait connaître en contribuant à la conception du Kinect de Microsoft. Rachetée par Apple en 2013 pour 360...
+    content: |
+      Apple files patent to control an iMac with gestures
+      Control your Mac like Tom Cruise in Minority Report? It's an idea that seems to be digging Apple. Indeed, the Cupertino company - or rather a company that belongs to it - has just seen one of its patents accepted. A patent that relates to the detection of movements.
+      The Israeli company PrimeSense has made itself known by contributing to the design of the Kinect of Microsoft. Acquired by Apple in 2013 for $ 360 million, PrimeSense has developed the technologies behind the Face ID of the iPhone X, like the TrueDepth camera. It is now on another file that the company of Tel Aviv works: the control of iMac by the movement.
+      In a patent that has just been accepted by UPSTO, the US Intellectual Property Organization, PrimeSense imagines a way to control an iMac simply by using motion. Based on its TrueDepth technology, the company is working on a three-dimensional interface to control a computer without touching the keyboard, the mouse, or even the screen. Nothing very concrete in use, yet, but the patent is already exploring the movements used for such navigation.
+      To be mistaken for Tom Cruise
+      All this recalls the way Tom Cruise navigates his software in the movie Minority Report, released in 2002. This is not the first time such a comparison is made. During the presentation of Kinect (then named NATAL project) in 2009, it had been used extensively in the press to describe the object. It remains to be seen how Apple intends to use this technology in the future, whether it makes sense for its iMac or not, the patent for the moment only to appropriate the technology.
     date: 2017-11-29
     url: https://www.lesnumeriques.com/ordinateur/apple-depose-brevet-pour-controler-imac-avec-gestes-n68911.html
 
-  - name: Inpecteur russe
-    slug: inspecteur-russe
+  - name: Awake inspector
+    slug: awake-inspector
     category: *facial_recognition
-    content: La vision par ordinateur et l'apprentissage automatique rendent le nouveau dispositif russe anti-sommeil pour conducteur plus efficace que ses ... Basé sur un processeur mono-cœur ARM 32 bits, l'appareil est doté d'une caméra de haute résolution à vision nocturne, ce qui garantit la fiabilité du...
+    content: |
+      A clock-driver designed in Russia is more efficient than its foreign competitors, it controls the situation from a distance, without hindering the movements of the person driving. Vladislav Lessovoy, creator of the device, provided details to Sputnik about this innovative device.
+      Computer vision and machine learning make the new Russian anti-sleep device more efficient than its foreign competitors, Vladislav Lessovoy, designer of the device called Awake Inspector, told Sputnik.
+      "Existing alarm clocks start when there is a change of position of the head. If the driver falls asleep and his head falls forward, they sound an audible alarm. But it is obvious that it makes no sense in 99% of cases "since it is often enough one or two seconds for the worst to happen," said Lessovoï.
+      Unlike wake-up drivers currently on the market, Awake Inspector remotely controls the expression and facial features of the driver, which helps to detect the loss of attention long before the driver realizes that he has sleep.
+      According to M.Lessovoy, his "Wake Up Inspector" does not interfere with the movements of the driver who is not obliged to set up specific devices (glasses, cap, sensors, etc.). Based on a 32-bit ARM mono-core processor, the camera is equipped with a high resolution night vision camera, which guarantees the reliability of the device.
+      When Awake Inspector detects signs of sleepiness, it alerts the driver with a flashing red LED and a 140 decibel sound signal, which equates to a Formula 1 race or a take-off plane. This signal is stronger than the fire brigade siren.
+      The designers of Awake Inspector, who have launched a fundraising campaign for their project, plan to launch mass production in the spring or summer of 2018.
+      Accidents caused by drowsy driving are always more serious because the driver is unable to slow down or avoid an obstacle.
+      In Russia, one in five road accidents is caused by driver drowsiness.
+      According to a study by the American Sleep Association, 60% of American drivers (about 168 million people) said they were sometimes drowsy driving. 37% of respondents admitted that they had already fallen asleep at the wheel of which 13% did so at least once the previous month. 4% of drivers, or 11 million people, have already had or narrowly avoided a car accident because they were asleep or too tired to drive. According to the US National Road Safety Department, 100,000 road accidents a year have been caused by drowsy drivers.
     date: 2017-11-17
     url: https://fr.sputniknews.com/sci_tech/201711171033926277-russie-anti-sommeil-volant-conducteur-disporitif/
 
   - name: 3D sensors
     slug: 3d-sensors
     category: *gesture_recognition
-    content: Gesture recognition for user interface is also being applied with 3D sensing. Although in the early stages of development, this promises to make great...
+    content: |
+      The three-dimensional sensor is a one-of-a-kind technology breakthrough that keeps surprising humanity in the areas it has been applied to. Technology-lovers desire up to date devices such as this invention. Three-dimensional sensors are the in-thing as depth sensing aims at connecting the devices with the real world which is a thrill to most consumers.The exciting part with 3D sensors is the wide application in modern life. This ranges from cameras to drones and robots.
+      The Artificial Intelligence is spurring because the Internet of Things (IoT) avails sensors that allow more reasonable sensory access to our real life. For instance, camera sensors give AI the ability to “see” the actual world and microphones are its “ears.”
+      Like man, AI is empowered by sensors to:
+      - Access several sensory inputs, in a variety of places simultaneously.
+      - With Infrared, AI can visualize heat variances and classify between objects.
+      - Ultrasonic “hearing” through frequency ranges that even man cannot sense.
+      In Virtual and Augmented Reality, it has been used for teleconferencing and by marketing teams to showcase property for sale to potential clients who are far from the property. It has given an exciting experience for game lovers, been used in 3D printing, designing, and object & facial recognition.
+      Top technology companies have not been left behind. From Samsung to Apple, they have attempted to elbow rivals by equipping their devices with 3D technology. Qualcomm, in partnerships with Himax technologies, are set to launch high-resolution three-dimensional depth-sensing camera that will be applied to computers for biometric face identification, 3D rebuilding, surveillance and in the automotive sector.
+      Vayyar Imaging, who are manufacturers of 3D imaging sensors, are set to launch 3D sensors whose view can penetrate through walls. This feature is to target the cable companies, broadband and smart home sectors. It will go a long way into enhancing security in our homes, given its ability to monitor the motions and activities of several people in a room.The feature which requires little work in installation and can cover a wide view is set to be affordable as it doesn’t need multiple sensors to work well.
+      Smartphone companies are also making a rush to fit the 3D sensors in their devices. This is from research carried out by Allied Market Research who predict that by 2018, four-fifths of smartphones will have 3D sensors in their handsets. In the past they have used it for biometric scanning, gesture sensing and to develop photo features.
+      Samsung Galaxy Note 8 has recently had a release that has a camera incorporated with 3D technology. This was included in a bid to court back customers after complains about its previous release.
+      Similarly, the iPhone 7 has a couple of 12-megapixel sensors at the hind view for a telephoto zoom. This overcomes shortcomings related to visual zoom.
+      Gesture recognition for user interface is also being applied with 3D sensing. Although in the early stages of development, this promises to make great breakthrough. Striking an infrared light source across a visual element in a structured pattern or a sheet of light, makes you be able to control games or entertainment devices by mere gestures.
+      Apple, through its company LinX, has developed a platform for stereo vision. This is a concept that relies on man’s depth perception. Two cameras are used, their feeds are captured and the distinction in horizontal placement for each object is analyzed.
+      Similarly, the technology has proven to be useful in the automotive sector. It is used by long-distance drivers to monitor their own behavior. A device in the truck’s interior detects the driver’s motion and warns if they seem to be sleeping while on the road. Cable, fire and security firms have also found the technology useful as with healthcare providers in checking for anomalies in our bodies. Of the numerous providers of 3D time-of-flight sensor systems, Genius Pros rests at the helm, having beaten their competition in the sector by a wide margin.
+      We live in a 3-D dimensional world which means human behavior analysis, obstacle navigations of Robot and autonomous driving cars require to perceive the 3D information precisely. However regular cameras only can perceive the 2D information.” Bruce Bai, the Chief Executive Officer at Genius Pros Commented during the product releasing event at San Francisco weeks ago, “But by 3D sensors applied, real time situation and environment messages can be detected, therefore the collected datas can be played to inferring the next most possible instructions through advanced algorithms, which is also where the magic happens as AI products supposed to work.
+      The only major shortcoming associated with the three-dimensional sensor technology is the amount of power it consumes when being used. Regardless, it is a recommendable invention that has great promises in future given its wide confluence of a variety of studies; differential geometry, harmonic analysis, numeric optimization and linear algebra just to mention a few.
     date: 2017-10-18
     url: https://thenextweb.com/contributors/2017/10/17/3d-sensors-bringing-revolution-ai-industry/
 
   - name: Matchpoint
     slug: matchpoint
     category: *gesture_recognition
-    content: Advances in voice recognition mean that in many cases we can simply ask our ... That's the promise of “Matchpoint,” a new gesture-based technology that ... To operate a control, you simply gesture in a way that mimics the icon's...
+    content: |
+      For decades, we’ve been pushing buttons to operate our devices. But that’s changing. Advances in voice recognition mean that in many cases we can simply ask our devices to read us the news or order our groceries. Soon we may be able to control computer cursors and screens of all sorts with a wave of the hand.
+      That’s the promise of “Matchpoint,” a new gesture-based technology that couples a webcam with software that can runs on TVs, tablets, and laptops. Matchpoint adds an interface in the corner of the screen, showing moving icons for volume, channel, etc.
+      Each target rotates around its corresponding function. The user matches the rotational movement with any object, or part of their body, to create a coupling and active the control. Lancaster University U.K.
+      To operate a control, you simply gesture in a way that mimics the icon’s movement. For instance, you might twirl your wrist to change the channel or raise the volume by nodding your head.
+      If Matchpoint catches on — for now it's just a prototype — the days of digging underneath your sofa cushions to find your remote may be over. But Matchpoint’s developers see wider applications. Unlike other gesture-based technologies, which typically track hands or fingers, Matchpoint observes motion regardless of what is moving — a hand, a head, or even a salt shaker.
+      You can select a control by following the movement of a moving target. Once selected, you can control a pointer on the screen. Lancaster University U.K.
+      “The ability to use objects (and lack of constraints on the user’s posture) means that users do not have to stop their current activities to interact with the system,” Christopher Clarke, a graduate student at the University of Lancaster in England and one of Matchpoint’s developers, told NBC News MACH in an email.
+      That makes Matchpoint a multitasker’s dream. You can run on a treadmill and skip music tracks without fumbling with your cellphone or change TV channels while washing dishes. And if you rely on online do-it-yourself (DIY) videos to, say, learn how to cook a new dish or fix your car’s squeaky brakes, Matchpoint lets you pause, rewind, and play without having to get batter on your tablet or put down your tools.
+      There’s more. In an operating room, Clark said in the email, “The surgeon might need to reference a medical diagram or look at an X-ray and manipulate the image (zoom, pan, etc.), and gesture control technology means that they can do this from a distance.”
+      Voice control, obviously, can help in many applications, too. But Clarke points out that there are scenarios in which that’s not a good option — for instance, if there’s a lot of background noise or, conversely, if you’re working in a silent space or giving a presentation where talking with your device would be awkward.
+      Lancaster University researcher Christopher Clarke selects a channel to watch by using his mug as a remote control. He moves his drink left or right until finding the station he wants to watch. Lancaster University U.K.
+      Further down the road, specialized versions of Matchpoint technology could emerge, involving recognition of specific objects and triggered responses. For example, one might imagine a system that instantly spots the motion of a gun being raised and, in turn, activates an alarm.
+      Sounds like maybe the remote has met its match.
     date: 2017-10-10
     url: https://www.nbcnews.com/mach/science/will-gesture-technology-kill-remote-control-ncna809051
 
-  - name: Panasonic Tokyo
-    slug: panasonic-tokyo
+  - name: CEATEC
+    slug: ceatec
     category: *facial_recognition
-    content: Outre les mimiques du visage, le système utilise une seconde caméra, thermique celle-là, une seconde source de données qui, combinée à la...
+    content: |
+      At CEATEC, the Japanese high-tech fair, your face can betray you, through new systems that instantly recognize you in a crowd, when others can guess your emotions. So much technological progress sometimes a little disturbing.
+      Smile, you are recognized, dissected, your emotions analyzed. This week, at CEATEC Tokyo, two giants, Panasonic and NEC, suddenly revealed facial recognition systems reflecting a new state of technological progress in this area. At Panasonic, it's your emotions, and even your state of form that your face can betray.
+      In addition to facial imitation, the system uses a second thermal camera, a second data source that, combined with the first one, allows you to assess your comfort level, whether you are hot or cold and to detect the first signs of fatigue. . Still in the prototype state, the technology should arrive in our cars, the involuntary return of facial expression also interesting a lot in the trade and advertising.
+      Detect thousands of known faces in the crowd
+      But there is more striking, at NEC, which has, he, wanted to perfect facial recognition in the service of public security. Make recognize your face by your smartphone, it's quite simple, it has only one face to recognize. But ending up in a crowd, instantly, from a file of thousands of faces, the exercise is quite different. Yet, this is what NEC has demonstrated, with a system capable of finding for sure or almost thousands of people known in video surveillance images.
+      What interest all public places, to detect suspects and criminals sought, everyone having in mind J.O. Tokyo in three years. The system can also be used in the trade, to identify a regular customer as soon as he arrives and to call him by his name even before he arrives. The images of the tests of the NEC system are bluffing, to find in the video above.
     date: 2017-10-07
     url: https://www.lci.fr/high-tech/video-ceatec-salon-de-tokyo-la-reconnaissance-faciale-fait-froid-dans-le-dos-nec-panasonic-2066604.html
 
   - name: SenseTime
     slug: sense-time
     category: *facial_recognition
-    content: En Chine, un système de surveillance à base de caméras sait reconnaître passants et véhicules dans la rue avec un taux d'erreur très faible.
+    content: |
+      In China, a camera-based surveillance system recognizes passers-by and vehicles in the street with a very low error rate. Big Brother is not far ...
+      Is Big Brother Chinese? In China, where 170 million CCTV cameras are already installed throughout the country, video face recognition technologies are very advanced and well mastered.
+      Express steaming!
+      No time to iron? Ready in 45s, the new Calor Access'Steam Steamer allows you to refresh all your outfits at a glance
+      While this biometrics technology is being tested in the KFC restaurant chain in China to secure electronic payment through a local start-up, facial recognition also finds potential uses for ongoing surveillance of the country's population.
+      The Chinese company SenseTime has developed a system capable of identifying passers-by or models of cars traveling on the street or public places, with an extremely low error rate (0.001%), thanks in particular to its software and high definition images captured.
+      Hope, the robot player who accompanies sick children at Rouen University Hospital...
+      China already centralizes photos of over 16s
+      In the explanatory video below, this system is able to identify pedestrians, passengers in a car, bikers, or individuals running down escalators, comparing them with an ID photo file.
+      The requirement for every 16-year-old Chinese citizen to be registered with the authorities with a photo ID, already feeds a national and centralized file of the population. However, these data could in any case be crossed with high definition images captured by facial recognition if it was deployed throughout the country.
+      In 2015, the Chinese Ministry of Public Security called for the creation of a "ubiquitous, fully connected and fully controllable video surveillance network" as a public security imperative. The "facial comparison" was among the techniques to be used to improve this surveillance network, recalls the Wall Street Journal.
     date: 2017-09-30
     url: bfmbusiness.bfmtv.com/hightech/ce-systeme-chinois-de-reconnaissance-faciale-est-d-une-efficacite-redoutable-1266945.html
 
   - name: HoloLamp
-    slug: holo-mamp
+    slug: hololamp
     category: *facial_recognition
-    content: Résultat de plusieurs années de recherches et de développement, HoloLamp utilise des algorithmes avancés de vision par ordinateur et de machine...
+    content: |
+      HoloLamp won the Laval Virtual Awards 2017 in the "3D Games & Entertainment" category. This distinction was awarded to the start-up on the occasion of its launch of a first portable device delivering an augmented reality experience without glasses and without smartphone / tablet ...
+      HoloLamp uses a pico-projector and multiple sensors to create 3D illusions - a real-time trompe l'oeil directly into the user's environment.
+      A software development kit in Unity allows developers to design the many HoloLamp applications. Usage cases include home entertainment, video games, avatar communications, education, 3D sports content broadcasts, and more. It can also be used as a sales tool to view objects before buying them.
+      HoloLamp brings to life applications that have only been seen in science fiction so far. Current demos include a 3D animated chess game similar to Harry Potter's Wizard's Chess. In addition to transporting video games in the real world, HoloLamp can be used to project a 3D virtual character that allows the user to interact with the connected home in a more personal way than current smart home solutions such as Google. Home or Amazon Echo. HoloLamp's applications are created in Unity, a leading video game creation software.
+      Result of several years of research and development, HoloLamp uses advanced algorithms of computer vision and machine learning to calculate in real time the position of the face of the user and capture the geometry of the environment. The projected image is then transformed into an image that appears in 3D from the perspective of the user. HoloLamp also incorporates a Leap Motion in the lamp head allowing the user to manipulate virtual 3D objects.
     date: 2017-09-28
     url: www.sonovision.com/univers/item/laval-8-hololamp-la-vr-portable-sans-lunettes-ni-smartphone-ni-tablette-mais-avec.html
 
   - name: Tap Strap
     slug: tap-trap
     category: *gesture_recognition
-    content:
+    content: |
+      An American start-up has just developed a gesture recognition system that can replace the keyboard, mouse and remote TV connected.
+      If the keyboard that we all know has adapted to innovations, until now, impossible to imagine without. Except for this American start-up, TAP System, which decided to switch to gesture recognition. The Tap Strap is a kind of American fist that is placed by hand. The five rings are there to replace the keyboard and the mouse. Just tap with your fingers to control computers, smartphones and tablets. The accessory connects via Bluetooth and its sensors can then transform the movement of the fingers into characters. So, to write a text, you will only have to strum on any surface.
+      Be careful, it's not that easy! Indeed, according to a journalist who tested the system, it takes about an hour to adopt the concept. There are 31 combinations of keystrokes to know. For the vowels, a tap with the fingers is enough to make them appear. For the consonants, you will have to learn combinations like to play the saxophone for example.
+      If the Tap Strap is not necessarily useful for a computer, because the keyboard is still more convenient, we can imagine various applications that could revolutionize the way we write a message on mobile devices just by tapping a part of our body using one hand. This keyboard of the future can also be used with a connected watch or serve as a controller for a virtual reality headset. Finally, the Tap Strap can also replace the remote control of a connected TV.
+      Available now, the Tap Strap is sold for $150 and is compatible on Windows, Mac, Android and iOS.
     date: 2018-02-26
     url: hitek.fr/actualite/tap-strap-clavier-futur-reconnaissance-gestuelle_15493
 
-  - name: Apple contrôle gestuel
-    slug: apple-controle-gestuel
+  - name: Apple
+    slug: apple
     category: *gesture_recognition
-    content:
+    content: |
+      Apple works on curved screens and remote gesture control, CNBC believes. Thus, the Californian group with the apple would develop these new technologies for the iPhone, also explains the Bloomberg agency, quoting sources having knowledge of the question. Concretely, users will be able to move their fingers near the screen without touching it, and thus perform certain actions. The screens could be gradually curved along their entire length. The new technologies in question could appear on the Apple iPhone from 2020.
+      Note that Apple will obviously have to bring a very personal touch to make a difference to customers, since these two technologies have already been proposed by rival Samsung.
     date: 2018-04-05
     url: https://www.boursier.com/actions/actualites/news/apple-travaille-sur-les-ecrans-incurves-et-le-controle-gestuel-761557.html
 
   - name: FingerTalk
     slug: finger-talk
     category: *gesture_recognition
-    content: FingerTalk is a newly released app that enables AR control via the user's hand gestures. To initiate the app's gesture recognition technology, the user...
+    content: |
+       K-ICT Born2Global Centre announced that its member company Macron Co., Ltd. recently released its mobile application "FingerTalk," which allows users to experience hand gesture recognition technology.
+      FingerTalk is a newly released app that enables AR control via the user's hand gestures. To initiate the app's gesture recognition technology, the user simply raises his or her palm through the air, which results in the automatic appearance of an AR object in the user's palm. This object can then be thrown or moved around in other ways.
+      Macron Co., Ltd. recently released its mobile application “FingerTalk,” which allows users to experience hand gesture recognition technology
+      FingerTalk also uses hand tracking technology that includes a picture drawing function. Moving one's hand through the air in the shape of a star creates an image of a star, while drawing a heart results in the creation of a heart image/emoticon. Through image processing technology, the user can change the resulting image with a swipe of the hand. Regardless of the direction the hand moves through the air, the AR effect changes with each swipe.
+      FingerTalk is equipped with not only traditional computer vision technology but also deep learning technology. Based on mobile optimization, it was designed to process gestures at an even faster rate on smartphones.
+      Backed by over 20 years of experience in computer vision technology, Macron is currently developing a touchless gesture recognition control solution and an object segmentation solution.
+      The touchless gesture recognition control solution is based on a 2D camera embedded in the device being used (smart phone, tablet PC, PC, TV, etc.) that recognizes hand movements to control the device. The service will be available for a relatively low price, because it does not require a 3D camera or any additional sensors. In addition to face detection or recognition technology, this hand gesture recognition technology can be used to create content to attract the public's attention for devices like digital signage. The solution's greatest advantage is the fact that the camera recognizes gestures made with the user's bare hands (without a supplementary device such a glove or ring) to control the device.
+      Macron's independently developed object segmentation solution involves a two-dimensional smartphone camera. This technology extracts the image of the user and combines it with other forms of content. What differentiates Macron's technology is the fact that the image of the user can be combined with other content in real-time and made to interact with other objects and forms of content.
+      For example, if a small child imitates the dance that a cartoon character does on television, an image of the dancing child can be displayed on the screen with other content in real time. This allows the child to engage in various activities with the virtual character, such as dancing and popping balloons.
+      Ph.D. Kil-Jae Lee, CEO of Macron said, "Macron's gesture recognition and object segmentation technologies are the core foundation for the true realization of mixed reality. The quality of these technologies has already been proven by hundreds of thousands of users, and they are currently increasing the convenience with which we use devices. We expect that the technology employed by the recently released FingerTalk as well as Macron's gesture recognition technology will allow users to interact with virtual objects in even more sophisticated ways."
+      The FingerTalk mobile application is available to download for free from Google Play.
     date: 2017-10-24
     url: https://www.prnewswire.com/news-releases/macron-releases-hand-gesture-recognition-app-fingertalk-300541991.html
