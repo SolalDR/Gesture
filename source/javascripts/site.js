@@ -87,15 +87,15 @@ class App {
   hideElements() {
     this.scene.plane.loadPreset("hide", 4);
     this.title.hide();
+    
     this.contents.forEach((content, i) => content.hide({
       delay: i*400
     }));
     this.buttons.forEach((btn, i) => btn.hide({
       delay: i*400 + 500
     }));
-    if( this.timeline ){
-      this.timeline.hide();
-    }
+    if(this.article) this.article.hide();
+    if( this.timeline ) this.timeline.hide();
   }
 
 

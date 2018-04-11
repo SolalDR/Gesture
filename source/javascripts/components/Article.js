@@ -1,6 +1,7 @@
 class Article {
   constructor(element){
     this.element = element;
+    this.backBtn = document.querySelector(".article__back-btn");
   }
 
   get hidden() {
@@ -9,6 +10,7 @@ class Article {
 
   set hidden(v) {
     this.element.classList[v ? 'add' : 'remove']('article--hidden');
+    this.backBtn.classList[v ? 'add' : 'remove']('article__back-btn--hidden');
   }
 
   show({delay = 0} = {}) {
