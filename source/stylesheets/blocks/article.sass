@@ -41,7 +41,7 @@
 
     @each $type in eye-tracking, gesture-recognition, facial-recognition
       &--#{$type}
-        background-image: image-url($type)
+        background-image: image-url('categories/#{$type}.svg')
 
   &__content
     margin-top: $gutter
