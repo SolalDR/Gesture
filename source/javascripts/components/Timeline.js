@@ -26,6 +26,22 @@ class Timeline {
     this.initItems();
   }
 
+  get hidden() {
+    return this.el.classList.contains('timeline--hidden');
+  }
+
+  set hidden(v) {
+    this.el.classList[v ? 'add' : 'remove']('timeline--hidden');
+
+    if(v) {
+      this.items.forEach(item => {
+        item.hide();
+        item.hidePoint((1 - this.items.length)*2500);
+      });
+    }
+    else this.items.forEach(item => item.showPoint(this.items.length*2500));
+  }
+
   /**
    * Init svg elements
    */
@@ -68,7 +84,7 @@ class Timeline {
   select(item) {
     if( this.selectedItem && this.selectedItem != item ) this.unselect();
     this.selectedItem = item;
-    this.selectedItem.display();
+    this.selectedItem.show();
   }
 
   unselect() {
@@ -78,21 +94,20 @@ class Timeline {
 
   /**
    * Display timeline
-   * @param {Object} args
+   * @param {Object} delay
    */
-  display(args) {
-    if( args && args.delay ) {
-      setTimeout(this.display.bind(this), args.delay);
-      return;
-    }
-    this.el.classList.remove("timeline--hide");
+  show({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.show(), delay);
+    else this.hidden = false;
   }
 
   /**
    * Hide timeline
+   * @param {Object} delay
    */
-  hide() {
-    this.el.classList.add("timeline--hide");
+  hide({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.show(), delay);
+    else this.hidden = true;
   }
 }
 

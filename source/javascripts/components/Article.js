@@ -11,12 +11,14 @@ class Article {
     this.element.classList[v ? 'add' : 'remove']('article--hidden');
   }
 
-  show() {
-    this.hidden = false;
+  show({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.show(), delay);
+    else this.hidden = false;
   }
 
-  hide() {
-    this.hidden = true;
+  hide({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.hide(), delay);
+    else this.hidden = true;
   }
 }
 

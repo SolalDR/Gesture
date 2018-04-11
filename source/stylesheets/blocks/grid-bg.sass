@@ -18,7 +18,7 @@ $duration: 1s
     transition:
       duration: $duration
       timing-function: ease-in-out
-  
+
     @for $i from 1 to ($count + 1)
       $offset: $i*(100%/($count + 1))
 
@@ -27,6 +27,6 @@ $duration: 1s
         // transform: translateY(0)
         transition-delay: $i*$delay
 
-      &--hide:nth-child(#{$i})
+      &--hidden:nth-child(#{$i})
         transform: translateX(#{$offset}) translateY(#{1024px*($i%2*2 - 1)})
         // transform: translateY(#{1024px*($i%2*2 - 1)})

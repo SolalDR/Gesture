@@ -19,10 +19,14 @@ class_name: article
         </h3>
       </header>
 
-      <div class="content content--hide  article__content">
+      <div class="content content--hidden article__content">
         <% article.content.split("\n\n").each do |paragraph| %>
           <p><%= paragraph.strip %></p>
         <% end %>
+      </div>
+
+      <div class="article__link">
+        <%= link_to 'Lire la suite', article.url, class: :btn, target: :_blank %>
       </div>
     </div>
   </article>

@@ -1,26 +1,24 @@
 class Button {
-  constructor(el, args) {
-    if( el && el.className.match("btn") ) {
-      this.el = el;
-    }
+  constructor(element) {
+    this.element = element;
   }
 
-  display(args) {
-    if( !args ) var args = { delay: 0 };
-    if( args.delay > 0 ) {
-      setTimeout(() => this.display(), args.delay);
-      return;
-    }
-    this.el.classList.remove("btn--hide");
+  get hidden() {
+    return this.element.classList.contains('btn--hidden');
   }
 
-  hide(args) {
-    if( !args ) var args = { delay: 0 };
-    if( args.delay > 0 ) {
-      setTimeout(() => this.hide(), args.delay);
-      return;
-    }
-    this.el.classList.add("btn--hide");
+  set hidden(v) {
+    this.element.classList[v ? 'add' : 'remove']('btn--hidden');
+  }
+
+  show({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.show(), delay);
+    else this.hidden = false;
+  }
+
+  hide({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.hide(), delay);
+    else this.hidden = true;
   }
 }
 

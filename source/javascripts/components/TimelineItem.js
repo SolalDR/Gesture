@@ -10,9 +10,9 @@ class TimelineItem {
     this.slug = datas.slug;
     this.date = new Date(datas.date);
 
-    this.genBubble();
-    this.genSvg();
-    this.displayMarker();
+    this.generateBubble();
+    this.generateSvg();
+    this.showPoint();
     this.initEvents();
   }
 
@@ -45,35 +45,51 @@ class TimelineItem {
     return null;
   }
 
+  get hidden() {
+    return this.bubble.classList.contains('timeline__bubble--hidden');
+  }
+
+  set hidden(v) {
+    this.bubble.classList[v ? 'add' : 'remove']('timeline__bubble--hidden');
+  }
+
+  get pointHidden() {
+    return this.point.classList.contains('timeline__point--hidden');
+  }
+
+  set pointHidden(v) {
+    this.point.classList[v ? 'add' : 'remove']('timeline__point--hidden');
+  }
+
   /**
    * Setup mouseenter & mouseleave events
    */
   initEvents() {
-    this.marker.addEventListener("mouseenter", ()=>{
+    this.point.addEventListener("mouseenter", ()=>{
       this.timeline.select(this);
     })
   }
 
   /**
-   * Generate HTML SVG Marker
+   * Generate HTML SVG Point
    */
-  genSvg() {
+  generateSvg() {
     var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     circle.setAttribute("r", 10);
-    circle.setAttribute("class", "timeline__point timeline__point--hide");
+    circle.setAttribute("class", "timeline__point timeline__point--hidden");
     circle.setAttribute("id", "circle-"+this.slug);
     circle.setAttribute("transform", "circle-"+this.slug);
 
-    this.marker = circle;
+    this.point = circle;
     this.updatePosition();
-    this.timeline.svg.appendChild(this.marker);
+    this.timeline.svg.appendChild(this.point);
   }
 
   /**
    * Generate HTML for a bubble
    */
-  genBubble() {
-    var proto = `<a href="/timeline/${this.slug}/" class="timeline__bubble timeline__bubble--hide">
+  generateBubble() {
+    var proto = `<a href="/timeline/${this.slug}/" class="timeline__bubble timeline__bubble--hidden">
         <p class="timeline__bubble-title">${this.name}</p>
         <p class="timeline__bubble-date">${this.dateFormated}</p>
       </a>`
@@ -85,28 +101,32 @@ class TimelineItem {
 
   updatePosition() {
     var p = this.position;
-    this.marker.setAttribute("cx", p.x);
-    this.marker.setAttribute("cy", p.y);
+    this.point.setAttribute("cx", p.x);
+    this.point.setAttribute("cy", p.y);
     var origin = this.timeline.getCoordInPercent(p);
-    this.marker.style.transformOrigin = `${origin.x*100}% ${origin.y*100}%`;
+    this.point.style.transformOrigin = `${origin.x*100}% ${origin.y*100}%`;
     this.bubble.style["top"] = origin.y*100 + "%"
     this.bubble.style["left"] = origin.x*100 + "%"
   }
 
-  displayMarker(){
-    this.marker.classList.remove("timeline__point--hide");
+  showPoint({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.showPoint(), delay)
+    else this.pointHidden = false;
   }
 
-  hideMarker() {
-    this.marker.classList.add("timeline__point--hide");
+  hidePoint({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.hidePoint(), delay)
+    else this.pointHidden = true;
   }
 
-  display(){
-    this.bubble.classList.remove("timeline__bubble--hide")
+  show({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.show(), delay)
+    else this.hidden = false;
   }
 
-  hide() {
-    this.bubble.classList.add("timeline__bubble--hide")
+  hide({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.hide(), delay)
+    else this.hidden = true;
   }
 }
 

@@ -60,22 +60,22 @@ class App {
   }
 
   /**
-   * Display all the HTML elements
+   * Shows all the HTML elements
    */
-  displayElements(timeout = 0) {
+  showElements(timeout = 0) {
     this.gridBg.show();
     setTimeout(()=> {
       this.scene.plane.loadPreset("default", 4);
-      this.title.display();
+      this.title.show();
       if(this.article) this.article.show();
-      this.contents.forEach((content, i) => content.display({
+      this.contents.forEach((content, i) => content.show({
         delay: i*400
       }));
-      this.buttons.forEach((btn, i) => btn.display({
+      this.buttons.forEach((btn, i) => btn.show({
         delay: i*400 + 500
       }));
       if( this.timeline ){
-        this.timeline.display({
+        this.timeline.show({
           delay: 2000
         });
       }
@@ -100,7 +100,7 @@ class App {
   load() {
     this.scene.plane.select(this.currentPage);
     this.initElements();
-    this.displayElements();
+    this.showElements();
   }
 
   beforeLoad(e) {
@@ -121,7 +121,7 @@ class App {
     this.scene = new Scene({
       page: this.currentPage,
       onload: () => {
-        this.displayElements(1000)
+        this.showElements(1000)
         this.preloadBackgrounds();
       }
     });

@@ -1,17 +1,27 @@
 class Title {
-  constructor(el) {
-    if( el && el.className.match("title") ) {
-      this.el = el;
-      this.crops = this.el.querySelectorAll(".title__crop");
-    }
+  constructor(element) {
+    this.element = element;
+    this.crops = this.element.querySelectorAll('.title__crop');
   }
 
-  display() {
-    if( this.crops ) this.crops.forEach(title => title.classList.remove("title__crop--hide"));
+  get hidden() {
+    return this._hidden;
   }
 
-  hide() {
-    if( this.crops ) this.crops.forEach(title => title.classList.add("title__crop--hide"));
+  set hidden(v) {
+    this._hidden = !!v;
+    var method = this.hidden ? 'add' : 'remove';
+    this.crops.forEach(crop => crop.classList[method]('title__crop--hidden'))
+  }
+
+  show({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.show(), delay)
+    else this.hidden = false;
+  }
+
+  hide({delay = 0} = {}) {
+    if(delay) setTimeout(() => this.hide(), delay)
+    else this.hidden = true;
   }
 }
 
