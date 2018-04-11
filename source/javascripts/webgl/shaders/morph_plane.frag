@@ -15,6 +15,7 @@ void main(){
   vec2 uv = vec2(gl_FragCoord.x / boundaries.x, -gl_FragCoord.y / boundaries.y + 1.);
 
   float intensity = (1. - min(1.,  distance(uv, mouse)/0.25)) * 0.3;
+  //intensity = intensity*intensity;
   vec2 diffMouse = uv - mouse;
 
 

@@ -3,16 +3,17 @@ class TimelineItem {
    * @constructor
    * @param {name: String, slug: String, date: String} datas : JSON datas of a single item
    * @param {*} timeline : Timeline's reference
+   * @prop {String} length : [0-1] part in the timeline
    */
   constructor(datas, timeline) {
     this.timeline = timeline;
     this.name = datas.name;
     this.slug = datas.slug;
+    this.length = 0; 
     this.date = new Date(datas.date);
 
     this.genBubble();
     this.genSvg();
-    this.displayMarker();
     this.initEvents();
   }
 
@@ -35,9 +36,9 @@ class TimelineItem {
     //this.timeline.config.duration
     if( this.date.getTime() > this.timeline.config.dateStart.getTime() ){
       var diff = this.timeline.config.dateStart.getTime() - this.date.getTime();
-      var length = diff/this.timeline.config.duration;
+      this.length = diff/this.timeline.config.duration;
       if(length < 1){
-        this._position = this.timeline.getPointAt(length);
+        this._position = this.timeline.getPointAt(this.length);
         return this._position;
       }
     }
@@ -87,17 +88,21 @@ class TimelineItem {
     var p = this.position;
     this.marker.setAttribute("cx", p.x);
     this.marker.setAttribute("cy", p.y);
+    p.x -= 10;
+    p.y += 5;
     var origin = this.timeline.getCoordInPercent(p);
     this.marker.style.transformOrigin = `${origin.x*100}% ${origin.y*100}%`;
     this.bubble.style["top"] = origin.y*100 + "%"
     this.bubble.style["left"] = origin.x*100 + "%"
   }
 
-  displayMarker(){
+  displayMarker(delay = 0){
+    if( delay && delay > 0 ) { setTimeout(this.displayMarker.bind(this), delay);  return; }
     this.marker.classList.remove("timeline__point--hide");
   }
 
-  hideMarker() {
+  hideMarker(delay = 0) {
+    if( delay && delay > 0 ) { setTimeout(this.hideMarker.bind(this), delay);  return; }
     this.marker.classList.add("timeline__point--hide");
   }
 

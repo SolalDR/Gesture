@@ -86,6 +86,9 @@ class Timeline {
       return;
     }
     this.el.classList.remove("timeline--hide");
+    for(var i = 0; i<this.items.length; i++){
+      this.items.forEach(i => { i.displayMarker(500 + i.length*2500); }) 
+    }
   }
 
   /**
