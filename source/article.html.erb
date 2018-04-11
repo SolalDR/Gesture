@@ -20,7 +20,7 @@ class_name: article
 
       <div class="content content--hidden article__content">
         <% article.content.split("\n").each do |paragraph| %>
-          <p><%= paragraph.strip %></p>
+          <p class="article__paragraph"><%= paragraph.strip %></p>
         <% end %>
       </div>
 
