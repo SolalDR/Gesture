@@ -154,14 +154,10 @@ class App {
 }
 
 window.addEventListener("load", function(){
-
-
-  window.app = new App();
   Asap.start({
     sourceSelector: ".main",
-   	targetSelector: ".main"
+    targetSelector: ".main"
   });
 
-  
-
+  window.app = new App();  
 })
