@@ -1,6 +1,7 @@
 import * as REGL from "regl"
 import MorphPlane from "./MorphPlane.js";
 import Dat from "dat-gui";
+import Gest from "./../components/Gest.js";
 
 class Scene {
   /**
@@ -11,7 +12,6 @@ class Scene {
     this.clock = new THREE.Clock();
     this.clock.start();
     this.gui = new Dat.GUI({autoPlace: false});
-
 
     this.canvas = document.querySelector("#canvas");
     this.onload = args.onload;
@@ -25,6 +25,15 @@ class Scene {
       clock: this.clock,
       regl: this.regl,
       page: args.page
+    })
+
+    Gest.start();
+    Gest.subscribeWithCallback(()=>{
+      console.log("gest")
+      this.plane.loadPreset("dancing", 1);
+      setTimeout(()=>{
+        this.plane.loadPreset("default", 1);
+      }, 1000)
     })
   }
 
