@@ -1,0 +1,25 @@
+.back-btn
+  color: black
+  text-decoration: none
+  position: relative
+  padding-left: 10px
+  transition: .4s
+  opacity: 1
+  transform: translateX(0)
+
+  &::before
+    content: ''
+    width: 30px
+    height: 30px
+    left: -30px
+    top: -2px
+    display: block
+    position: absolute
+    background:
+      image: image-url('timeline.svg')
+      size: contain
+      repeat: no-repeat
+
+  &--hidden
+    transform: translateX(-20px)
+    opacity: 0

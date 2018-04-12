@@ -1,0 +1,32 @@
+.sitography
+  margin-top: 30px
+  transition: 1.2s .2s
+
+  &__entry
+    &:not(:last-child)
+      margin-bottom: 40px
+
+  &__title
+    margin-bottom: 15px
+    display: block
+    font:
+      size: 20px
+      weight: bolder
+
+  &__link
+    overflow: hidden
+    display: block
+    font:
+      weight: bolder
+      size: 14px
+    color: $color-3
+    white-space: nowrap
+    text-overflow: ellipsis
+
+  &--hidden
+    opacity: 0
+
+.page-sitography
+  padding:
+    top: 80px
+    bottom: 80px

@@ -1,14 +1,14 @@
-class Article {
+class Sitography {
   constructor(element){
     this.element = element;
   }
 
   get hidden() {
-    return this.element.classList.contains('article--hidden');
+    return this.element.classList.contains('sitography--hidden');
   }
 
   set hidden(v) {
-    this.element.classList[v ? 'add' : 'remove']('article--hidden');
+    this.element.classList[v ? 'add' : 'remove']('sitography--hidden');
   }
 
   show({delay = 0} = {}) {
@@ -21,4 +21,5 @@ class Article {
     else this.hidden = true;
   }
 }
-export default Article;
+
+export default Sitography;

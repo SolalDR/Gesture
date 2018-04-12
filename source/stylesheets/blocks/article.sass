@@ -8,36 +8,12 @@
     left: auto
     right: auto
 
-  &__back-btn
-    color: black
-    text-decoration: none
-    position: relative
-    padding-left: 10px
-    transition: .4s
-    opacity: 1
-    transform: translateX(0)
-    &--hidden
-      transform: translateX(-20px)
-      opacity: 0
-    &::before
-      content: ""
-      width: 30px
-      height: 30px
-      left: -30px
-      top: -2px
-      display: block
-      position: absolute
-      background:
-        image: image-url("timeline.svg")
-        size: contain
-        repeat: no-repeat
-
   &__header
     $margin-left: -100%/7
     margin-left: $margin-left
 
   &__title, &__date, &__category-icon, &__link, &__category
-    transition: .6s 
+    transition: .6s
 
   &--hidden &__title, &--hidden &__date, &--hidden &__category-icon, &--hidden &__link, &--hidden &__category
     opacity: 0

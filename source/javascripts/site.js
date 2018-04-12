@@ -9,20 +9,22 @@ import Content from "./components/Content.js"
 import Timeline from "./components/Timeline.js"
 import Button from "./components/Button.js"
 import Article from "./components/Article.js"
+import Sitography from "./components/Sitography.js"
+import BackButton from "./components/BackButton.js"
 
 class App {
   /**
    * List of available pages
    */
   get PAGES_LIST() {
-    return ["home", "timeline", "article"];
+    return ["home", "timeline", "article", "sitography"];
   }
 
   /**
    * Return the current page from the data-page attribute
    */
   get currentPage() {
-    var page = this.main.querySelector("*[data-page]");
+    var page = this.main.querySelector("[data-page]");
     return page ? page.getAttribute("data-page") : "home";
   }
 
@@ -41,6 +43,12 @@ class App {
     if( this.currentPage === 'article' ){
       this.article = new Article(this.main.querySelector('.article'));
     }
+
+    if( this.currentPage === 'sitography' ){
+      this.sitography = new Sitography(this.main.querySelector('.sitography'));
+    }
+
+    this.backButton = new BackButton(this.main.querySelector('.back-btn'));
 
     this.contents = [];
     var contentsEl = document.querySelectorAll(".content");
@@ -69,7 +77,9 @@ class App {
     setTimeout(()=> {
       this.scene.plane.loadPreset("default", 4);
       this.title.show();
-      if(this.article) this.article.show(); 
+      if(this.article) this.article.show();
+      if(this.sitography) this.sitography.show();
+      if(this.backButton.available) this.backButton.show();
       this.contents.forEach((content, i) => content.show({
         delay: i*400
       }));
@@ -87,7 +97,7 @@ class App {
   hideElements() {
     this.scene.plane.loadPreset("hide", 4);
     this.title.hide();
-    
+
     this.contents.forEach((content, i) => content.hide({
       delay: i*400
     }));
@@ -95,6 +105,8 @@ class App {
       delay: i*400 + 500
     }));
     if(this.article) this.article.hide();
+    if(this.sitography) this.sitography.hide();
+    if(this.backButton.available) this.backButton.hide()
     if( this.timeline ) this.timeline.hide();
   }
 

@@ -1,0 +1,27 @@
+---
+title: Sitography
+class_name: sitography
+---
+
+<div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
+  <div class="aside aside--right">
+    <div class="aside__content">
+      <%= link_to "timeline", "/timeline.html", class: "back-btn back-btn--hidden" %>
+    </div>
+  </div>
+
+  <h1 class="title col-s-5-6 left-s-1-6">
+    <span class="title__crop title__crop--hidden">Sitography</span>
+  </h1>
+
+  <div>
+    <ul class="sitography sitography--hidden col-s-1-2 left-s-1-4">
+      <% data.contents.articles.each do |article| %>
+        <li class="sitography__entry">
+          <span class="sitography__title"><%= article.name %></span>
+          <%= link_to article.url, article.url, class: :sitography__link %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

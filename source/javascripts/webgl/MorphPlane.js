@@ -23,10 +23,10 @@ class MorphPlane {
     this.scene = args.scene;
 
     this.page = args.page;
-    this.mouse = [0, 0]; 
-    this.expectedMouse = [0, 0]; 
-    
-    this.noise = null; 
+    this.mouse = [0, 0];
+    this.expectedMouse = [0, 0];
+
+    this.noise = null;
     this.texture = null;
     this.preset = null;
     this.animation = null;
@@ -38,7 +38,7 @@ class MorphPlane {
 
   /**
    * Return boundaries according to current window size & current page
-   * @return {[x, y]} 
+   * @return {[x, y]}
    */
   get boundaries() {
     var boundaries = this._boundaries[this.page].call(this);
@@ -54,8 +54,8 @@ class MorphPlane {
    */
   init(page) {
     this.registerPreset();
-    this.registerBoundaries();    
-    this.loadPreset("hide");    
+    this.registerBoundaries();
+    this.loadPreset("hide");
 
     // Load noise
     var noise = new Image();
@@ -73,7 +73,7 @@ class MorphPlane {
 
   /**
    * Select a page
-   * @param {String} page 
+   * @param {String} page
    */
   select(page){
     this.page  = page;
@@ -173,7 +173,7 @@ class MorphPlane {
   }
 
   /**
-   * Mix between two preset 
+   * Mix between two preset
    */
   renderAnimation() {
     function easeInOut (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t }
@@ -241,7 +241,7 @@ class MorphPlane {
     for( var i in sizes ){
       if( window.innerWidth < sizes[i] ) {
         this.size = i;
-        break; 
+        break;
       }
     }
   }
@@ -270,14 +270,15 @@ class MorphPlane {
    */
   registerBoundaries() {
     this._boundaries = {
-      "article": ()=> {
+      "article": () => {
         switch(this.size) {
           case "sm" : return [window.innerWidth, window.innerHeight]; break;
           default : return [window.innerWidth/2, window.innerHeight]
         }
       },
       "home" : () => { return [window.innerWidth, window.innerHeight] },
-      "timeline": () => { return [window.innerWidth, window.innerHeight] }
+      "timeline": () => { return [window.innerWidth, window.innerHeight] },
+      "sitography" : () => { return [window.innerWidth, window.innerHeight] }
     }
   }
 

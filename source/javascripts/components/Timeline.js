@@ -42,9 +42,9 @@ class Timeline {
    */
   initEvents() {
     this.wheel = { current: 0, speed: 0 }
-    this.el.addEventListener("wheel", (event) => {
-      if( this.wheel.speed === 0 ) requestAnimationFrame(this.updateSpeedWheel.bind(this));  
-    
+    document.body.addEventListener("wheel", (event) => {
+      if( this.wheel.speed === 0 ) requestAnimationFrame(this.updateSpeedWheel.bind(this));
+
       this.wheel.speed = event.deltaY > 0 ? Math.min(2, event.deltaY) : Math.max(-2, event.deltaY);
       this.items.forEach(i => i.hide());
     })
@@ -83,19 +83,19 @@ class Timeline {
       this.currentDate.setTime(this.currentDate.getTime() + deltaDate);
       if(this.currentDate.getTime() < this.config.dateStart.getTime() ) {
         this.currentDate.setTime(this.config.dateStart.getTime());
-      } 
+      }
       if(this.currentDate.getTime() > this.config.dateEnd.getTime() ) {
         this.currentDate.setTime(this.config.dateEnd.getTime());
-      } 
+      }
 
       this.updateDate();
       this.items.forEach(i => i.updatePosition());
-      
+
       this.wheel.speed = 0;
       requestAnimationFrame(this.updateSpeedWheel.bind(this));
     }
   }
- 
+
   /**
    * Init svg elements
    */
