@@ -1,7 +1,8 @@
 ---
-title: article.name
 class_name: article
 ---
+
+<% current_page.data[:title] = article.name %>
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
   <div class="aside aside--right">
