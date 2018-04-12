@@ -15,7 +15,7 @@ page '/*.txt', layout: false
 
 activate :directory_indexes
 data.contents.articles.each do |article|
-  proxy "/timeline/#{article.slug}/", '/article.html', locals: { article: article }, ignore: true, layout: 'layout'
+  proxy "/timeline/#{article.slug}/index.html", '/article.html', locals: { article: article }, ignore: true, layout: 'layout'
 end
 
 activate :external_pipeline,

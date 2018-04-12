@@ -48,3 +48,22 @@ p
 
 .page-article
   padding: 80px 0
+
+
+@media print 
+  canvas
+    display: none
+    
+  *[data-page] 
+    background-position: center
+    background-size: contain
+    background-repeat: no-repeat
+
+  .page-home 
+    background-image: image-url("backgrounds/bg_home.jpg")
+  .page-timeline 
+    background-image: image-url("backgrounds/bg_timeline.jpg")
+  .page-article 
+    background-image: image-url("backgrounds/bg_article.jpg")
+  .page-sitography 
+    background-image: image-url("backgrounds/bg_sitogrphy.jpg")
