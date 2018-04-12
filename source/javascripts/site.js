@@ -142,6 +142,12 @@ class App {
       onload: () => {
         this.showElements(1000)
         this.preloadBackgrounds();
+        setTimeout(() => {
+          document.querySelector(".loader").classList.add("loader--hidding");
+          setTimeout(()=> {
+            document.querySelector(".loader").classList.add("loader--hidden");
+          }, 500)
+        }, 1000)
       }
     });
   }
@@ -149,14 +155,8 @@ class App {
 
 window.addEventListener("load", function(){
 
-  setTimeout(() => {
-    document.querySelector(".loader").classList.add("loader--hidding");
-    setTimeout(()=> {
-      document.querySelector(".loader").classList.add("loader--hidden");
-      window.app = new App();
-    }, 500)
-  }, 1000)
 
+  window.app = new App();
   Asap.start({
     sourceSelector: ".main",
    	targetSelector: ".main"
