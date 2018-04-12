@@ -4,8 +4,8 @@ class_name: timeline
 ---
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
-  <aside class="aside aside--align-bottom">
-    <!--<div class="aside__content">
+  <aside id="aside-filter" class="aside aside--hidden aside--left-bottom">
+    <div class="aside__content">
       <ul class="categories">
         <% data.contents.categories.each do |category| %>
           <li class="categories__item category category--centered">
@@ -14,7 +14,7 @@ class_name: timeline
           </li>
         <% end %>
       </ul>
-    </div>-->
+    </div>
   </aside>
 
   <h1 class="title col-s-1-2 left-s-1-6">
@@ -27,7 +27,7 @@ class_name: timeline
     <%= svg "timeline" %>
     <p class="timeline__date timeline__date--hidden"></p>
     <div id="timeline__data" class="timeline__data">
-      <%= data.contents.articles.map{ |a| a.slice :name, :slug, :date }.to_json.html_safe %>
+      <%= data.contents.articles.map{ |a| a.slice :name, :slug, :date, :category }.to_json.html_safe %>
     </div>
     <div class="timeline__bubbles"></div>
   </div>

@@ -9,6 +9,7 @@ class TimelineItem {
     this.timeline = timeline;
     this.name = datas.name;
     this.slug = datas.slug;
+    this.category = datas.category
     this.length = 0;
     this.date = new Date(datas.date);
 
@@ -69,6 +70,12 @@ class TimelineItem {
     this.point.addEventListener("mouseenter", ()=>{
       this.timeline.select(this);
     })
+    this.point.addEventListener("mouseleave", ()=>{
+      this.timeline.unselect();
+    })
+    this.point.addEventListener("click", ()=>{
+      this.bubble.click();
+    })
   }
 
   /**
@@ -91,7 +98,7 @@ class TimelineItem {
    * Generate HTML for a bubble
    */
   generateBubble() {
-    var proto = `<a href="/timeline/${this.slug}/" class="timeline__bubble timeline__bubble--hidden">
+    var proto = `<a href="/timeline/${this.slug}/" data-category="${this.category.slug}" class="timeline__bubble timeline__bubble--hidden">
         <p class="timeline__bubble-title">${this.name}</p>
         <p class="timeline__bubble-date">${this.dateFormated}</p>
       </a>`

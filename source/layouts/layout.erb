@@ -9,6 +9,9 @@
     <%= javascript_include_tag 'site' %>
   </head>
   <body>
+    <div class="loader">
+      <%= image_tag "loader.gif", class: "loader__gif" %>
+    </div>
     <%= partial 'partials/background' %>
     <div class="logo logo--header-top logo--hidden"></div>
     <main class="main center-y">

@@ -38,6 +38,7 @@ class App {
 
     if( this.currentPage === "timeline" ){
       this.timeline = new Timeline(this.main.querySelector(".timeline"));
+      document.querySelector("#aside-filter").classList.remove("aside--hidden");
     }
 
     if( this.currentPage === 'article' ){
@@ -107,7 +108,11 @@ class App {
     if(this.article) this.article.hide();
     if(this.sitography) this.sitography.hide();
     if(this.backButton.available) this.backButton.hide()
-    if( this.timeline ) this.timeline.hide();
+    if( this.timeline ) {
+      this.timeline.hide();
+      this.timeline = null; 
+      document.querySelector("#aside-filter").classList.add("aside--hidden");
+    }
   }
 
 
@@ -143,11 +148,20 @@ class App {
 }
 
 window.addEventListener("load", function(){
+
+  setTimeout(() => {
+    document.querySelector(".loader").classList.add("loader--hidding");
+    setTimeout(()=> {
+      document.querySelector(".loader").classList.add("loader--hidden");
+      window.app = new App();
+    }, 500)
+  }, 1000)
+
   Asap.start({
     sourceSelector: ".main",
    	targetSelector: ".main"
   });
 
-  window.app = new App();
+  
 
 })

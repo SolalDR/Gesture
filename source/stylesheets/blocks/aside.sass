@@ -13,6 +13,9 @@
   justify-content: space-between
   box-sizing: border-box
   position: fixed
+  transition: .4s
+  transform: translateX(0)
+  opacity: 1
 
   &--right
     left: auto
@@ -20,6 +23,15 @@
 
   &--align-bottom
     justify-content: end
+
+  &--hidden
+    transform: translateX(-20px)
+    opacity: 0
+
+  &--left-bottom
+    justify-content: end
+    width: auto
+    left: 30px
 
   @media screen and (max-width: $width*6)
     $relative-width: 100%/6
