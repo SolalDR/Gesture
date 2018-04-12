@@ -2,12 +2,29 @@ body
   font-family: $font-primary
 
 p
-  line-height: 1.4em
-  font-size: 11px
+  line-height: 1.6em
+  font-size: 1em
+
+.bordered-paragraph
+  padding-top: 10px
+
+  &::before
+    content: ''
+    background: #000
+    width: 10%
+    height: 1px
+    margin:
+      left: auto
+      bottom: 10px
+    position: relative
+    display: block
 
 .content
   p
     margin: 5px
+
+.link
+  color: #000
 
 #canvas
   position: fixed
@@ -26,7 +43,7 @@ p
 .d-none
   display: none
 
-.clr 
+.clr
   clear: both
 
 .page-article
