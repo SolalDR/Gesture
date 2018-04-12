@@ -272,7 +272,7 @@ class MorphPlane {
     this._boundaries = {
       "article": () => {
         switch(this.size) {
-          case "sm" : return [window.innerWidth, window.innerHeight]; break;
+          case "md" : return [window.innerWidth, window.innerHeight]; break;
           default : return [window.innerWidth/2, window.innerHeight]
         }
       },

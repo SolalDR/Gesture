@@ -1,7 +1,7 @@
 import * as REGL from "regl"
 import MorphPlane from "./MorphPlane.js";
 import Dat from "dat-gui";
-import Gest from "./../components/Gest.js";
+// import Gest from "./../components/Gest.js";
 
 class Scene {
   /**
@@ -27,14 +27,13 @@ class Scene {
       page: args.page
     })
 
-    Gest.start();
-    Gest.subscribeWithCallback(()=>{
-      console.log("gest")
-      this.plane.loadPreset("dancing", 1);
-      setTimeout(()=>{
-        this.plane.loadPreset("default", 1);
-      }, 1000)
-    })
+    // Gest.start();
+    // Gest.subscribeWithCallback(()=>{
+    //   this.plane.loadPreset("dancing", 1);
+    //   setTimeout(()=>{
+    //     this.plane.loadPreset("default", 1);
+    //   }, 1000)
+    // })
   }
 
   /**

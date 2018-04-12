@@ -5,7 +5,7 @@ class_name: timeline
 
 <div class="page-<%= current_page.data.class_name %>" data-page="<%= current_page.data.class_name %>">
   <aside id="aside-filter" class="aside aside--hidden aside--left-bottom">
-    <div class="aside__content">
+    <div class="aside__content hide-s">
       <ul class="categories">
         <% data.contents.categories.each do |category| %>
           <li class="categories__item category category--centered">
@@ -23,7 +23,7 @@ class_name: timeline
 
   <div class="clr"></div>
 
-  <div class="timeline timeline--hidden mt-1">
+  <div class="timeline timeline--hidden mt-1 mb-2">
     <%= svg "timeline" %>
     <p class="timeline__date timeline__date--hidden"></p>
     <div id="timeline__data" class="timeline__data">
